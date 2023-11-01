@@ -75,7 +75,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} h-screen bg-green-400`}>
+      <body className={`${inter.className}`}>
         {/* {children} */}
         <Layout pageName={"Dashboard"}>
           {children}
