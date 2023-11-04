@@ -61,7 +61,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 };
 
 const sidebarItems = [
-  { icon: FaHome, text: "Dashboard", href: "/" },
+  { icon: FaHome, text: "Dashboard", href: "/dashboard" },
   { icon: FaCog, text: "Settings", href: "/settings" },
   { icon: FaUsers, text: "User Management", href: "/user-management" },
   { icon: FaFile, text: "File Management", href: "/file-management" },

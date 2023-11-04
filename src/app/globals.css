@@ -45,4 +45,9 @@ html {
   box-sizing: border-box;
   overflow: hidden;
   height: 100vh;
+  background: #F8F8F8;
+}
+
+.MuiOutlinedInput-root, input {
+  background: rgba(239, 240, 246, 1);
 }

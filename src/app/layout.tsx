@@ -77,9 +77,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className}`}>
         {/* {children} */}
-        <Layout pageName={"Dashboard"}>
-          {children}
-        </Layout>
+        {children}
       </body>
     </html>
   );
