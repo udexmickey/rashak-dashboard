@@ -1,10 +1,5 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-// import Layout from "@/components/Layout";
-import Image from 'next/image';
-import { Container, Grid, Paper, Button, TextField } from '@mui/material';
-import LoginForm from "@/app/(Authentication)/components/loginForm";
-
 const inter = Inter({ subsets: ["latin"] });
 
 const client_Url: string | URL = process.env.NEXT_PUBLIC_BASE_URL as string | URL ?? process.env.NEXT_PUBLIC_TEST_URL  as string | URL;
@@ -74,7 +69,7 @@ export default function Layout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} !bg-white`}>
+      <body className={`${inter.className}`}>
         {/* {children} */}
         {/* <Layout pageName={"Dashboard"}>
         </Layout> */}

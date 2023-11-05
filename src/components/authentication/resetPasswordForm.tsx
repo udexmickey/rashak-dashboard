@@ -2,64 +2,48 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { Paper, TextField, Button } from '@mui/material';
 import { BsEyeSlash, BsEye } from 'react-icons/bs';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 interface Values {
-  email: string;
-  password: string;
-  fullName: string;
-  confirmPassword: string;
+  token: string;
+  newPassword: string;
+  confirmNewPassword: string;
   showPassword: boolean;
-  emailError: boolean;
   passwordError: boolean;
-  confirmPasswordError: boolean;
+  confirmNewPasswordError: boolean;
 }
 
-const SignupForm = () => {
+const ResetPasswordForm = ({ params }: { params: { resetpasswordId: string } }) => {
+
   const [values, setValues] = useState<Values>({
-    email: '',
-    password: '',
-    fullName: '',
-    confirmPassword: '',
+    token: '',
+    newPassword: '',
+    confirmNewPassword: '',
     showPassword: false,
-    emailError: false,
     passwordError: false,
-    confirmPasswordError: false,
+    confirmNewPasswordError: false,
   });
 
   const [showPassword, setShowPassword] = useState<boolean>(true);
 
+  const router = useRouter();
+
   const handleChange = (prop: keyof Values) => (event: ChangeEvent<HTMLInputElement>) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
-
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
-  };
-
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
+    setValues({ ...values, token: params.resetpasswordId ?? event.target.value, [prop]: event.target.value });
   };
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
 
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!values.email.match(emailRegex)) {
-      setValues({ ...values, emailError: true });
-      return;
-    }
-
     // Password validation (minimum 8 characters)
-    if (values.password.length < 8) {
+    if (values.newPassword.length < 8) {
       setValues({ ...values, passwordError: true });
       return;
     }
 
     // Confirm Password validation
-    if (values.password !== values.confirmPassword) {
-      setValues({ ...values, confirmPasswordError: true });
+    if (values.newPassword !== values.confirmNewPassword) {
+      setValues({ ...values, confirmNewPasswordError: true });
       return;
     }
 
@@ -67,7 +51,7 @@ const SignupForm = () => {
     const submitForm = () => {
       return new Promise((resolve) => {
         setTimeout(() => {
-          resolve({ message: 'Signup successful' });
+          resolve({ message: 'Password reset was successful' });
         }, 1000);
       });
     };
@@ -76,6 +60,9 @@ const SignupForm = () => {
       .then((response) => {
         console.log('Form submitted:', values);
         console.log('API Response:', response);
+
+        // Redirect to the check page
+        router.push('/reset-password');
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -85,39 +72,23 @@ const SignupForm = () => {
   return (
     <div className="flex flex-col items-center justify-start h-screen w-[100%] max-w-2xl isolate box-border md:gap-y-20 gap-y-10">
       <div className="flex justify-end md:w-[90%] w-[90%]">
-        <Link href={'/login'}>
-          <Button
-            variant="contained"
-            style={{ backgroundColor: '#00A651', color: '#ffffff' }}
-            type="submit"
-            className="rounded-[2.5rem] text-xl px-3 py-3 md:px-10 md:py-5 capitalize"
-            sx={{
-              '&:focus': { backgroundColor: '#00A651' },
-              '&.Mui-error': { backgroundColor: 'red' },
-            }}
-          >
-            Log In
-          </Button>
-        </Link>
       </div>
       <Paper elevation={0} className="p-8 text-center rounded-[1rem] w-full flex gap-y-2 flex-col">
-        <div className="mb-4">
-          {/* <label className="text-base text-left mb-2 block text-[#A0A3BD]">Welcome back</label> */}
-          <h2 className="text-left text-3xl !text-[#00a651] ">Create Account</h2>
-        </div>
         <form className="text-left flex gap-y-4 flex-col" onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="text-base mb-2 block text-[#A0A3BD]">Full Name</label>
+            <label className="text-base mb-2 block text-[#A0A3BD]">Token</label>
             <div className="relative">
               <TextField
                 variant="outlined"
                 fullWidth
                 type="text"
-                placeholder="Enter your full name"
+                placeholder="Paste your token"
                 required
-                value={values.fullName}
+                value={params.resetpasswordId ?? values.token}
+                // defaultValue={params.resetpasswordId}
+                disabled={params.resetpasswordId ? true : false}
                 size="medium"
-                onChange={handleChange('fullName')}
+                onChange={handleChange('token')}
                 InputProps={{
                   classes: {
                     root: 'border-none rounded-[2.5rem] h-16 text-base',
@@ -127,52 +98,20 @@ const SignupForm = () => {
                   shrink: true,
                 }}
               />
-            </div>
-          </div>
-          <div className="mb-4">
-            <label className="text-base mb-2 block text-[#A0A3BD]">Email</label>
-            <div className="relative">
-              <TextField
-                variant="outlined"
-                fullWidth
-                type="email"
-                placeholder="Enter your email"
-                required
-                value={values.email}
-                size="medium"
-                onChange={handleChange('email')}
-                InputProps={{
-                  classes: {
-                    root: 'border-none rounded-[2.5rem] h-16 text-base',
-                  },
-                }}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                error={values.emailError}
-                sx={{
-                  '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                    borderColor: values.emailError ? '#F5821F' : '#00A651',
-                  },
-                }}
-              />
-              {values.emailError && (
-                <p className="text-[#F5821F] mt-2 text-xs">Please enter a valid email</p>
-              )}
             </div>
           </div>
           <div className="mb-4 relative">
-            <label className="text-base mb-2 block text-[#A0A3BD]">Password</label>
+            <label className="text-base mb-2 block text-[#A0A3BD]">New Password</label>
             <div className="relative">
               <TextField
                 variant="outlined"
                 fullWidth
                 type={showPassword ? 'password' : 'text'}
-                placeholder="Enter your password"
+                placeholder="Enter your newPassword"
                 required
-                value={values.password}
+                value={values.newPassword}
                 size="medium"
-                onChange={handleChange('password')}
+                onChange={handleChange('newPassword')}
                 InputProps={{
                   classes: {
                     root: 'border-none rounded-[2.5rem] h-16 text-base',
@@ -203,7 +142,7 @@ const SignupForm = () => {
             </div>
           </div>
           <div className="mb-4 relative">
-            <label className="text-base mb-2 block text-[#A0A3BD]">Confirm Password</label>
+            <label className="text-base mb-2 block text-[#A0A3BD]">Confirm New Password</label>
             <div className="relative">
               <TextField
                 variant="outlined"
@@ -211,9 +150,9 @@ const SignupForm = () => {
                 type={showPassword ? 'password' : 'text'}
                 placeholder="Confirm your password"
                 required
-                value={values.confirmPassword}
+                value={values.confirmNewPassword}
                 size="medium"
-                onChange={handleChange('confirmPassword')}
+                onChange={handleChange('confirmNewPassword')}
                 InputProps={{
                   classes: {
                     root: 'border-none rounded-[2.5rem] h-16 text-base',
@@ -231,14 +170,14 @@ const SignupForm = () => {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                error={values.confirmPasswordError}
+                error={values.confirmNewPasswordError}
                 sx={{
                   '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                    borderColor: values.confirmPasswordError ? '#F5821F' : '#00A651',
+                    borderColor: values.confirmNewPasswordError ? '#F5821F' : '#00A651',
                   },
                 }}
               />
-              {values.confirmPasswordError && (
+              {values.confirmNewPasswordError && (
                 <p className="text-[#F5821F] mt-2 text-xs">Passwords do not match</p>
               )}
             </div>
@@ -254,7 +193,7 @@ const SignupForm = () => {
               '&.Mui-error': { backgroundColor: 'red' },
             }}
           >
-            Create account
+            Reset Password
           </Button>
         </form>
       </Paper>
@@ -262,4 +201,4 @@ const SignupForm = () => {
   );
 };
 
-export default SignupForm;
+export default ResetPasswordForm;
