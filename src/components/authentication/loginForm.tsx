@@ -68,8 +68,11 @@ const LoginForm = () => {
         console.log('Form submitted:', values);
         console.log('API Response:', response);
 
+        // After successful signup
+        localStorage.setItem('isLoggedIn', 'true');
+
         // Redirect to the check page
-      router.push('/admins');
+      router.push('/dashboard');
       })
       .catch((error) => {
         console.error('Error:', error);

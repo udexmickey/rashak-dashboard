@@ -89,7 +89,7 @@ const Sidebar: React.FC<SidebarProps> = ({ handleCloseSidebar }) => {
           />
         </Link>
       </div>
-      <div className="h-full px-3 py-4 overflow-y-auto">
+      <div className="h-full px-3 py-4 overflow-y-auto bg-white">
         <List className="space-y-4 font-medium relative">
           {sidebarItems.map((item, index) => (
             <SidebarItem
@@ -101,7 +101,7 @@ const Sidebar: React.FC<SidebarProps> = ({ handleCloseSidebar }) => {
               handleCloseSidebar={handleCloseSidebar as () => void}
             />
           ))}
-          <Link href={"/sign-out"}>
+          <Link href={"/login"}>
             <ListItem className="flex-grow fixed bottom-4 z-10">
               <div className="bg-[#FF000033] rounded-full w-10 h-10 flex justify-center items-center">
                 <FaSignOutAlt

@@ -13,16 +13,22 @@ const AuthLayout : React.FC<AuthLayoutProps> = ({ children, backgroundImage }) =
     <Grid container className="bg-white">
       <Grid item xs={12} sm={6}>
         <div
-        className='md:h-screen relative'
+        className='md:h-screen relative w-full h-full'
+        style={{
+          position: "relative",
+          // height: 'auto', width: 'auto'
+        }}
         >
           <Image
             src={backgroundImage}
             alt="Background Image"
-            layout="fill"
-            // width={840}
-            // height={850}
-            objectFit="fill"
-            className="md:h-[100vh] hidden md:flex flex-col object-fill"
+            fill
+            style={{
+              objectFit: 'fill', height: '100%', width: '100%'
+            }}
+            sizes="100%"
+            priority
+            className="hidden md:flex flex-col h-auto w-auto"
           />
           <div className='absolute top-8 left-16'>
             <Image 

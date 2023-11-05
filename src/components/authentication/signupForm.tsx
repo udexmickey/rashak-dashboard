@@ -3,7 +3,7 @@ import { useState, ChangeEvent, FormEvent } from 'react';
 import { Paper, TextField, Button } from '@mui/material';
 import { BsEyeSlash, BsEye } from 'react-icons/bs';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 interface Values {
   email: string;
@@ -34,14 +34,6 @@ const SignupForm = () => {
   
   const handleChange = (prop: keyof Values) => (event: ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [prop]: event.target.value });
-  };
-
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
-  };
-
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
   };
 
   const handleSubmit = (event: FormEvent) => {
@@ -84,7 +76,7 @@ const SignupForm = () => {
         localStorage.setItem('isRegistered', 'true');
 
         // Redirect to the check page
-      router.push('/check');
+        router.push('/check');
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -92,7 +84,7 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start h-screen w-[100%] max-w-2xl isolate box-border md:gap-y-20 gap-y-10">
+    <div className="flex flex-col items-center justify-start h-screen w-[100%] max-w-2xl isolate box-border gap-y-10">
       <div className="flex justify-end md:w-[90%] w-[90%]">
         <Link href={'/login'}>
           <Button

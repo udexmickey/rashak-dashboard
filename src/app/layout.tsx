@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Sidebar from "@/components/menu/Sidebar";
-import { FaBell } from "react-icons/fa";
-import Layout from "@/components/menu/Layout";
-import TopNav from "@/components/menu/TopNav";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +15,7 @@ export const metadata: Metadata = {
     template: '%s | Rashak Management System'
   },
   description: description.slice(0, 80) + '...',
-  keywords: ['Agriculture investment', ' investment', ' rashak', ' Farm', ' Rashak', ' RashakAgro', ' rashakagro', ' Farm investment ', ' farm Business', ' Agriculture', ' Nature', ' farm Technology', ' agriculture technology', ' farm blog', ' agriculture news'],
+  keywords: 'Agriculture investment, investment, rashak, Farm, Rashak, RashakAgro, rashakagro, Farm investment , farm Business, Agriculture, Nature, farm Technology, agriculture technology, farm blog, agriculture news',
   generator: 'Rashak',
   applicationName: 'Rashak',
   referrer: 'origin-when-cross-origin',

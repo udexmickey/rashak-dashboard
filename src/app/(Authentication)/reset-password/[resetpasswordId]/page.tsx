@@ -47,11 +47,6 @@ export default async function ResetPasswordPost({
 }: {
   params: { resetpasswordId: string };
 }) {
-  const { resetpasswordId } = params;
-
-  // console.log('resetpasswordId', resetpasswordId);
-  // console.log('params', params);
-  // console.log('params.resetpasswordId', params.resetpasswordId);
   
   return (
     <AuthLayout backgroundImage="/sign_up_girl.png">

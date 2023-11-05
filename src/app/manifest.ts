@@ -12,8 +12,8 @@ export default function manifest(): MetadataRoute.Manifest {
     categories: ['Agriculture investment ', 'investment', 'rashak', 'Farm', 'Rashak', 'RashakAgro', 'rashakagro', 'Farm investment ', 'Business', 'Agriculture', 'Nature', 'farm Technology', 'agriculture technology', 'farm blog', 'agriculture news'],
     icons: [
       {
-        src: '/favicon.ico',
-        sizes: 'any',
+        src: 'favicon.ico',
+        sizes: "64x64 32x32 24x24 16x16",
         type: 'image/x-icon',
       },
     ],
