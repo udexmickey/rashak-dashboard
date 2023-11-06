@@ -1,7 +1,8 @@
 "use client";
 import { usePathname } from "next/navigation";
 import { IconType } from "react-icons/lib";
-import { FaHome, FaCog, FaUsers, FaFile, FaSignOutAlt } from "react-icons/fa";
+import { FaHome, FaCog, FaFile, FaSignOutAlt, } from "react-icons/fa";
+import { FaUserGroup } from "react-icons/fa6";
 import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
@@ -36,14 +37,14 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
       <ListItem
         button
         onClick={handleClick}
-        className={`flex items-center p-4 rounded-lg dark:hover:bg-opacity-25 group ${
+        className={`flex items-center p-4 rounded-lg dark:hover:bg-opacity-25 group hover:w-[90%] ${
           isActive ? "bg-[#ECFFF5]" : ""
         } transition-all duration-200 ease-in-out`}
       >
         <ListItemIcon>
           <Icon
-            size={26}
-            className={`flex-shrink-0 w-5 h-5 transition duration-75 ${
+            size={46}
+            className={`flex-shrink-0 w-7 h-7 transition duration-75 ${
               isActive ? "text-[#00A651]" : "text-[#484848]"
             } group-hover:text-[#00A651]`}
             aria-hidden="true"
@@ -63,7 +64,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 const sidebarItems = [
   { icon: FaHome, text: "Dashboard", href: "/dashboard" },
   { icon: FaCog, text: "Settings", href: "/settings" },
-  { icon: FaUsers, text: "User Management", href: "/user-management" },
+  { icon: FaUserGroup, text: "User Management", href: "/user-management" },
   { icon: FaFile, text: "File Management", href: "/file-management" },
 ];
 
@@ -71,7 +72,7 @@ const Sidebar: React.FC<SidebarProps> = ({ handleCloseSidebar }) => {
   let router = usePathname();
 
   return (
-    <aside className="h-[90vh] w-64" aria-label="Sidebar">
+    <aside className="h-[90vh] w-80 flex flex-col items-center justify-start pl-8" aria-label="Sidebar">
       <div className="w-64 h-[10vh] sm:hidden flex px-8 items-center border-b border-gray-300">
         <Link href="/" as={"/"} className="-m-1.5 p-1.5 max-w-max max-h-12">
           <span className="sr-only">Rashak logo</span>
@@ -89,7 +90,7 @@ const Sidebar: React.FC<SidebarProps> = ({ handleCloseSidebar }) => {
           />
         </Link>
       </div>
-      <div className="h-full px-3 py-4 overflow-y-auto bg-white">
+      <div className="h-[90%] relative py-4 overflow-y-auto w-full bg-white">
         <List className="space-y-4 font-medium relative">
           {sidebarItems.map((item, index) => (
             <SidebarItem
@@ -102,7 +103,7 @@ const Sidebar: React.FC<SidebarProps> = ({ handleCloseSidebar }) => {
             />
           ))}
           <Link href={"/login"}>
-            <ListItem className="flex-grow fixed bottom-4 z-10">
+            <ListItem className="flex-grow fixed bottom-32 z-10">
               <div className="bg-[#FF000033] rounded-full w-10 h-10 flex justify-center items-center">
                 <FaSignOutAlt
                   size={26}

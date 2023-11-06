@@ -19,7 +19,7 @@ const TopNav: React.FC<{ pageName: string }> = ({ pageName }) => {
 
   return (
     <div className="relative">
-      <header className="h-[10vh] flex justify-between items-center p-4 bg-white text-[#1E1E1E] border-b border-gray-300">
+      <header className="h-[10vh] pl-10 flex justify-between items-center p-4 text-[#1E1E1E]">
         <div className="lg:hidden">
           <FaBars
             size={24}
@@ -28,7 +28,7 @@ const TopNav: React.FC<{ pageName: string }> = ({ pageName }) => {
           />
         </div>
         <div className="flex items-center justify-center">
-          <div className="lg:w-64 max-h-max">
+          <div className="lg:w-72 max-h-max">
             <Link href="/" as={'/'} className="-m-1.5 p-1.5 max-w-max max-h-12">
                 <span className="sr-only">Rashak logo</span>
                 <Image
