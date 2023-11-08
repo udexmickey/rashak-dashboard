@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import EditOptionMenu from "./table.options";
 import NestedModal from "./modal";
-import ConfirmationModal from "./confirmation";
+import ConfirmationModal from "./deleteAdminConfirmationModal";
 
 export default function AdminTable() {
   const dataArray = [
@@ -80,7 +80,7 @@ export default function AdminTable() {
                   className="px-6 py-4 font-medium whitespace-nowrap list-decimal max-w-max"
                 >
                   <Link href={"#"}>
-                  {idx + 1}. &nbsp; {window.innerWidth >= 768 &&  <span> &nbsp;</span> } {admin.title}
+                  {idx + 1}. &nbsp; {admin.title}
                   </Link>
                 </th>
                 <td
@@ -94,13 +94,6 @@ export default function AdminTable() {
                   {admin.Department}
                 </td>
                 <td className="px-6 py-4 text-[#1E1E1E]">
-                  {/* <EditOptionMenu /> */}
-                  {/* {openModal && (
-  // <NestedModal
-  //   modalName={modalType}
-  //   // handleClose={() => setOpenModal(false)}
-  // />
-)} */}
                   <EditOptionMenu
                     adminId={admin.id}
                     handleOptionClick={handleOptionClick}
@@ -110,14 +103,17 @@ export default function AdminTable() {
             ))}
         </tbody>
       </table>
-      {openModal && (
-        <NestedModal
+            {openModal && (
+              <NestedModal
           modalName={modalType}
+          adminId={'admin.id'}
           handleClose={() => setOpenModal(false)}
-        >
-            <ConfirmationModal />
-        </NestedModal>
-      )}
+          title={modalType === 'delete' ? 'Delete Admin' : 'Re-assign Admin'} handleReassign={function (adminId: string, selectedDepartment: string): void {
+            throw new Error("Function not implemented.");
+          } }             >
+                  <ConfirmationModal />
+              </NestedModal>
+            )}
     </div>
   );
 }

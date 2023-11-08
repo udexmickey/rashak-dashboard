@@ -5,6 +5,7 @@ import Sidebar from "./Sidebar"; // Import your Sidebar component
 import Drawer from "@mui/material/Drawer";
 import Link from "next/link";
 import Image from "next/image";
+import { MenuItem, IconButton, Badge } from "@mui/material";
 
 const TopNav: React.FC<{ pageName: string }> = ({ pageName }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -48,9 +49,22 @@ const TopNav: React.FC<{ pageName: string }> = ({ pageName }) => {
           <h1 className="text-2xl md:px-8 px-4 font-bold md:flex hidden">{pageName}</h1>
         </div>
         <div className="flex">
-          <Link href='notification'>
+          {/* <Link href='notification'>
             <FaBell size={24} className="text-[#ED7524]" />
-          </Link>
+          </Link> */}
+          <MenuItem>
+        <IconButton
+          size="large"
+          aria-label="show 17 new notifications"
+          color="inherit"
+        >
+          <Badge badgeContent={17} color="error">
+            {/* <NotificationsIcon /> */}
+            <FaBell size={24} className="text-[#ED7524]" />
+          </Badge>
+        </IconButton>
+        <p>Notifications</p>
+      </MenuItem>
         </div>
       </header>
       <Drawer

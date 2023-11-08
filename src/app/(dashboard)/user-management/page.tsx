@@ -60,8 +60,9 @@ export default function UserManagement() {
     // onChange={handleChange} 
     // aria-label="basic tabs example"
     // value={value}
+    TabIndicatorProps={{style: {background:'#00A651'}}}
     onChange={handleChange}
-    indicatorColor="secondary"
+    // indicatorColor="secondary"
     textColor="inherit"
     variant="fullWidth"
     aria-label="full width tabs example"
