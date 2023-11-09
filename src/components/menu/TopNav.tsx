@@ -20,7 +20,7 @@ const TopNav: React.FC<{ pageName: string }> = ({ pageName }) => {
 
   return (
     <div className="relative">
-      <header className="h-[10vh] pl-10 flex justify-between items-center p-4 text-[#1E1E1E]">
+      <header className="h-[10vh] lg:pl-10 pl-6 flex justify-between items-center p-4 text-[#1E1E1E] pr-16 bg-white">
         <div className="lg:hidden">
           <FaBars
             size={24}
@@ -46,13 +46,11 @@ const TopNav: React.FC<{ pageName: string }> = ({ pageName }) => {
                 />
             </Link>
           </div>
-          <h1 className="text-2xl md:px-8 px-4 font-bold md:flex hidden">{pageName}</h1>
+          <h1 className="text-2xl md:px-12 px-4 font-bold md:flex hidden">{pageName}</h1>
         </div>
         <div className="flex">
-          {/* <Link href='notification'>
-            <FaBell size={24} className="text-[#ED7524]" />
-          </Link> */}
-          <MenuItem>
+          
+          <Link href='notification'>
         <IconButton
           size="large"
           aria-label="show 17 new notifications"
@@ -63,8 +61,8 @@ const TopNav: React.FC<{ pageName: string }> = ({ pageName }) => {
             <FaBell size={24} className="text-[#ED7524]" />
           </Badge>
         </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
+        {/* <p>Notifications</p> */}
+          </Link>
         </div>
       </header>
       <Drawer

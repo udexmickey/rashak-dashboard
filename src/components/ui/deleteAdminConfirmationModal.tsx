@@ -1,7 +1,7 @@
 import React from "react";
 import { Alert, Button, Typography } from "@mui/material";
 
-export default function ConfirmationModal() {
+export default function DeleteConfirmationModal() {
   return (
     <div className="relative w-full max-h-full">
       <div className="relative rounded-lg">
@@ -41,12 +41,7 @@ export default function ConfirmationModal() {
             Yes, I am sure
           </Button>
 
-          {/* <LoadingButton loading variant="outlined">
-            Submit
-          </LoadingButton> */}
           <Button
-            // variant="outlined"
-            // color="error"
             onClick={() => {
               alert("close ");
             }}

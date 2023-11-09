@@ -57,10 +57,10 @@ export default function UserManagement() {
   <Box sx={{ borderBottom: 1, borderColor: 'divider', width: '100%' }}>
     <Tabs 
     value={value} 
+    TabIndicatorProps={{style: {background:'#00A651'}}}
     // onChange={handleChange} 
     // aria-label="basic tabs example"
     // value={value}
-    TabIndicatorProps={{style: {background:'#00A651'}}}
     onChange={handleChange}
     // indicatorColor="secondary"
     textColor="inherit"

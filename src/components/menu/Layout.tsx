@@ -17,7 +17,7 @@ const Layout: React.FC<LayoutProps> = ({ pageName, children }) => {
         <aside className="hidden md:flex">
           <Sidebar />
         </aside>
-        <div className="flex-1 flex flex-col overflow-y-auto h-[90vh] py-4 md:px-8 px-4 w-full">
+        <div className="flex flex-col max-w-[83rem] overflow-y-auto h-[90vh] pb-4 md:pl-12 px-6 w-full md:pr-8">
           {children}
         </div>
       </div>

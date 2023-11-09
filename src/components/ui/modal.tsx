@@ -85,7 +85,6 @@ const NestedModal: React.FC<modalProps> = ({
           />
         )}
         {modalName === "delete" && (
-          // Add another card or component for delete action if needed
           <ConfirmationModal />
         )}
       </Box>

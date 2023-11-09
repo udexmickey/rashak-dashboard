@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 
 export default function AdminTable() {
-  const dataArray = [
+  const usermanagementData = [
     {
       id: "123",
       title: "Oladapo Koiki",
@@ -43,8 +43,8 @@ export default function AdminTable() {
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table className="text-sm text-left w-full">
         <tbody className="bg-white text-base text-[#1E1E1E] ">
-          {dataArray &&
-            dataArray.map((admin, idx) => (
+          {usermanagementData &&
+            usermanagementData.map((admin, idx) => (
               <tr className="bg-white text-lg border-b" key={admin.title}>
                 <th
                   scope="row"

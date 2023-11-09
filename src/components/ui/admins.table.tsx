@@ -4,35 +4,9 @@ import React, { useState } from "react";
 import EditOptionMenu from "./table.options";
 import NestedModal from "./modal";
 import ConfirmationModal from "./deleteAdminConfirmationModal";
+import { usermanagementData } from "@/app/(dashboard)/user-management/usermanagementData.seed";
 
 export default function AdminTable() {
-  const dataArray = [
-    {
-      id: "123",
-      title: "Oladapo Koiki",
-      email: "races@gmail.com",
-      Department: "Communications",
-    },
-    {
-      id: "223",
-      title: "Abdulbasit Ibrahim",
-      email: "gaza@gmail.com",
-      Department: "IT",
-    },
-    {
-      id: "323",
-      title: "Ibrahim Sandra",
-      email: "santo@gmail.com",
-      Department: "IT",
-    },
-    {
-      id: "423",
-      title: "Barakat Tosin",
-      email: "john@gmail.com",
-      Department: "Communications",
-    },
-  ];
-
   const [openModal, setOpenModal] = useState(false);
   const [modalContent, setModalContent] = useState<any>(null);
   const [modalType, setModalType] = useState("");
@@ -72,14 +46,14 @@ export default function AdminTable() {
         </thead>
         <tbody className="bg-white text-lg text-[#1E1E1E]">
         {/* <NestedModal /> */}
-          {dataArray &&
-            dataArray.map((admin, idx) => (
+          {usermanagementData &&
+            usermanagementData.map((admin, idx) => (
               <tr className="bg-white border-b" key={admin.title}>
                 <th
                   scope="row"
                   className="px-6 py-4 font-medium whitespace-nowrap list-decimal max-w-max"
                 >
-                  <Link href={"#"}>
+                  <Link href={`/user-management/${admin.id}`}>
                   {idx + 1}. &nbsp; {admin.title}
                   </Link>
                 </th>
