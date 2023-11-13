@@ -2,11 +2,11 @@ import React from "react";
 import { Metadata, ResolvingMetadata } from "next";
 import { List, ListItem, ListItemText } from "@mui/material";
 import BackgroundLetterAvatars from "@/components/menu/stringAvatar";
-import { usermanagementData } from "../usermanagementData.seed";
+import { membersData } from "../membersData.seed";
 
 // =========SEO for single post=============
 type Props = {
-  params: { usermanagementId: string };
+  params: { membersId: string };
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
@@ -15,16 +15,16 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   // read route params
-  const { usermanagementId } = params;
+  const { membersId } = params;
 
   // optionally access and extend (rather than replace) parent metadata
   const previousImages = (await parent).openGraph?.images || [];
 
   return {
-    name: "Usermanagement",
+    title: "members",
     // description: "",
     alternates: {
-      canonical: `/user-management/${usermanagementId}`,
+      canonical: `/members/${membersId}`,
     },
     openGraph: {
       images: [
@@ -41,22 +41,21 @@ export async function generateMetadata(
 
 // +++==================The main post itself=======================
 
-// eslint-disable-next-line @next/next/no-async-client-component
-export default async function UsermanagementById({
+export default async function MembersById({
   params,
 }: {
-  params: { usermanagementId: string };
+  params: { membersId: string };
 }) {
-  const usermanagement =
-    usermanagementData &&
-    usermanagementData.find((admin) => admin.id === params.usermanagementId);
+  const members =
+    membersData &&
+    membersData.find((admin) => admin.id === params.membersId);
 
   return (
     <div className="">
       <div className="flex bg-white max-w-4xl w-full max-h-[30rem] h-full rounded-3xl gap-6 p-8">
         <div className="w-full flex gap-12 flex-col">
           <BackgroundLetterAvatars
-            name={usermanagement && usermanagement.name}
+            name={members && members.name}
             width={"9rem"}
             height={"9rem"}
             fontSize={"3rem"}
@@ -66,15 +65,15 @@ export default async function UsermanagementById({
           >
             <ListItem>
               <ListItemText primary="Name:" />
-              <ListItemText primary={usermanagement?.name} />
+              <ListItemText primary={members?.name} />
             </ListItem>
             <ListItem>
               <ListItemText primary="Department:" />
-              <ListItemText primary={usermanagement?.Department} />
+              <ListItemText primary={members?.Department} />
             </ListItem>
             <ListItem>
               <ListItemText primary="Email Address:" />
-              <ListItemText primary={usermanagement?.email} />
+              <ListItemText primary={members?.email} />
             </ListItem>
           </List>
         </div>

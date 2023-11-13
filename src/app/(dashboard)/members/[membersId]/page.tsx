@@ -1,13 +1,13 @@
 import React from "react";
 import { Metadata, ResolvingMetadata } from "next";
-import Usermanagement from "./usermanagement";
-import { usermanagementData } from "../usermanagementData.seed";
+import { membersData } from "../membersData.seed";
+import MembersById from "./members";
 
 export const revalidate = 3600; // revalidate at most every hour
 
 // =========SEO for single post=============
 type Props = {
-  params: { usermanagementId: string };
+  params: { membersId: string };
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
@@ -16,19 +16,19 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   // read route params
-  const { usermanagementId } = params;
+  const { membersId } = params;
 
   // fetch data / api data
-  const usermanagement = usermanagementData?.find((data) => {
-    return data.id === usermanagementId;
+  const members = membersData?.find((data) => {
+    return data.id === membersId;
   });
 
-  if(!usermanagement?.id) {
+  if(!members?.id) {
     return {
         title: 'Not Found',
         description: 'The page is not found',
         alternates: {
-            canonical: `/usermanagement/${usermanagementId}`
+            canonical: `/members/${membersId}`
         }
     }
   }
@@ -36,43 +36,43 @@ export async function generateMetadata(
   const previousImages = (await parent).openGraph?.images || [];
 
   return {
-    title: usermanagement && usermanagement?.name,
+    title: members && members?.name,
     openGraph: {
-      // images: [`${usermanagement && usermanagement.url}`, ...previousImages],
+      // images: [`${members && members.url}`, ...previousImages],
       images: [
         {
-          url: `${usermanagement && usermanagement.id}`,
+          url: `${members && members.id}`,
           width: 1200,
           height: 630, 
         },
         ...previousImages
       ],
-      description: usermanagement && usermanagement.Department,
-      title: usermanagement && usermanagement?.name,
+      description: members && members.Department,
+      title: members && members?.name,
     },
     alternates: {
-        canonical: `/usermanagement/${usermanagementId}`
+        canonical: `/members/${membersId}`
     },
-    description: usermanagement && usermanagement.Department
+    description: members && members.Department
   };
 }
 
 // +++==================The main post itself=======================
 
-export default async function UsermanagementPost({
+export default async function MembersPost({
   params,
 }: {
-  params: { usermanagementId: string };
+  params: { membersId: string };
 }) {
-  const { usermanagementId } = params;
+  const { membersId } = params;
 
-  const usermanagement = usermanagementData?.find((data) => {
-    return data.id === usermanagementId;
+  const members = membersData?.find((data) => {
+    return data.id === membersId;
   });
 
   return (
     <div className="max-w-7xl px-6 md:px-8 grid gap-6 py-6">
-      <Usermanagement params={params} />
+      <MembersById params={params} />
     </div>
   );
 }

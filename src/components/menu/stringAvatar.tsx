@@ -24,10 +24,10 @@ function stringAvatar(name: string) {
   };
 }
 
-export default function BackgroundLetterAvatars({ name, width, height, fontSize } : { name: string | undefined, width: string, fontSize: string, height: string }) {
+export default function BackgroundLetterAvatars({ name, width, height, fontSize, className } : { name: string | undefined, width: string, fontSize: string, height: string, className?: string, }) {
   return (
     <Stack direction="row" spacing={2}>
-      <Avatar style={{ height, width, fontSize }} {...stringAvatar(name as string)} />
+      <Avatar style={{ height, width, fontSize }} {...stringAvatar(name as string)} className={className} />
     </Stack>
   );
 }

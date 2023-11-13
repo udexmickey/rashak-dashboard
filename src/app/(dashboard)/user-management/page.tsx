@@ -4,8 +4,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import CustomPaginationActionsTable from '@/components/ui/users.table';
-import AdminTable from '@/components/ui/admins.table';
+import CustomPaginationActionsTable from '@/components/ui/Tables/users.table';
+import AdminTable from '@/components/ui/Tables/admins.table';
 
 interface TabPanelProps {
   children?: React.ReactNode;

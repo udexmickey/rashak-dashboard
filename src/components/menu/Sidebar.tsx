@@ -6,6 +6,7 @@ import { FaUserGroup } from "react-icons/fa6";
 import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
+import WelcomeCard from "../ui/cards/welcomeCard";
 
 interface SidebarItemProps {
   icon: IconType;
@@ -66,6 +67,7 @@ const sidebarItems = [
   { icon: FaCog, text: "Settings", href: "/settings" },
   { icon: FaUserGroup, text: "User Management", href: "/user-management" },
   { icon: FaFile, text: "File Management", href: "/file-management" },
+  { icon: FaUserGroup, text: "Team and Board", href: "/members" },
 ];
 
 const Sidebar: React.FC<SidebarProps> = ({ handleCloseSidebar }) => {
@@ -73,7 +75,7 @@ const Sidebar: React.FC<SidebarProps> = ({ handleCloseSidebar }) => {
 
   return (
     <aside className="h-[90vh] w-80 flex flex-col items-center justify-start pl-8 bg-white" aria-label="Sidebar">
-      <div className="w-64 h-[10vh] sm:hidden flex px-8 items-center border-b border-gray-300">
+      <div className="w-64 h-[10vh] sm:hidden flex px-8 items-center border-b border-gray-300 gap-y-10">
         <Link href="/" as={"/"} className="-m-1.5 p-1.5 max-w-max max-h-12">
           <span className="sr-only">Rashak logo</span>
           <Image
@@ -90,7 +92,13 @@ const Sidebar: React.FC<SidebarProps> = ({ handleCloseSidebar }) => {
           />
         </Link>
       </div>
-      <div className="h-[90%] relative py-4 overflow-y-auto w-full bg-white">
+      <div className="h-[90%] relative pb-4 overflow-y-auto w-full bg-white">
+      <Link href={"/profile"}>
+
+          <ListItem>
+            <WelcomeCard />
+          </ListItem>
+      </Link>
         <List className="space-y-4 font-medium relative">
           {sidebarItems.map((item, index) => (
             <SidebarItem
@@ -103,7 +111,7 @@ const Sidebar: React.FC<SidebarProps> = ({ handleCloseSidebar }) => {
             />
           ))}
           <Link href={"/login"}>
-            <ListItem className="fixed bottom-32 z-10 max-w-max">
+            <ListItem className="fixed bottom-12 z-10 max-w-max">
               <div className="bg-[#FF000033] rounded-full w-10 h-10 flex justify-center items-center">
                 <FaSignOutAlt
                   size={26}

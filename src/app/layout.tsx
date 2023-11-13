@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const montserrat = Montserrat({ 
+  subsets: ['latin'], 
+  variable: '--Montserrat-font', 
+  display: 'swap'
+})
 
 const client_Url: string | URL = process.env.NEXT_PUBLIC_BASE_URL as string | URL ?? process.env.NEXT_PUBLIC_TEST_URL  as string | URL;
 
@@ -25,7 +29,7 @@ export const metadata: Metadata = {
     canonical: client_Url,
     languages: {
       'en-US': '/en-US',
-      // 'de-DE': '/de-DE',
+      'de-DE': '/de-DE',
     },
   },
   formatDetection: {
@@ -59,9 +63,6 @@ export const metadata: Metadata = {
     locale: 'en_US',
     type: 'website',
   },
-  verification: {
-    google: `${process.env.NEXT_PUBLIC_ANALYTICS_URL}?id=${process.env.NEXT_PUBLIC_ANALYTICS_ID}/rashak-logo-svg.svg`
-  }
 }
 
 export default function RootLayout({
@@ -71,7 +72,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className}`}>
+      <body className={`${montserrat.className}`}>
         {/* {children} */}
         {children}
       </body>

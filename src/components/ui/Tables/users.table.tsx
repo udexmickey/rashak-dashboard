@@ -5,25 +5,25 @@ export default function AdminTable() {
   const usermanagementData = [
     {
       id: "123",
-      title: "Oladapo Koiki",
+      name: "Oladapo Koiki",
       email: "races@gmail.com",
       Department: "Communications",
     },
     {
       id: "223",
-      title: "Abdulbasit Ibrahim",
+      name: "Abdulbasit Ibrahim",
       email: "gaza@gmail.com",
       Department: "IT",
     },
     {
       id: "323",
-      title: "Ibrahim Sandra",
+      name: "Ibrahim Sandra",
       email: "santo@gmail.com",
       Department: "IT",
     },
     {
       id: "423",
-      title: "Barakat Tosin",
+      name: "Barakat Tosin",
       email: "john@gmail.com",
       Department: "Communications",
     },
@@ -45,13 +45,13 @@ export default function AdminTable() {
         <tbody className="bg-white text-base text-[#1E1E1E] ">
           {usermanagementData &&
             usermanagementData.map((admin, idx) => (
-              <tr className="bg-white text-lg border-b" key={admin.title}>
+              <tr className="bg-white text-lg border-b" key={admin.name}>
                 <th
                   scope="row"
                   className="px-6 py-4 font-medium whitespace-nowrap list-decimal max-w-max"
                 >
                   <Link href={"#"}>
-                    {idx + 1}. &nbsp; {window.innerWidth >= 768 &&  <span> &nbsp;</span> } {admin.title}
+                    {idx + 1}. &nbsp; {window.innerWidth >= 768 &&  <span> &nbsp;</span> } {admin.name}
                   </Link>
                 </th>
                 <td

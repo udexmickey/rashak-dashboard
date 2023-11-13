@@ -1,10 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import Button from "@mui/material/Button";
 import { Typography } from "@mui/material";
-import DepartmentCard from "./DepartmentCard";
-import ConfirmationModal from "./deleteAdminConfirmationModal";
 import { IoClose } from "react-icons/io5";
 
 const style = {
@@ -21,27 +18,24 @@ const style = {
   pb: 3,
 };
 
-interface modalProps {
+interface ModalProps {
   title: string;
-  adminId: string;
-  modalName: string;
   handleClose: () => void;
-  handleReassign: (adminId: string, selectedDepartment: string) => void;
   children: React.ReactNode;
 }
 
-const NestedModal: React.FC<modalProps> = ({
-  modalName,
-  handleClose,
-  title,
-  adminId,
-  handleReassign,
-  children,
-}) => {
+const NestedModal: React.FC<ModalProps> = ({ title, handleClose, children }) => {
+  const [open, setOpen] = React.useState(true);
+
+  const handleCloseModal = () => {
+    setOpen(false);
+    handleClose();
+  };
+
   return (
     <Modal
-      open={true}
-      onClose={handleClose}
+      open={open}
+      onClose={handleCloseModal}
       aria-labelledby="parent-modal-title"
       aria-describedby="parent-modal-description"
     >
@@ -72,21 +66,12 @@ const NestedModal: React.FC<modalProps> = ({
             id="transition-modal-close"
             component="button"
             className="mb-5 text-xl font-normal text-[#9E9E9E] cursor-pointer hover:opacity-60"
-            onClick={handleClose}
+            onClick={handleCloseModal}
           >
             <IoClose />
           </Typography>
         </Typography>
-        {modalName === "re-assign" && (
-          <DepartmentCard
-            title="Re-Assign Admin Department"
-            adminId={adminId}
-            handleReassign={handleReassign} // Pass down handleReassign function
-          />
-        )}
-        {modalName === "delete" && (
-          <ConfirmationModal />
-        )}
+        {children}
       </Box>
     </Modal>
   );

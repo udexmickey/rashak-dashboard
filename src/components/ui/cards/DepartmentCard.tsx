@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import { MdComputer, MdPhone } from "react-icons/md";
 import { FormControl, FormLabel, RadioGroup } from "@mui/material";
-import AssignedConfirmModal from "./confirm.assign.modal";
+import AssignedConfirmModal from "../confirm.assign.modal";
 
 interface DepartmentCardProps {
   title: string;
