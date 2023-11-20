@@ -11,7 +11,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: '100%',
+  width: "100%",
   bgcolor: "background.paper",
   border: "1px solid transparent",
   boxShadow: 24,
@@ -28,8 +28,10 @@ interface ConfirmationModalProps {
   handleClose: () => void;
 }
 
-const MemberConfirmModal: React.FC<ConfirmationModalProps> = ({ selectedMember, handleClose }) => {
-
+const MemberConfirmModal: React.FC<ConfirmationModalProps> = ({
+  selectedMember,
+  handleClose,
+}) => {
   return (
     <>
       <Modal
@@ -38,17 +40,25 @@ const MemberConfirmModal: React.FC<ConfirmationModalProps> = ({ selectedMember, 
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <Box sx={{ ...style, maxWidth: 900, minHeight: '60dvh', minWidth: '350px', }} className='px-2 md:px-4'>
+        <Box
+          sx={{
+            ...style,
+            maxWidth: 900,
+            minHeight: "60dvh",
+            minWidth: "350px",
+          }}
+          className="px-2 md:px-4"
+        >
           <div className="flex justify-between items-center">
-
-        <Typography
+            <Typography
               id="transition-modal-close"
               component="h2"
               className="md:text-2xl mb-4"
-              >
-
-          {selectedMember === 'team' ? 'Add New Team Member' : 'Add New Board Member' }
-              </Typography>
+            >
+              {selectedMember === "team"
+                ? "Add New Team Member"
+                : "Add New Board Member"}
+            </Typography>
             <Typography
               id="transition-modal-close"
               component="button"
@@ -56,11 +66,9 @@ const MemberConfirmModal: React.FC<ConfirmationModalProps> = ({ selectedMember, 
               onClick={handleClose}
             >
               <IoClose />
-          </Typography>
+            </Typography>
           </div>
-{selectedMember === 'team' ? 
-<TeamMemberForm /> : <BoardMemberForm /> 
-}
+          {selectedMember === "team" ? <TeamMemberForm /> : <BoardMemberForm />}
         </Box>
       </Modal>
     </>

@@ -9,6 +9,7 @@ import TeamMemberTable from "@/components/ui/Tables/teamMember.table";
 import { Button } from "@mui/material";
 import NestedModal from "@/components/ui/modal";
 import MemberCard from "@/components/ui/cards/MemberCard";
+import BoardMemberTable from "@/components/ui/Tables/boardMember.table";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -97,7 +98,7 @@ export default function MembersManagement() {
         <TeamMemberTable />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <CustomPaginationActionsTable />
+        <BoardMemberTable />
       </CustomTabPanel>
 
       <Button

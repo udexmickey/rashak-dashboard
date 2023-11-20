@@ -9,12 +9,15 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "#F8F8F8",
-  border: "1px solid #000",
+  width: "90%",
+  bgcolor: "background.paper",
+  border: "1px solid transparent",
   boxShadow: 24,
+  // display: 'flex',
+  // flexDirection: 'column',
+  // gap: '2rem',
   pt: 2,
-  px: 4,
+  // px: 6,
   pb: 3,
 };
 
@@ -42,12 +45,13 @@ const NestedModal: React.FC<ModalProps> = ({ title, handleClose, children }) => 
       <Box
         sx={{
           ...style,
-          width: "auto",
-          maxWidth: 990,
-          maxHeight: 587,
-          minWidth: 350,
-          height: "auto",
+          maxWidth: 900,
+          maxHeight: "96dvh",
+          minWidth: "350px",
+          height: 'auto',
+          width: 'auto'
         }}
+        className="px-2 md:px-4"
       >
         <Typography
           id="transition-modal"
@@ -59,14 +63,14 @@ const NestedModal: React.FC<ModalProps> = ({ title, handleClose, children }) => 
             id="transition-modal-title"
             variant="h6"
             component="h2"
-            className="mb-5 text-xl font-normal text-[#1E1E1E]"
+            className="md:mb-5 mb-2 text-xl font-normal text-[#1E1E1E]"
           >
             {title ?? ""}
           </Typography>
           <Typography
             id="transition-modal-close"
             component="button"
-            className="mb-5 text-xl font-normal text-[#9E9E9E] cursor-pointer hover:opacity-60"
+            className="md:mb-5 mb-2 text-xl font-normal text-[#9E9E9E] cursor-pointer hover:opacity-60"
             onClick={handleCloseModal}
           >
             <IoClose />
