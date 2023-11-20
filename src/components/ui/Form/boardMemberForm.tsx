@@ -4,8 +4,9 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
+import Container from "@mui/material/Container";
 
-const TeamMemberForm: React.FC = () => {
+const BoardMemberForm: React.FC = () => {
   const [name, setName] = React.useState("");
   const [role, setRole] = React.useState("");
   const [linkedinLink, setLinkedinLink] = React.useState("");
@@ -158,7 +159,7 @@ const TeamMemberForm: React.FC = () => {
         {/* Right Column (Name, Role, LinkedinLink) */}
         <div className="md:w-1/2 w-[90%] px-2">
           <Typography variant="h6" gutterBottom>
-            {/* Add New Team Member */}{" "}
+            {/* Add New Board Member */}{" "}
           </Typography>
           <label htmlFor="name" className="block mb-2">
             Name:
@@ -232,4 +233,4 @@ const TeamMemberForm: React.FC = () => {
   );
 };
 
-export default TeamMemberForm;
+export default BoardMemberForm;

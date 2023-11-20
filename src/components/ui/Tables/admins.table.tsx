@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import EditOptionMenu from "./table.options";
 import NestedModal from "../modal";
-import ConfirmationModal from "../deleteAdminConfirmationModal";
+import ConfirmationModal from "../confirmationUI/deleteAdminConfirmationModal";
 import { usermanagementData } from "@/app/(dashboard)/user-management/usermanagementData.seed";
 import { MdAssignmentAdd, MdAutoDelete } from "react-icons/md"
 import DepartmentCard from "../cards/DepartmentCard";
@@ -36,6 +36,10 @@ export default function AdminTable() {
       return;
     }
   };
+
+  function handleReassign(adminId: string, selectedDepartment: string): void {
+    throw new Error("Function not implemented.");
+  }
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -91,12 +95,12 @@ export default function AdminTable() {
           handleClose={() => setOpenModal(false)}
           title={modalType === "delete" ? "Delete Admin" : "Re-assign Admin"}
         >
-          {/* {modalType === "re-assign" ? (
+          {modalType === "re-assign" ? (
           <DepartmentCard
               title="Re-Assign Admin Department"
               handleReassign={handleReassign}
               adminId={""}          />
-        ) : null} */}
+        ) : null}
         {modalType === "delete" ? (
           <ConfirmationModal />
         ) : null}

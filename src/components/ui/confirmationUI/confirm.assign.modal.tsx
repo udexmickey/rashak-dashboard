@@ -4,7 +4,7 @@ import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import { Typography } from "@mui/material";
 import { IoClose } from "react-icons/io5";
-import PositionedSnackbar from "./alert/snack";
+import PositionedSnackbar from "../alert/snack";
 
 const style = {
   position: "absolute" as "absolute",

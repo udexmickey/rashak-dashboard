@@ -45,6 +45,7 @@ const NestedModal: React.FC<ModalProps> = ({ title, handleClose, children }) => 
           width: "auto",
           maxWidth: 990,
           maxHeight: 587,
+          minWidth: 350,
           height: "auto",
         }}
       >

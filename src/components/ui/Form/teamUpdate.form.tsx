@@ -11,7 +11,7 @@ interface TeamMemberUpdateFormProps {
   initialValues: {
     name: string;
     role: string;
-    youtubeLink: string;
+    linkedinLink: string;
     image: File | null;
   };
   handleUpdate: (data: FormData) => void;
@@ -23,7 +23,7 @@ const TeamMemberUpdateForm: React.FC<TeamMemberUpdateFormProps> = ({
 }) => {
   const [name, setName] = React.useState(initialValues.name);
   const [role, setRole] = React.useState(initialValues.role);
-  const [youtubeLink, setYoutubeLink] = React.useState(initialValues.youtubeLink);
+  const [linkedinLink, setLinkedinLink] = React.useState(initialValues.linkedinLink);
   const [file, setFile] = React.useState<File | null>(initialValues.image);
   const [nameError, setNameError] = React.useState<string | null>(null);
   const [roleError, setRoleError] = React.useState<string | null>(null);
@@ -41,10 +41,10 @@ const TeamMemberUpdateForm: React.FC<TeamMemberUpdateFormProps> = ({
     setUnsavedChanges(true);
   };
 
-  const handleYoutubeLinkChange = (
+  const handleLinkedinLinkChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setYoutubeLink(event.target.value);
+    setLinkedinLink(event.target.value);
     setUnsavedChanges(true);
   };
 
@@ -77,7 +77,7 @@ const TeamMemberUpdateForm: React.FC<TeamMemberUpdateFormProps> = ({
       const formData = new FormData();
       formData.append("name", name);
       formData.append("role", role);
-      formData.append("youtubeLink", youtubeLink);
+      formData.append("linkedinLink", linkedinLink);
       if (file) {
         formData.append("file", file);
       }
@@ -138,7 +138,7 @@ const TeamMemberUpdateForm: React.FC<TeamMemberUpdateFormProps> = ({
           )}
         </div>
 
-        {/* Right Column (Name, Role, YoutubeLink) */}
+        {/* Right Column (Name, Role, LinkedinLink) */}
         <div>
           <Typography variant="h6" gutterBottom>
             Update Team Member
@@ -182,15 +182,15 @@ const TeamMemberUpdateForm: React.FC<TeamMemberUpdateFormProps> = ({
               },
             }}
           />
-          <label htmlFor="youtubeLink" className="block mb-1">
-            Youtube Link:
+          <label htmlFor="linkedinLink" className="block mb-1">
+            Linkedin Link:
           </label>
           <TextField
-            id="youtubeLink"
+            id="linkedinLink"
             variant="outlined"
             fullWidth
-            value={youtubeLink}
-            onChange={handleYoutubeLinkChange}
+            value={linkedinLink}
+            onChange={handleLinkedinLinkChange}
             margin="normal"
             InputProps={{
               classes: {

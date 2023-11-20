@@ -7,6 +7,8 @@ import Box from "@mui/material/Box";
 import CustomPaginationActionsTable from "@/components/ui/Tables/users.table";
 import TeamMemberTable from "@/components/ui/Tables/teamMember.table";
 import { Button } from "@mui/material";
+import NestedModal from "@/components/ui/modal";
+import MemberCard from "@/components/ui/cards/MemberCard";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -46,15 +48,24 @@ function a11yProps(index: number) {
   };
 }
 
-export default function UserManagement() {
+export default function MembersManagement() {
   const [value, setValue] = React.useState(0);
+  const [openModal, setOpenModal] = React.useState<boolean>(false);
+  const [modalType, setModalType] = React.useState<string>("");
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
+  function handleReassign(adminId: string, selectedMember: string): void {
+    throw new Error("Function not implemented.");
+  }
+
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box
+      sx={{ width: "100%", bgcolor: "white", minHeight: "70vh" }}
+      component={"div"}
+    >
       <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
         <Tabs
           value={value}
@@ -88,6 +99,32 @@ export default function UserManagement() {
       <CustomTabPanel value={value} index={1}>
         <CustomPaginationActionsTable />
       </CustomTabPanel>
+
+      <Button
+        variant="contained"
+        style={{ backgroundColor: "#00A651", color: "#ffffff" }}
+        type="submit"
+        className=" px-6 !text-base py-2 capitalize mt-12 float-right"
+        sx={{
+          "&:focus": { backgroundColor: "#00A651" },
+          "&.Mui-error": { backgroundColor: "red" },
+        }}
+        onClick={() => setOpenModal(true)}
+      >
+        Add New Member
+      </Button>
+
+      {openModal && (
+        <NestedModal
+          handleClose={() => setOpenModal(false)}
+          title={"Select Member"}
+        >
+          <MemberCard
+            title="Kindly select the member you want to add"
+            handleReassign={handleReassign}
+          />
+        </NestedModal>
+      )}
     </Box>
   );
 }

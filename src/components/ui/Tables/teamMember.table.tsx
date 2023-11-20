@@ -5,10 +5,9 @@ import EditOptionMenu from "./table.options";
 import NestedModal from "../modal";
 import { BiEditAlt } from "react-icons/bi";
 import { MdAutoDelete } from "react-icons/md";
-import TeamMemberForm from "../Form/teamMember.form";
 import { teamMembersData } from "@/app/(dashboard)/members/seed";
 import TeamMemberUpdateForm from "../Form/teamUpdate.form";
-import DeleteConfirmationModal from "../deleteAdminConfirmationModal";
+import DeleteConfirmationModal from "../confirmationUI/deleteAdminConfirmationModal";
 
 export default function TeamMemberTable() {
   const [openModal, setOpenModal] = useState(false);

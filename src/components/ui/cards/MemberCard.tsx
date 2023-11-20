@@ -1,32 +1,32 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
-import { MdComputer, MdPhone } from "react-icons/md";
+import { TbUsersPlus } from "react-icons/tb";
+import { PiUserSwitchFill } from "react-icons/pi";
 import { FormControl, FormLabel, RadioGroup } from "@mui/material";
-import AssignedConfirmModal from "../confirmationUI/confirm.assign.modal";
+import MemberConfirmModal from "../confirmationUI/confirm.member.modal";
 
-interface DepartmentCardProps {
+interface MemberCardProps {
   title: string;
-  adminId: string;
-  handleReassign: (adminId: string, selectedDepartment: string) => void;
+  handleReassign: (adminId: string, selectedMember: string) => void;
 }
 
-const DepartmentCard: React.FC<DepartmentCardProps> = ({ title, adminId }) => {
-  const [selectedDepartment, setSelectedDepartment] = useState<string>("");
+const MemberCard: React.FC<MemberCardProps> = ({ title }) => {
+  const [selectedMember, setSelectedMember] = useState<string>("");
   const [showConfirmationModal, setShowConfirmationModal] =
     useState<boolean>(false);
 
   const handleAssignClick = () => {
-    selectedDepartment !== "" && setShowConfirmationModal(true);
+    selectedMember !== "" && setShowConfirmationModal(true);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedDepartment((event.target as HTMLInputElement).value);
+    setSelectedMember((event.target as HTMLInputElement).value);
   };
 
   useEffect(() => {
-    console.log("selectedDepartment", selectedDepartment);
-  }, [selectedDepartment]);
+    console.log("selectedMember", selectedMember);
+  }, [selectedMember]);
 
   return (
     <>
@@ -45,7 +45,7 @@ const DepartmentCard: React.FC<DepartmentCardProps> = ({ title, adminId }) => {
           aria-labelledby="demo-customized-radios"
           name="customized-radios"
           className="grid w-full gap-6 md:grid-cols-2"
-          value={selectedDepartment}
+          value={selectedMember}
           onChange={handleChange}
         >
           <div>
@@ -54,8 +54,8 @@ const DepartmentCard: React.FC<DepartmentCardProps> = ({ title, adminId }) => {
               id="hosting-small"
               name="hosting"
               className="hidden peer"
-              onChange={(e) => setSelectedDepartment(e.target.value)}
-              value={"IT"}
+              onChange={(e) => setSelectedMember(e.target.value)}
+              value={"team"}
             />
 
             <label
@@ -65,10 +65,10 @@ const DepartmentCard: React.FC<DepartmentCardProps> = ({ title, adminId }) => {
               <div className="block">
                 <div className="w-full text-lg font-semibold flex max-w-max items-center justify-center">
                   <span className="rounded-full bg-white h-14 w-14 flex items-center justify-center">
-                    <MdComputer size={24} />
+                    <TbUsersPlus size={24} />
                   </span>
                   &nbsp; &nbsp;
-                  <span>IT Department</span>
+                  <span>Team Member</span>
                 </div>
               </div>
             </label>
@@ -78,8 +78,8 @@ const DepartmentCard: React.FC<DepartmentCardProps> = ({ title, adminId }) => {
               type="radio"
               id="hosting-big"
               name="hosting"
-              value={"Communications"}
-              onChange={(e) => setSelectedDepartment(e.target.value)}
+              value={"board"}
+              onChange={(e) => setSelectedMember(e.target.value)}
               className="hidden peer"
             />
             <label
@@ -89,10 +89,10 @@ const DepartmentCard: React.FC<DepartmentCardProps> = ({ title, adminId }) => {
               <div className="block">
                 <div className="w-full text-lg font-semibold flex max-w-max items-center justify-center">
                   <span className="rounded-full bg-white h-14 w-14 flex items-center justify-center">
-                    <MdPhone size={24} />
+                    <PiUserSwitchFill size={24} />
                   </span>
                   &nbsp; &nbsp;
-                  <span>Communication Department</span>
+                  <span>Board Member</span>
                 </div>
               </div>
             </label>
@@ -105,21 +105,19 @@ const DepartmentCard: React.FC<DepartmentCardProps> = ({ title, adminId }) => {
           style={{ color: "#fff", backgroundColor: '#00A651' }}
           className="max-w-max w-full grid place-items-center px-12 py-4 rounded-2xl"
           onClick={handleAssignClick}
-          disabled={selectedDepartment === ""}
+          disabled={selectedMember === ""}
         >
-          Assign
+          Sellect
         </Button>
 
         {showConfirmationModal && (
-          <AssignedConfirmModal
-            adminId={adminId}
-            selectedDepartment={selectedDepartment}
-            handleClose={() => setShowConfirmationModal(false)}
-          />
-        )}
+          <MemberConfirmModal
+            handleClose={() => setShowConfirmationModal(false)} selectedMember={selectedMember}          />
+        )
+        }
       </FormControl>
     </>
   );
 };
 
-export default DepartmentCard;
+export default MemberCard;
