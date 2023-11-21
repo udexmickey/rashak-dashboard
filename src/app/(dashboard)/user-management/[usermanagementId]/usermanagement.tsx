@@ -21,7 +21,7 @@ export async function generateMetadata(
   const previousImages = (await parent).openGraph?.images || [];
 
   return {
-    name: "Usermanagement",
+    title: "Usermanagement",
     // description: "",
     alternates: {
       canonical: `/user-management/${usermanagementId}`,
