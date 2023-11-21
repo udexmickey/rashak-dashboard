@@ -3,34 +3,37 @@ import { Montserrat } from "next/font/google";
 import "./globals.css";
 import Maintance from "@/components/ui/placeholders/maintance.placeholder";
 
-const montserrat = Montserrat({ 
-  subsets: ['latin'], 
-  variable: '--Montserrat-font', 
-  display: 'swap'
-})
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--Montserrat-font",
+  display: "swap",
+});
 
-const client_Url: string | URL = process.env.NEXT_PUBLIC_BASE_URL as string | URL ?? process.env.NEXT_PUBLIC_TEST_URL  as string | URL;
+const client_Url: string | URL =
+  (process.env.NEXT_PUBLIC_BASE_URL as string | URL) ??
+  (process.env.NEXT_PUBLIC_TEST_URL as string | URL);
 
 const description: string =
   "The Rashak Management System is a comprehensive platform designed to streamline various aspects of organizational management. It provides functionalities for managing team members, board members, partners, news, blogs, and stories. The system integrates with third-party services like Cloudinary for efficient media file storage and utilizes Nodemailer for seamless email communication.";
 
 export const metadata: Metadata = {
   title: {
-    default: 'Rashak Management System',
-    template: '%s | Rashak Management System'
+    default: "Rashak Management System",
+    template: "%s | Rashak Management System",
   },
-  description: description.slice(0, 80) + '...',
-  keywords: 'Agriculture investment, investment, rashak, Farm, Rashak, RashakAgro, rashakagro, Farm investment , farm Business, Agriculture, Nature, farm Technology, agriculture technology, farm blog, agriculture news',
-  generator: 'Rashak',
-  applicationName: 'Rashak',
-  referrer: 'origin-when-cross-origin',
-  creator: 'Dimgba Micheal',
+  description: description.slice(0, 80) + "...",
+  keywords:
+    "Agriculture investment, investment, rashak, Farm, Rashak, RashakAgro, rashakagro, Farm investment , farm Business, Agriculture, Nature, farm Technology, agriculture technology, farm blog, agriculture news",
+  generator: "Rashak",
+  applicationName: "Rashak",
+  referrer: "origin-when-cross-origin",
+  creator: "Dimgba Micheal",
   metadataBase: new URL(client_Url),
   alternates: {
     canonical: client_Url,
     languages: {
-      'en-US': '/en-US',
-      'de-DE': '/de-DE',
+      "en-US": "/en-US",
+      "de-DE": "/de-DE",
     },
   },
   formatDetection: {
@@ -40,31 +43,32 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: {
-      default: 'Rashak',
-      template: '%s | Rashak'
+      default: "Rashak",
+      template: "%s | Rashak",
     },
     images: [
       {
         url: `${process.env.NEXT_PUBLIC_BASE_URL}/images/rashak-og.png`,
         width: 1200,
         height: 630,
-        type: 'image/png',
+        type: "image/png",
       },
       {
-        url: '/rashak-logo-svg.svg',
+        url: "/rashak-logo-svg.svg",
         width: 350,
         height: 400,
-        alt: 'Rashak alt',
-        type: 'image/svg',
+        alt: "Rashak alt",
+        type: "image/svg",
       },
     ],
-    description: 'Rashak is an agri tech company that empowers small holder farmers by providing access to market, financial services and robust data driven support to ...',
+    description:
+      "Rashak is an agri tech company that empowers small holder farmers by providing access to market, financial services and robust data driven support to ...",
     url: client_Url,
-    siteName: 'Rashak',
-    locale: 'en_US',
-    type: 'website',
+    siteName: "Rashak",
+    locale: "en_US",
+    type: "website",
   },
-}
+};
 
 export default function RootLayout({
   children,
@@ -75,13 +79,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${montserrat.className}`}>
         {/* {children} */}
-        <div className="app-layout">
-        {children}
-
-        </div>
+        <div className="app-layout">{children}</div>
 
         <div className="">
-        <Maintance />
+          <Maintance />
         </div>
       </body>
     </html>

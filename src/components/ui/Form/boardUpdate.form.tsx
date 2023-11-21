@@ -104,7 +104,7 @@ const BoardMemberUpdateForm: React.FC<BoardMemberUpdateFormProps> = ({
   }, [unsavedChanges]);
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="md:w-[850px]">
       <Box className="flex flex-col md:flex-row justify-center items-center gap-y-2 md:gap-y-8  md:gap-x-10">
         {/* Left Column (File Upload) */}
         <div className="md:w-1/2 w-[90%] px-2">

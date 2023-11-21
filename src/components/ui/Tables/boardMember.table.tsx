@@ -48,7 +48,7 @@ const boardMembersDatas = teamMembersData && teamMembersData.find((member) => me
   };
 
   return (
-    <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <div className="relative overflow-x-auto sm:rounded-lg">
       <table className="text-sm text-left w-full">
         <thead className="text-sm text-gray-700 bg-white border-b uppercase">
           <tr>
@@ -88,7 +88,8 @@ const boardMembersDatas = teamMembersData && teamMembersData.find((member) => me
       {openModal && (
         <NestedModal
           handleClose={() => setOpenModal(false)}
-          title={modalType === "edit" ? "Edit BoardMember" : "Remove BoardMember"}
+          title={modalType === "edit" ? "Edit Board Member" : "Remove Board Member"}
+          modalClassName={"w-auto"}
         >
           {modalType === "edit" ? 
           <BoardMemberUpdateForm initialValues={boardMembersDatas as any} handleUpdate={handleUpdate} />

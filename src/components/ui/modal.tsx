@@ -23,11 +23,12 @@ const style = {
 
 interface ModalProps {
   title: string;
+  modalClassName?: string;
   handleClose: () => void;
   children: React.ReactNode;
 }
 
-const NestedModal: React.FC<ModalProps> = ({ title, handleClose, children }) => {
+const NestedModal: React.FC<ModalProps> = ({ title, handleClose, children, modalClassName }) => {
   const [open, setOpen] = React.useState(true);
 
   const handleCloseModal = () => {
@@ -52,7 +53,7 @@ const NestedModal: React.FC<ModalProps> = ({ title, handleClose, children }) => 
           height: 'auto',
           // width: 'auto'
         }}
-        className="px-2 md:px-8"
+        className={`px-2 md:px-8 ${modalClassName}`}
       >
         <Typography
           id="transition-modal"
