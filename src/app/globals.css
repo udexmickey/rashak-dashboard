@@ -40,3 +40,14 @@ input:checked + label {
   background-color: #C7FFE2;
   border-radius: 0.5rem
 }
+
+@media screen and (max-width: 600px) {
+  .app-layout {
+    visibility: hidden;
+    clear: both;
+    float: left;
+    /* margin: 10px auto 5px 20px; */
+    /* width: 28%; */
+    display: none;
+  }
+}

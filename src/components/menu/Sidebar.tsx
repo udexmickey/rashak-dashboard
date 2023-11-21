@@ -38,7 +38,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
       <ListItem
         button
         onClick={handleClick}
-        className={`flex items-center p-4 rounded-lg dark:hover:bg-opacity-25 group hover:w-[90%] ${
+        className={`flex items-center p-4 rounded-lg dark:hover:bg-opacity-25 group  ${
           isActive ? "bg-[#ECFFF5]" : ""
         } transition-all duration-200 ease-in-out`}
       >
@@ -55,7 +55,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
           primary={text}
           className={`text-sm whitespace-nowrap ${
             isActive ? "text-[#00A651]" : "text-[#484848]"
-          }`}
+          } group-hover:text-[#00A651]`}
         />
       </ListItem>
     </Link>
@@ -66,7 +66,7 @@ const sidebarItems = [
   { icon: FaHome, text: "Dashboard", href: "/dashboard" },
   { icon: FaCog, text: "Settings", href: "/settings" },
   { icon: FaUserGroup, text: "User Management", href: "/user-management" },
-  { icon: FaFile, text: "File Management", href: "/file-management" },
+  { icon: FaFile, text: "Content Management", href: "/content-management" },
   { icon: FaUserGroup, text: "Team and Board", href: "/members" },
 ];
 
@@ -75,7 +75,7 @@ const Sidebar: React.FC<SidebarProps> = ({ handleCloseSidebar }) => {
 
   return (
     <aside className="h-[90vh] w-80 flex flex-col items-center justify-start pl-8 bg-white" aria-label="Sidebar">
-      <div className="w-64 h-[10vh] sm:hidden flex px-8 items-center border-b border-gray-300 gap-y-10">
+      <div className="w-64 h-[10vh] sm:hidden flex md:px-8 items-center border-b border-gray-300 gap-y-10">
         <Link href="/" as={"/"} className="-m-1.5 p-1.5 max-w-max max-h-12">
           <span className="sr-only">Rashak logo</span>
           <Image
@@ -92,7 +92,7 @@ const Sidebar: React.FC<SidebarProps> = ({ handleCloseSidebar }) => {
           />
         </Link>
       </div>
-      <div className="h-[90%] relative pb-4 overflow-y-auto w-full bg-white">
+      <div className="h-[90%] mt-8 relative pb-4 overflow-y-auto w-full bg-white">
       <Link href={"/profile"}>
 
           <ListItem>

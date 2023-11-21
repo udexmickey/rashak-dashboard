@@ -47,7 +47,7 @@ const MemberConfirmModal: React.FC<ConfirmationModalProps> = ({
             minHeight: "60dvh",
             minWidth: "350px",
           }}
-          className="px-2 md:px-4"
+          className="px-2 md:px-8"
         >
           <div className="flex justify-between items-center">
             <Typography

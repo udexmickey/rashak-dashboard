@@ -24,7 +24,7 @@ const TeamMemberUpdateForm: React.FC<TeamMemberUpdateFormProps> = ({
   const [name, setName] = React.useState(initialValues.name);
   const [role, setRole] = React.useState(initialValues.role);
   const [linkedinLink, setLinkedinLink] = React.useState(initialValues.linkedinLink);
-  const [file, setFile] = React.useState<File | null>(initialValues.image);
+  const [file, setFile] = React.useState<File | null>(null);
   const [nameError, setNameError] = React.useState<string | null>(null);
   const [roleError, setRoleError] = React.useState<string | null>(null);
   const [unsavedChanges, setUnsavedChanges] = React.useState(false);
@@ -105,17 +105,17 @@ const TeamMemberUpdateForm: React.FC<TeamMemberUpdateFormProps> = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      <Box display="grid" gridTemplateColumns="1fr 1fr" gap={4}>
+      <Box className="flex flex-col md:flex-row justify-center items-center gap-y-2 md:gap-y-8  md:gap-x-10">
         {/* Left Column (File Upload) */}
-        <div>
+        <div className="md:w-1/2 w-[90%] px-2">
           <input
             type="file"
             accept="image/*"
             onChange={handleFileChange}
             className="hidden"
-            id="file-upload-update"
+            id="file-upload"
           />
-          <label htmlFor="file-upload-update" className="mb-4">
+          <label htmlFor="file-upload" className="mb-4">
             <Button
               variant="contained"
               component="span"
@@ -125,25 +125,57 @@ const TeamMemberUpdateForm: React.FC<TeamMemberUpdateFormProps> = ({
             >
               Upload File
             </Button>
+            <br />
+            <div className="h-full cursor-grab min-h-full relative flex md:justify-start items-center justify-center mt-4 md:mt-6">
+              {file ? (
+                <Image
+                  src={URL.createObjectURL(file)}
+                  width={400}
+                  height={400}
+                  alt="File Preview"
+                  className="max-w-full aspect-square"
+                />
+              ) : (
+                <Box
+                  sx={{ bgcolor: "#D9D9D9", maxHeight: "35vh", height: 'auto'}}
+                  width={400}
+                  className="max-w-full aspect-square"
+                >
+                  <div className="flex bg-[#D9D9D9] flex-col items-center justify-center pt-5 pb-6 max-w-96 w-full h-[35vh]">
+                    <svg
+                      className="w-8 h-8 mb-4 text-gray-500"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 20 16"
+                    >
+                      <path
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                      />
+                    </svg>
+                    <p className="mb-2 text-sm text-gray-500">
+                      <span className="font-semibold">Click to upload</span> 
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      SVG, PNG, or JPG (MAX. 800x400px)
+                    </p>
+                  </div>
+                </Box>
+              )}
+            </div>
           </label>
-          <br /><br />
-          {file && (
-            <Image
-              src={URL.createObjectURL(file)}
-              width={300}
-              height={400}
-              alt="File Preview"
-              className="max-w-full mb-4"
-            />
-          )}
         </div>
 
         {/* Right Column (Name, Role, LinkedinLink) */}
-        <div>
+        <div className="md:w-1/2 w-[90%] px-2">
           <Typography variant="h6" gutterBottom>
-            Update Team Member
+            {/* Add New Team Member */}{" "}
           </Typography>
-          <label htmlFor="name" className="block mb-1">
+          <label htmlFor="name" className="block mb-2">
             Name:
           </label>
           <TextField
@@ -163,7 +195,7 @@ const TeamMemberUpdateForm: React.FC<TeamMemberUpdateFormProps> = ({
               },
             }}
           />
-          <label htmlFor="role" className="block mb-1">
+          <label htmlFor="role" className="block mb-2">
             Role:
           </label>
           <TextField
@@ -182,7 +214,7 @@ const TeamMemberUpdateForm: React.FC<TeamMemberUpdateFormProps> = ({
               },
             }}
           />
-          <label htmlFor="linkedinLink" className="block mb-1">
+          <label htmlFor="linkedinLink" className="block mb-2">
             Linkedin Link:
           </label>
           <TextField
@@ -205,6 +237,7 @@ const TeamMemberUpdateForm: React.FC<TeamMemberUpdateFormProps> = ({
             color="primary"
             fullWidth
             style={{ backgroundColor: "#00A651", color: "white" }}
+            className="block mt-4 md:py-2 md:text-lg"
           >
             Save
           </Button>

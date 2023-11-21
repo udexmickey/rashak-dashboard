@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
+import Maintance from "@/components/ui/placeholders/maintance.placeholder";
 
 const montserrat = Montserrat({ 
   subsets: ['latin'], 
@@ -74,7 +75,14 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${montserrat.className}`}>
         {/* {children} */}
+        <div className="app-layout">
         {children}
+
+        </div>
+
+        <div className="">
+        <Maintance />
+        </div>
       </body>
     </html>
   );

@@ -4,7 +4,6 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import CustomPaginationActionsTable from "@/components/ui/Tables/users.table";
 import TeamMemberTable from "@/components/ui/Tables/teamMember.table";
 import { Button } from "@mui/material";
 import NestedModal from "@/components/ui/modal";
@@ -41,9 +40,6 @@ function CustomTabPanel(props: TabPanelProps) {
 
 function a11yProps(index: number) {
   return {
-    //   id: `simple-tab-${index}`,
-    //   'aria-controls': `simple-tabpanel-${index}`,
-    // };
     id: `full-width-tab-${index}`,
     "aria-controls": `full-width-tabpanel-${index}`,
   };
@@ -66,19 +62,19 @@ export default function MembersManagement() {
     <Box
       sx={{ width: "100%", bgcolor: "white", minHeight: "70vh" }}
       component={"div"}
+      className={'shadow-md'}
     >
-      <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
+      <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%", }}>
         <Tabs
           value={value}
           TabIndicatorProps={{ style: { background: "#00A651" } }}
-          // onChange={handleChange}
-          // aria-label="basic tabs example"
           // value={value}
           onChange={handleChange}
-          // indicatorColor="secondary"
+          indicatorColor="secondary"
           textColor="inherit"
           variant="fullWidth"
           aria-label="full width tabs example"
+          className="text-[#00A651]"
         >
           <Tab
             label="Team members"
@@ -105,7 +101,7 @@ export default function MembersManagement() {
         variant="contained"
         style={{ backgroundColor: "#00A651", color: "#ffffff" }}
         type="submit"
-        className=" px-6 !text-base py-2 capitalize mt-12 float-right"
+        className="px-6 !text-base py-2 capitalize mt-12 float-right mr-8"
         sx={{
           "&:focus": { backgroundColor: "#00A651" },
           "&.Mui-error": { backgroundColor: "red" },

@@ -47,11 +47,12 @@ const NestedModal: React.FC<ModalProps> = ({ title, handleClose, children }) => 
           ...style,
           maxWidth: 900,
           maxHeight: "96dvh",
+          // minHeight: "96dvh",
           minWidth: "350px",
           height: 'auto',
-          width: 'auto'
+          // width: 'auto'
         }}
-        className="px-2 md:px-4"
+        className="px-2 md:px-8"
       >
         <Typography
           id="transition-modal"

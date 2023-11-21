@@ -35,7 +35,7 @@ export default async function sitemap() {
         lastModified: new Date(),
     },
     {
-        url: `${base_Url}/file-management`,
+        url: `${base_Url}/content-management`,
         lastModified: new Date(),
     },
     {
