@@ -23,7 +23,7 @@ export default async function NotFound() {
 
       {/* content section */}
 
-      <div className="h-screen bg-gray-50 max-w-6xl w-full flex flex-col md:flex-row items-center">
+      <div className="min-h-[80dvh] bg-gray-50 max-w-6xl w-full flex flex-col md:flex-row items-center">
         <div className="container flex flex-col md:flex-row items-center justify-between px-5 text-gray-700 gap-x-12">
           <div className="w-full lg:w-1/2 mx-8">
             <div className="text-7xl text-green-500 font-dark font-extrabold mb-8">

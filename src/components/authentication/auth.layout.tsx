@@ -13,7 +13,7 @@ const AuthLayout : React.FC<AuthLayoutProps> = ({ children, backgroundImage }) =
     <Grid container className="bg-white">
       <Grid item xs={12} sm={6}>
         <div
-        className='md:h-screen relative w-full h-full'
+        className='md:h-screen relative w-full h-full bg-[floralwhite] p-2'
         style={{
           position: "relative",
           // height: 'auto', width: 'auto'
@@ -28,14 +28,15 @@ const AuthLayout : React.FC<AuthLayoutProps> = ({ children, backgroundImage }) =
             }}
             sizes="100%"
             priority
-            className="hidden md:flex flex-col h-auto w-auto"
+            className="hidden md:flex flex-col h-auto w-auto mix-blend-darken"
           />
-          <div className='absolute top-8 left-16'>
+          <div className='absolute top-8 left-16 bg-[floralwhite] p-2'>
             <Image 
                 src="/logo.svg" 
                 alt="Logo" 
                 width={145} 
                 height={100} 
+                className='mix-blend-darken'
             />
           </div>
         </div>

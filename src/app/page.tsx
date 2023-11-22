@@ -11,11 +11,13 @@ export default function Home() {
 
     if (!isLoggedIn) {
       router.push("/login");
+    } else {
+      router.push("/dashboard");
     }
 
   }, [router]);
 
   return (<div>
-    Welcome Are you logged in ? 
+    {/* Welcome Are you logged in ?  */}
   </div>);
 }
