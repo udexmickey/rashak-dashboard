@@ -6,11 +6,30 @@ export default async function NotFound() {
     <>
       <main className="grid min-h-full place-items-center px-6 py-24 sm:py-32 lg:px-8">
         {/* Logo */}
-        <Image
+        {/* <Image
           src={'/rashak-logo-svg.svg'}
+
           alt="Your Logo Alt Text"
           className="absolute top-6 left-6 h-12 w-12"
-        />
+        /> */}
+
+<div className="lg:w-72 max-h-max">
+            <Link href="/" as={"/"} className="-m-1.5 p-1.5 max-w-max max-h-12">
+              <span className="sr-only">Rashak logo</span>
+              <Image
+                src={"/rashak-logo-svg.svg"}
+                loading="eager"
+                priority={true}
+                className="max-w-max w-full h-7 md:h-9"
+                alt={"Rashak logo"}
+                quality={100}
+                sizes="max-w-max"
+                width={108}
+                height={28}
+                aria-hidden="true"
+              />
+            </Link>
+          </div>
 
         <div className="text-center">
           <p className="text-base font-semibold text-[var(--orange-box-bg)]">
