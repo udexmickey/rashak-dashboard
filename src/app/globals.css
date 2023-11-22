@@ -41,13 +41,21 @@ input:checked + label {
   border-radius: 0.5rem
 }
 
+.mobile-maintainance{
+  visibility: hidden;
+  display: none;
+}
+
 @media screen and (max-width: 600px) {
   .app-layout {
     visibility: hidden;
+    display: none;
     clear: both;
     float: left;
-    /* margin: 10px auto 5px 20px; */
-    /* width: 28%; */
-    display: none;
+  }
+
+  .mobile-maintainance{
+    display: block;
+    visibility: visible;
   }
 }

@@ -1,14 +1,10 @@
 'use client'
+import useIsMobile from '@/hooks/useIsMobile';
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
 
 export default function Maintance() {
-    const [isMobile, setIsMobile] = useState<boolean>(false)
-    useEffect(() => {
-        if (window.innerWidth <= 600) return setIsMobile(true)
-    }, [])
-    
+    const { isMobile } = useIsMobile();
   return (
     <div className={`w-full ${isMobile ? 'h-[90dvh]' : 'h-[80dvh]'} grid gap-8 px-8`}>
         {
@@ -37,7 +33,7 @@ export default function Maintance() {
             <p className="text-4xl font-bold text-gray-700 capitalize tracking-wide mt-8">Website under maintenance!</p>
             <p className="text-xl text-gray-700 uppercase mt-4">{`We'll be back soon`}</p>
             <br /><br />
-            <p>{isMobile ? 'You can you the desktop/Laptop design for now' : null}</p>
+            <p>{isMobile ? '"While our mobile-friendly version is in the works", you can access the full features of our website using your desktop or laptop.' : null}</p>
         </div>
         <div className="w-full py-4 border-t border-gray-300">
             <div className="container mx-auto flex flex-col md:flex-row items-center justify-center text-gray-600 text-sm md:space-x-8 space-y-1 md:space-y-0">

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import Maintance from "@/components/ui/placeholders/maintance.placeholder";
+import useIsMobile from "@/hooks/useIsMobile";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -60,8 +61,6 @@ export const metadata: Metadata = {
         type: "image/svg",
       },
     ],
-    description:
-      "Rashak is an agri tech company that empowers small holder farmers by providing access to market, financial services and robust data driven support to ...",
     url: client_Url,
     siteName: "Rashak",
     locale: "en_US",
@@ -74,13 +73,13 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // const { isMobile } = useIsMobile();
   return (
     <html lang="en">
       <body className={`${montserrat.className}`}>
-        {/* {children} */}
         <div className="app-layout">{children}</div>
+        <div className="mobile-maintainance">
 
-        <div className="">
           <Maintance />
         </div>
       </body>

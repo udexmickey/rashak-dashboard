@@ -3,60 +3,55 @@ import Image from "next/image";
 
 export default async function NotFound() {
   return (
-    <>
-      <main className="grid min-h-full place-items-center px-6 py-24 sm:py-32 lg:px-8">
-        {/* Logo */}
-        {/* <Image
-          src={'/rashak-logo-svg.svg'}
+    <main className="px-4 py-4 sm:py-8 lg:px-8 flex flex-col items-center">
+      {/* logo section */}
+      <div className="lg:w-72 grid place-items-start place-self-start">
+        <Link href="/" as={"/"} className="-m-1.5 p-1.5 max-w-max max-h-12">
+          <span className="sr-only">Rashak logo</span>
+          <Image
+            width={108}
+            height={28}
+            src={"/rashak-logo-svg.svg"}
+            loading="eager"
+            className="max-w-max w-full h-7 md:h-9"
+            alt={"Rashak logo"}
+            sizes="max-w-max"
+            aria-hidden="true"
+          />
+        </Link>
+      </div>
 
-          alt="Your Logo Alt Text"
-          className="absolute top-6 left-6 h-12 w-12"
-        /> */}
+      {/* content section */}
 
-<div className="lg:w-72 max-h-max">
-            <Link href="/" as={"/"} className="-m-1.5 p-1.5 max-w-max max-h-12">
-              <span className="sr-only">Rashak logo</span>
-              <Image
-                src={"/rashak-logo-svg.svg"}
-                loading="eager"
-                priority={true}
-                className="max-w-max w-full h-7 md:h-9"
-                alt={"Rashak logo"}
-                quality={100}
-                sizes="max-w-max"
-                width={108}
-                height={28}
-                aria-hidden="true"
-              />
-            </Link>
-          </div>
+      <div className="h-screen bg-gray-50 max-w-6xl w-full flex flex-col md:flex-row items-center">
+        <div className="container flex flex-col md:flex-row items-center justify-between px-5 text-gray-700 gap-x-12">
+          <div className="w-full lg:w-1/2 mx-8">
+            <div className="text-7xl text-green-500 font-dark font-extrabold mb-8">
+              {" "}
+              404
+            </div>
+            <p className="text-2xl md:text-3xl font-light leading-normal mb-8 ">
+              {`Sorry we couldn't find the page you're looking for`}
+            </p>
 
-        <div className="text-center">
-          <p className="text-base font-semibold text-[var(--orange-box-bg)]">
-            404
-          </p>
-          <h1 className="font-semibold font-mono text-3xl tracking-tight text-gray-900 sm:text-5xl">
-            Page not found
-          </h1>
-          <p className="mt-6 text-base leading-7 text-gray-600">
-            Sorry, we couldn’t find the page you’re looking for.
-          </p>
-          <div className="mt-10 flex items-center justify-center gap-x-6">
             <Link
               href="/"
-              className="rounded-md bg-[var(--green-box-bg)] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[var(--orange-box-bg) focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--green-box-bg)]"
+              className="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-green-700 hover:bg-green-800"
             >
-              Go back home
-            </Link>
-            <Link
-              href="contact"
-              className="text-sm font-semibold text-gray-900"
-            >
-              Contact support <span aria-hidden="true">&rarr;</span>
+              back to homepage
             </Link>
           </div>
+          <div className="w-full lg:flex lg:justify-end lg:w-1/2 mx-5 my-12">
+            <Image
+              width={608}
+              height={528}
+              src="https://user-images.githubusercontent.com/43953425/166269493-acd08ccb-4df3-4474-95c7-ad1034d3c070.svg"
+              className=""
+              alt="Page not found"
+            />
+          </div>
         </div>
-      </main>
-    </>
+      </div>
+    </main>
   );
 }

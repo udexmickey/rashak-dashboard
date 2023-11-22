@@ -1,7 +1,11 @@
+'use client'
+import useIsMobile from "@/hooks/useIsMobile";
 import Link from "next/link";
 import React from "react";
 
 export default function AdminTable() {
+  const { isMobile } = useIsMobile();
+  
   const usermanagementData = [
     {
       id: "123",
@@ -51,7 +55,7 @@ export default function AdminTable() {
                   className="px-6 py-4 font-medium whitespace-nowrap list-decimal max-w-max"
                 >
                   <Link href={"#"}>
-                    {idx + 1}. &nbsp; {window.innerWidth >= 768 &&  <span> &nbsp;</span> } {admin.name}
+                    {idx + 1}. &nbsp; {isMobile &&  <span> &nbsp;</span> } {admin.name}
                   </Link>
                 </th>
                 <td
