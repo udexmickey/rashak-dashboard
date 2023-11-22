@@ -4,7 +4,6 @@ import { List, ListItem, ListItemText } from "@mui/material";
 import BackgroundLetterAvatars from "@/components/menu/stringAvatar";
 import { usermanagementData } from "../usermanagementData.seed";
 
-// =========SEO for single post=============
 type Props = {
   params: { usermanagementId: string };
   searchParams: { [key: string]: string | string[] | undefined };
@@ -14,7 +13,6 @@ export async function generateMetadata(
   { params, searchParams }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  // read route params
   const { usermanagementId } = params;
 
   // optionally access and extend (rather than replace) parent metadata
@@ -28,11 +26,6 @@ export async function generateMetadata(
     },
     openGraph: {
       images: [
-        // {
-        //   url: `${"/sign_up_girl.png"}`,
-        //   width: 1200,
-        //   height: 630,
-        // },
         ...previousImages,
       ],
     },
@@ -41,7 +34,6 @@ export async function generateMetadata(
 
 // +++==================The main post itself=======================
 
-// eslint-disable-next-line @next/next/no-async-client-component
 export default async function UsermanagementById({
   params,
 }: {

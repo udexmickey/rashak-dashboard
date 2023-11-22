@@ -10,8 +10,7 @@ const montserrat = Montserrat({
 });
 
 const client_Url: string | URL =
-  (process.env.NEXT_PUBLIC_BASE_URL as string | URL) ??
-  (process.env.NEXT_PUBLIC_TEST_URL as string | URL);
+  (process.env.NEXT_PUBLIC_BASE_URL as string | URL)
 
 const description: string =
   "The Rashak Management System is a comprehensive platform designed to streamline various aspects of organizational management. It provides functionalities for managing team members, board members, partners, news, blogs, and stories. The system integrates with third-party services like Cloudinary for efficient media file storage and utilizes Nodemailer for seamless email communication.";
@@ -48,7 +47,7 @@ export const metadata: Metadata = {
     },
     images: [
       {
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/images/rashak-og.png`,
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/rashak-og.png`,
         width: 1200,
         height: 630,
         type: "image/png",
