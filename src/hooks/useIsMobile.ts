@@ -5,7 +5,7 @@ const useIsMobile = () => {
 
   useEffect(() => {
     const checkIsMobile = () => {
-      if (window.innerWidth <= 600) {
+      if (process.env.NODE_ENV !== 'development' && window.innerWidth <= 600) {
         setIsMobile(true);
       } else {
         setIsMobile(false);

@@ -6,7 +6,7 @@ import Link from 'next/link'
 export default function Maintance() {
     const { isMobile } = useIsMobile();
   return (
-    <div className={`w-full ${isMobile ? 'h-[90dvh]' : 'h-[80dvh]'} grid gap-8 px-8`}>
+    <div className={`w-full ${isMobile ? 'h-[90dvh]' : 'h-[80dvh]'} grid gap-8 px-8 place-items-center`}>
         {
             isMobile &&
         <div className="lg:w-72 max-h-max place-items-start">

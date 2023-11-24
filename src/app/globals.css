@@ -40,22 +40,3 @@ input:checked + label {
   background-color: #C7FFE2;
   border-radius: 0.5rem
 }
-
-.mobile-maintainance{
-  visibility: hidden;
-  display: none;
-}
-
-@media screen and (max-width: 600px) {
-  .app-layout {
-    visibility: hidden;
-    display: none;
-    clear: both;
-    float: left;
-  }
-
-  .mobile-maintainance{
-    display: block;
-    visibility: visible;
-  }
-}

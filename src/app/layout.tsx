@@ -73,13 +73,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // const { isMobile } = useIsMobile();
   return (
     <html lang="en">
       <body className={`${montserrat.className}`}>
-        <div className="app-layout">{children}</div>
-        <div className="mobile-maintainance">
-
+        {/* The line below clears the mobile designs till they want it */}
+        <div className={`${process.env.NODE_ENV !== 'development' ? "sm:block hidden" : null}`}>{children}</div>
+        <div className={`${process.env.NODE_ENV !== 'development' ? 'block sm:hidden' : null }`}>
           <Maintance />
         </div>
       </body>

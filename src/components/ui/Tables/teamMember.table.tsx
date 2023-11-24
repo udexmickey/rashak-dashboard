@@ -91,7 +91,7 @@ const teamMembersDatas = teamMembersData && teamMembersData.find((member) => mem
         <NestedModal
           handleClose={() => setOpenModal(false)}
           title={modalType === "edit" ? "Edit Team Member" : "Remove Team Member"} 
-          modalClassName={"w-auto"}>
+          modalClassName={""}>
           {modalType === "edit" ? 
           <TeamMemberUpdateForm initialValues={teamMembersDatas as any} handleUpdate={handleUpdate} />
           : null}
