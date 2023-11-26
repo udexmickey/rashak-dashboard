@@ -5,15 +5,16 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import Container from "@mui/material/Container";
+import useUnsavedFormChanges from "@/hooks/useUnsavedFormChanges";
 
 const BoardMemberForm: React.FC = () => {
+  const { setUnsavedChanges } = useUnsavedFormChanges();
   const [name, setName] = React.useState("");
   const [role, setRole] = React.useState("");
   const [linkedinLink, setLinkedinLink] = React.useState("");
   const [file, setFile] = React.useState<File | null>(null);
   const [nameError, setNameError] = React.useState<string | null>(null);
   const [roleError, setRoleError] = React.useState<string | null>(null);
-  const [unsavedChanges, setUnsavedChanges] = React.useState(false);
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -72,23 +73,6 @@ const BoardMemberForm: React.FC = () => {
     }
   };
 
-  React.useEffect(() => {
-    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      if (unsavedChanges) {
-        const message =
-          "You have unsaved changes. Are you sure you want to leave?";
-        event.returnValue = message; // Standard for most browsers
-        return message; // For some older browsers
-      }
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, [unsavedChanges]);
-
   return (
     <form onSubmit={handleSubmit}>
       <Box className="flex flex-col md:flex-row justify-center items-center gap-y-8 md:gap-x-10 flex-grow">
@@ -144,10 +128,10 @@ const BoardMemberForm: React.FC = () => {
                       />
                     </svg>
                     <p className="mb-2 text-sm text-gray-500 bg-[#D9D9D9]">
-                      <span className="font-semibold">Click to upload</span> 
+                      <span className="font-semibold">Click to upload</span>
                     </p>
                     <p className="text-xs text-gray-500 bg-[#D9D9D9]">
-                      SVG, PNG, or JPG (MAX. 800x400px)
+                      PNG, or JPG (MAX. 800x400px)
                     </p>
                   </div>
                 </Box>

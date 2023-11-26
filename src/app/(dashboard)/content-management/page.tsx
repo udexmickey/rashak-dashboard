@@ -19,8 +19,6 @@ export default function ContentManagement() {
   );
   const options = ["Media & News", "BlogPost", "Stories"];
 
-  console.log("page", page);
-
   return (
     <div>
       <Grid container>

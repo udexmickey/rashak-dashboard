@@ -148,7 +148,12 @@ const NewsTable: React.FC = () => {
                           />
                           <div className="ps-3">
                             <div className="text-base font-semibold">
-                              {item.title}
+                              {`${item.title.slice(0, 25)} ${
+                                item.title.length >
+                                item.title.slice(0, 22).length
+                                  ? "..."
+                                  : ""
+                              }`}
                             </div>
                             {/* <div className="font-normal text-gray-500">
                               neil.sims@flowbite.com
@@ -183,6 +188,8 @@ const NewsTable: React.FC = () => {
           />
           <Button
             variant="contained"
+            LinkComponent={'a'}
+            href="/content-management/news"
             style={{ backgroundColor: "#00A651", color: "#ffffff" }}
             type="submit"
             className="px-6 !text-base py-2 capitalize float-right "

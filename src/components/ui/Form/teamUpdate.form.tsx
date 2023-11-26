@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
+import useUnsavedFormChanges from "@/hooks/useUnsavedFormChanges";
 
 interface TeamMemberUpdateFormProps {
   initialValues: {
@@ -21,13 +22,15 @@ const TeamMemberUpdateForm: React.FC<TeamMemberUpdateFormProps> = ({
   initialValues,
   handleUpdate,
 }) => {
+  const { setUnsavedChanges } = useUnsavedFormChanges();
   const [name, setName] = React.useState(initialValues.name);
   const [role, setRole] = React.useState(initialValues.role);
-  const [linkedinLink, setLinkedinLink] = React.useState(initialValues.linkedinLink);
+  const [linkedinLink, setLinkedinLink] = React.useState(
+    initialValues.linkedinLink
+  );
   const [file, setFile] = React.useState<File | null>(null);
   const [nameError, setNameError] = React.useState<string | null>(null);
   const [roleError, setRoleError] = React.useState<string | null>(null);
-  const [unsavedChanges, setUnsavedChanges] = React.useState(false);
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -87,22 +90,6 @@ const TeamMemberUpdateForm: React.FC<TeamMemberUpdateFormProps> = ({
     }
   };
 
-  React.useEffect(() => {
-    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      if (unsavedChanges) {
-        const message = "You have unsaved changes. Are you sure you want to leave?";
-        event.returnValue = message; // Standard for most browsers
-        return message; // For some older browsers
-      }
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, [unsavedChanges]);
-
   return (
     <form onSubmit={handleSubmit} className="md:w-[850px]">
       <Box className="flex flex-col md:flex-row justify-center items-center gap-y-2 md:gap-y-8  md:gap-x-10">
@@ -137,7 +124,7 @@ const TeamMemberUpdateForm: React.FC<TeamMemberUpdateFormProps> = ({
                 />
               ) : (
                 <Box
-                  sx={{ bgcolor: "#D9D9D9", maxHeight: "35vh", height: 'auto'}}
+                  sx={{ bgcolor: "#D9D9D9", maxHeight: "35vh", height: "auto" }}
                   width={400}
                   className="max-w-full aspect-square"
                 >
@@ -158,10 +145,10 @@ const TeamMemberUpdateForm: React.FC<TeamMemberUpdateFormProps> = ({
                       />
                     </svg>
                     <p className="mb-2 text-sm text-gray-500">
-                      <span className="font-semibold">Click to upload</span> 
+                      <span className="font-semibold">Click to upload</span>
                     </p>
                     <p className="text-xs text-gray-500">
-                      SVG, PNG, or JPG (MAX. 800x400px)
+                      PNG, or JPG (MAX. 800x400px)
                     </p>
                   </div>
                 </Box>

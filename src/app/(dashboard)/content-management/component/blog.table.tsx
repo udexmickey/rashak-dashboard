@@ -148,7 +148,12 @@ const BlogPostTable: React.FC = () => {
                           />
                           <div className="ps-3">
                             <div className="text-base font-semibold">
-                              {`${item.title.slice(0, 25)} ${item.title.length > item.title.slice(0, 22).length ? "..." : ''}`}
+                              {`${item.title.slice(0, 25)} ${
+                                item.title.length >
+                                item.title.slice(0, 22).length
+                                  ? "..."
+                                  : ""
+                              }`}
                             </div>
                             {/* <div className="font-normal text-gray-500">
                               neil.sims@flowbite.com
@@ -160,7 +165,7 @@ const BlogPostTable: React.FC = () => {
                         {new Date(item.createdAt).toDateString()}
                       </TableCell>
                       <TableCell className="p-4 border-b border-gray-200">
-                      <EditOptionMenu
+                        <EditOptionMenu
                           adminId={""}
                           options={options}
                           handleOptionClick={handleOptionClick}
@@ -183,6 +188,8 @@ const BlogPostTable: React.FC = () => {
           />
           <Button
             variant="contained"
+            LinkComponent={"a"}
+            href="/content-management/blogs"
             style={{ backgroundColor: "#00A651", color: "#ffffff" }}
             type="submit"
             className="px-6 !text-base py-2 capitalize float-right "

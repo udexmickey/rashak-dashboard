@@ -1,7 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
 import { IconType } from "react-icons/lib";
-import { FaHome, FaCog, FaFile, FaSignOutAlt, } from "react-icons/fa";
+import { FaHome, FaCog, FaFile, FaSignOutAlt } from "react-icons/fa";
 import { FaUserGroup } from "react-icons/fa6";
 import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import Link from "next/link";
@@ -74,7 +74,10 @@ const Sidebar: React.FC<SidebarProps> = ({ handleCloseSidebar }) => {
   let router = usePathname();
 
   return (
-    <aside className="h-[90vh] w-80 flex flex-col items-center justify-start pl-8 bg-white" aria-label="Sidebar">
+    <aside
+      className="h-[90vh] w-80 flex flex-col items-center justify-start pl-8 bg-white"
+      aria-label="Sidebar"
+    >
       <div className="w-64 h-[10vh] sm:hidden flex md:px-8 items-center border-b border-gray-300 gap-y-10">
         <Link href="/" as={"/"} className="-m-1.5 p-1.5 max-w-max max-h-12">
           <span className="sr-only">Rashak logo</span>
@@ -93,38 +96,41 @@ const Sidebar: React.FC<SidebarProps> = ({ handleCloseSidebar }) => {
         </Link>
       </div>
       <div className="h-[90%] mt-8 relative pb-4 overflow-y-auto w-full bg-white">
-      <Link href={"/profile"}>
-
+        <Link href={"/profile"}>
           <ListItem>
             <WelcomeCard />
           </ListItem>
-      </Link>
-        <List className="space-y-4 font-medium relative">
-          {sidebarItems.map((item, index) => (
-            <SidebarItem
-              key={index}
-              icon={item.icon}
-              text={item.text}
-              href={item.href}
-              isActive={router === item.href}
-              handleCloseSidebar={handleCloseSidebar as () => void}
-            />
-          ))}
-          <Link href={"/login"}>
-            <ListItem className="fixed bottom-12 z-10 max-w-max">
-              <div className="bg-[#FF000033] rounded-full w-10 h-10 flex justify-center items-center">
-                <FaSignOutAlt
-                  size={26}
-                  className="flex-shrink-0 w-5 h-5 transition duration-75 text-[#fe5252] text-sm"
-                  aria-hidden="true"
+        </Link>
+        <List className="space-y-4 font-medium relative h-[90%]">
+          <div className="flex justify-between items-start flex-col h-[80%]">
+            <div className="flex justify-center flex-col items-start">
+              {sidebarItems.map((item, index) => (
+                <SidebarItem
+                  key={index}
+                  icon={item.icon}
+                  text={item.text}
+                  href={item.href}
+                  isActive={router === item.href}
+                  handleCloseSidebar={handleCloseSidebar as () => void}
                 />
-              </div>
-              <ListItemText
-                primary={"Sign Out"}
-                className="text-sm flex-1 ml-3 whitespace-nowrap text-[#484848]"
-              />
-            </ListItem>
-          </Link>
+              ))}
+            </div>
+            <Link href={"/login"} className="bottom justify-end">
+              <ListItem>
+                <div className="bg-[#FF000033] rounded-full w-10 h-10 flex justify-center items-center">
+                  <FaSignOutAlt
+                    size={26}
+                    className="flex-shrink-0 w-5 h-5 transition duration-75 text-[#fe5252] text-sm"
+                    aria-hidden="true"
+                  />
+                </div>
+                <ListItemText
+                  primary={"Sign Out"}
+                  className="text-sm flex-1 ml-3 whitespace-nowrap text-[#484848]"
+                />
+              </ListItem>
+            </Link>
+          </div>
         </List>
       </div>
     </aside>
