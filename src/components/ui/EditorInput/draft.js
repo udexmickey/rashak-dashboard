@@ -1,22 +1,24 @@
-// import React, { useState } from "react";
-// import { Editor, EditorContent, useEditor } from "@tiptap/react";
-// import StarterKit from "@tiptap/starter-kit";
+import React, { useMemo, useCallback, useState } from "react";
+import { createEditor } from "slate";
+import { Slate, Editable, withReact } from "slate-react";
 
-// const MyEditor = ({ editText, setEditText }) => {
-//   const editor = useEditor({
-//     extensions: [StarterKit],
-//     content: editText,
-//     onUpdate({ editor }) {
-//       setEditText(editor.getHTML());
-//       console.log("Content was updated:", editor.getHTML());
-//     },
-//   });
+const RichTextEditor = ({ value, onChange }) => {
+  const editor = useMemo(() => withReact(createEditor()), []);
+  const [content, setContent] = useState(value || []);
 
-//   return (
-//     <Editor editor={editor}>
-//       <EditorContent />
-//     </Editor>
-//   );
-// };
+  const handleEditorChange = useCallback(
+    (newContent) => {
+      setContent(newContent);
+      onChange(newContent);
+    },
+    [onChange]
+  );
 
-// export default MyEditor;
+  return (
+    <Slate editor={editor} value={content} onChange={handleEditorChange}>
+      <Editable />
+    </Slate>
+  );
+};
+
+export default RichTextEditor;

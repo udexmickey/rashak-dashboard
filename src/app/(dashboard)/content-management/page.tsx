@@ -34,7 +34,8 @@ export default function ContentManagement() {
                 style={{
                   maxWidth: "458px",
                   width: "100%",
-                  borderRadius: "3rem",
+                  // borderRadius: "3rem",
+                  paddingInline: "1rem",
                 }}
                 onChange={(e: SelectChangeEvent) => setPage(e.target.value)} // Function to handle changes in the hasStates filter select input
               >

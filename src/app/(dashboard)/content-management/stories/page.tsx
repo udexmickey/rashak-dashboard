@@ -7,10 +7,9 @@ import {
   Typography,
   Box,
   Stack,
-  TextareaAutosize,
 } from "@mui/material";
 import Image from "next/image";
-import "react-quill/dist/quill.snow.css";
+// import "react-quill/dist/quill.snow.css";
 import useUnsavedFormChanges from "@/hooks/useUnsavedFormChanges";
 
 const StoryPostForm: React.FC = () => {

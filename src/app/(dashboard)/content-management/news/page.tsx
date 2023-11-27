@@ -14,7 +14,7 @@ import Image from "next/image";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import useUnsavedFormChanges from "@/hooks/useUnsavedFormChanges";
-// import MyEditor from "@/components/ui/EditorInput/draft";
+import RichTextEditor from "@/components/ui/EditorInput/draft";
 
 const NewsPostForm: React.FC = () => {
   const { setUnsavedChanges } = useUnsavedFormChanges();
@@ -217,7 +217,7 @@ const NewsPostForm: React.FC = () => {
             //   style={{ height: '300px' }}
             className="max-h-[300px] h-full"
           />
-          {/* <MyEditor editText={blogContent} setEditText={setBlogContent} /> */}
+          {/* <MyEditor content={blogContent} setContent={setBlogContent} /> */}
         </div>
 
         {/* Related Pictures */}
