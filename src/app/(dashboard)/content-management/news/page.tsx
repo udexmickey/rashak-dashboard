@@ -11,10 +11,9 @@ import {
 } from "@mui/material";
 import { IoMdPhotos } from "react-icons/io";
 import Image from "next/image";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+// import ReactQuill from "react-quill";
+// import "react-quill/dist/quill.snow.css";
 import useUnsavedFormChanges from "@/hooks/useUnsavedFormChanges";
-import RichTextEditor from "@/components/ui/EditorInput/draft";
 
 const NewsPostForm: React.FC = () => {
   const { setUnsavedChanges } = useUnsavedFormChanges();
@@ -30,18 +29,18 @@ const NewsPostForm: React.FC = () => {
   );
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value);
+    setTitle((prev) => (prev = event.target.value));
     setUnsavedChanges(true);
   };
 
   const handleHeroImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
-    setHeroImage(file);
+    setHeroImage((prev) => (prev = file));
     setUnsavedChanges(true);
   };
 
-  const handleContentChange = (value: string) => {
-    setBlogContent(value);
+  const handleContentChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setBlogContent((prev) => (prev = event.target.value));
   };
 
   // Inside handleRelatedPictureChange
@@ -63,14 +62,14 @@ const NewsPostForm: React.FC = () => {
   const handleYoutubeLinkChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setYoutubeLink(event.target.value);
+    setYoutubeLink((prev) => (prev = event.target.value));
     setUnsavedChanges(true);
   };
 
   const handlePressReleaseLinksChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setPressReleaseLinks(event.target.value);
+    setPressReleaseLinks((prev) => (prev = event.target.value));
     setUnsavedChanges(true);
   };
 
@@ -93,7 +92,6 @@ const NewsPostForm: React.FC = () => {
     };
 
     console.log("Form Data:", formData);
-    console.log("title", title);
     setUnsavedChanges(false);
   };
 
@@ -107,7 +105,7 @@ const NewsPostForm: React.FC = () => {
         sx={{
           "& .MuiTextField-root": {
             m: 1,
-            width: "100ch",
+            width: "100%",
           },
         }}
         noValidate
@@ -121,7 +119,7 @@ const NewsPostForm: React.FC = () => {
           variant="outlined"
           value={title}
           onChange={handleTitleChange}
-          className="mb-4 max-w-[458px] w-full"
+          className="mb-4 max-w-[430px] w-full"
           InputProps={{
             style: {
               borderRadius: "2rem",
@@ -151,8 +149,7 @@ const NewsPostForm: React.FC = () => {
               ) : (
                 <Box
                   sx={{ bgcolor: "#D9D9D9", height: "30vh" }}
-                  //   width={400}ß
-                  className="max-w-[458px] w-full md:aspect-square"
+                  className="max-w-[458px] w-full"
                 >
                   <div className="flex flex-col items-center justify-center pt-5 pb-6 max-w-[458px] w-full h-[30vh]">
                     <svg
@@ -194,14 +191,14 @@ const NewsPostForm: React.FC = () => {
 
         {/* Content/Description Body */}
         <div
-          className="sm:mb-0 mb-8 flex flex-col gap-y8"
-          style={{ height: "400px" }}
+          className="sm:mb-0 mb-8 flex flex-col gap-y-8 h-full w-full relative"
+          // style={{ height: "500px" }}
         >
           <label htmlFor="blog-content" className="block mb-1">
             Media Content
           </label>
 
-          <ReactQuill
+          {/* <ReactQuill
             theme="snow"
             value={blogContent}
             onChange={handleContentChange}
@@ -215,9 +212,25 @@ const NewsPostForm: React.FC = () => {
               ],
             }}
             //   style={{ height: '300px' }}
-            className="max-h-[300px] h-full"
+            className="max-h-[300px] h-full w-full"
+          /> */}
+
+          <TextField
+            id="outlined-multiline-static"
+            label="Media Content"
+            multiline
+            rows={10}
+            variant="outlined"
+            fullWidth
+            className="w-full mx-auto"
+            value={blogContent}
+            onChange={handleContentChange}
+            InputProps={{
+              style: {
+                height: "300px",
+              },
+            }}
           />
-          {/* <MyEditor content={blogContent} setContent={setBlogContent} /> */}
         </div>
 
         {/* Related Pictures */}
@@ -251,7 +264,7 @@ const NewsPostForm: React.FC = () => {
                   <Box
                     sx={{ bgcolor: "#D9D9D9", height: "30vh" }}
                     // width={400}
-                    className="max-w-sm w-full lg:aspect-square"
+                    className="max-w-sm w-full"
                   >
                     <div className="flex flex-col items-center justify-center pt-5 pb-6 max-w-xl w-full h-[30vh]">
                       <svg
