@@ -9,9 +9,9 @@ import {
   SelectChangeEvent,
   Typography,
 } from "@mui/material";
-import NewsTable from "./component/news.table";
-import StoryTable from "./component/stories.table";
-import BlogPostTable from "./component/blog.table";
+import NewsTable from "./component/Tables/news.table";
+import StoryTable from "./component/Tables/stories.table";
+import BlogPostTable from "./component/Tables/blog.table";
 
 export default function ContentManagement() {
   const [page, setPage] = React.useState<string | null>(

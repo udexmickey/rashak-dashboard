@@ -23,28 +23,14 @@ import { BiPlus } from "react-icons/bi";
 import Image from "next/image";
 import { MdAutoDelete } from "react-icons/md";
 import { RiEditFill } from "react-icons/ri";
+import useFetchData from "@/hooks/useFetchData";
+import Link from "next/link";
 
 const StoryTable: React.FC = () => {
   const [sortBy, setSortBy] = useState("newest");
-  const [data, setData] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
   const [page, setPage] = React.useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "https://64cf213fffcda80aff51a4e7.mockapi.io/api/v1/blogs?limit=2"
-        );
-        const data = await response.json();
-        setData(data);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
+  const { loading, data } = useFetchData();
 
   const handleChangePage = (event: ChangeEvent<unknown>, newPage: number) => {
     setPage(newPage);
@@ -138,28 +124,30 @@ const StoryTable: React.FC = () => {
                   .map((item) => (
                     <TableRow key={item.id}>
                       <TableCell className="p-4 border-b border-gray-200">
-                        <div className="flex items-center px-2 whitespace-nowrap ">
-                          <Image
-                            className="w-10 h-10 rounded-full"
-                            src={item.image as string}
-                            alt="Jese image"
-                            width={40}
-                            height={40}
-                          />
-                          <div className="ps-3">
-                            <div className="text-base font-semibold">
-                              {`${item.title.slice(0, 25)} ${
-                                item.title.length >
-                                item.title.slice(0, 22).length
-                                  ? "..."
-                                  : ""
-                              }`}
-                            </div>
-                            {/* <div className="font-normal text-gray-500">
+                        <Link href={`content-management/stories/${item.id}`}>
+                          <div className="flex items-center px-2 whitespace-nowrap ">
+                            <Image
+                              className="w-10 h-10 rounded-full"
+                              src={item.image as string}
+                              alt="Jese image"
+                              width={40}
+                              height={40}
+                            />
+                            <div className="ps-3">
+                              <div className="text-base font-semibold">
+                                {`${item.title.slice(0, 25)} ${
+                                  item.title.length >
+                                  item.title.slice(0, 22).length
+                                    ? "..."
+                                    : ""
+                                }`}
+                              </div>
+                              {/* <div className="font-normal text-gray-500">
                               neil.sims@flowbite.com
                             </div> */}
+                            </div>
                           </div>
-                        </div>
+                        </Link>
                       </TableCell>
                       <TableCell className="p-4 border-b border-gray-200">
                         {new Date(item.createdAt).toDateString()}
