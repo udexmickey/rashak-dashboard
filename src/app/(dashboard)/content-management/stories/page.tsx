@@ -87,9 +87,6 @@ const StoryPostForm: React.FC = () => {
       blogContent,
       relatedPictures: formDataObject,
     };
-
-    console.log("Form Data:", formData);
-    console.log("name", name);
     setUnsavedChanges(false);
   };
 

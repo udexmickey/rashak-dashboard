@@ -21,10 +21,6 @@ export default function BlogsPost({ params }: Props) {
       return data.id === id;
     });
 
-  console.log("params", params);
-  console.log("initialBlogsData", initialBlogsData);
-  console.log("data", data);
-
   return (
     <div>
       {loading ? (

@@ -1,9 +1,5 @@
-// components/Layout.tsx
-"use client";
 import Sidebar from "./Sidebar";
-import { FaBell } from "react-icons/fa";
 import TopNav from "./TopNav";
-import { useEffect } from "react";
 
 interface LayoutProps {
   pageName: string;
@@ -11,11 +7,6 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ pageName, children }) => {
-  useEffect(() => {
-    if (window.innerWidth <= 768) {
-    }
-  }, []);
-
   return (
     <div className="flex flex-col">
       <TopNav pageName={pageName} />

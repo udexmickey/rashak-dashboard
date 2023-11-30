@@ -46,9 +46,9 @@ const DeleteConfirmModal: React.FC<ConfirmationModalProps> = ({
     isError,
   } = useDeletePost(contentId);
 
-  const handleConfirmDeletion = () => {
+  const handleConfirmDeletion = async () => {
     //the delete function from useDeletePost hook
-    deletePost();
+    await deletePost();
   };
 
   useEffect(() => {

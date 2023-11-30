@@ -13,22 +13,14 @@ import {
 import { IoMdPhotos } from "react-icons/io";
 import Image from "next/image";
 import useUnsavedFormChanges from "@/hooks/useUnsavedFormChanges";
-
-interface UpdateNewsPostFormProps {
-  initialData: {
-    title: string;
-    image: File | null;
-    blogContent: string;
-    youtubeLink: string;
-    pressReleaseLinks: string;
-    relatedPictures: (File | null)[];
-  };
-}
+import { UpdateNewsPostFormProps } from "@/utils/types/UpdateNewsPostFormProps";
+import useUpdatePost from "@/hooks/UseUpdatePost";
 
 const UpdateNewsPostForm: React.FC<UpdateNewsPostFormProps> = ({
   initialData,
 }) => {
   const { setUnsavedChanges } = useUnsavedFormChanges();
+  const { updatePost, loading, error, isError } = useUpdatePost("12" || "");
 
   const [title, setTitle] = useState<string>(initialData?.title);
   const [heroImage, setHeroImage] = useState<File | null>(initialData?.image);
@@ -96,7 +88,7 @@ const UpdateNewsPostForm: React.FC<UpdateNewsPostFormProps> = ({
     setPressReleaseLinks(event.target.value);
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
     const updatedData = {
@@ -108,10 +100,16 @@ const UpdateNewsPostForm: React.FC<UpdateNewsPostFormProps> = ({
       relatedPictures,
     };
 
-    // Handle form submission logic here, for example:
-    console.log("Form submitted with data:", updatedData);
+    // Use the updatePost function from the hook
+    await updatePost(updatedData);
 
-    setUnsavedChanges(false);
+    // Optionally, handle errors or perform other actions after updating
+    if (!isError) {
+      console.log("Post updated successfully");
+      setUnsavedChanges(false);
+    } else {
+      console.error("Failed to update post:", error);
+    }
   };
 
   return (

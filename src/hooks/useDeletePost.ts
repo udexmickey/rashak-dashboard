@@ -16,7 +16,9 @@ const useDeletePost = (postId: string): UseDeletePostResult => {
     setLoading(true);
     try {
       // Assuming you make a DELETE request to your API
-      const response = await fetch(`https://6567770364fcff8d73106d0b.mockapi.io/api/v1/content-magament/${postId}`, {
+      const response = await fetch(`
+      https://6567770364fcff8d73106d0b.mockapi.io/api/v1/content-magament/${postId}`, 
+      {
         method: 'DELETE',
         // Add headers or credentials if needed
       });

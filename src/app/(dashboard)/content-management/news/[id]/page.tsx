@@ -21,10 +21,6 @@ export default function NewsPost({ params }: Props) {
       return data.id === id;
     });
 
-  console.log("params", params);
-  console.log("initialNewsData", initialNewsData);
-  console.log("data", data);
-
   return (
     <div>
       {loading ? (

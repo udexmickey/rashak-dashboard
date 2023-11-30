@@ -71,8 +71,6 @@ const NewsTable: React.FC = () => {
     if (optionName.toLowerCase() === "edit") {
       router.push(`content-management/news/${clickedContentId}`);
     } else if (optionName.toLowerCase() === "delete") {
-      //   setModalType("delete");
-      // console.log("you Just deleted post with id", clickedContentId);
       setSelectedContent((prev) => (prev = selectedContent));
       setContentId((prev) => (prev = clickedContentId));
       setOpenModal(true);
