@@ -1,12 +1,19 @@
 "use client";
 import { usePathname } from "next/navigation";
 import { IconType } from "react-icons/lib";
-import { FaHome, FaCog, FaFile, FaSignOutAlt } from "react-icons/fa";
+import {
+  FaHome,
+  FaCog,
+  FaFile,
+  FaSignOutAlt,
+  FaChevronRight,
+} from "react-icons/fa";
 import { FaUserGroup } from "react-icons/fa6";
 import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
 import WelcomeCard from "../ui/cards/welcomeCard";
+import { IoIosReturnRight } from "react-icons/io";
 
 interface SidebarItemProps {
   icon: IconType;
@@ -74,68 +81,74 @@ const Sidebar: React.FC<SidebarProps> = ({ handleCloseSidebar }) => {
   let router = usePathname();
 
   return (
-    <aside
-      className="h-[90dvh] w-80 flex flex-col items-center justify-start pl-8 bg-white"
-      aria-label="Sidebar"
-    >
-      <div className="w-64 h-[10dvh] sm:hidden flex md:px-8 items-center border-b border-gray-300 gap-y-10">
-        <Link href="/" as={"/"} className="-m-1.5 p-1.5 max-w-max max-h-12">
-          <span className="sr-only">Rashak logo</span>
-          <Image
-            src={"/rashak-logo-svg.svg"}
-            loading="eager"
-            priority={true}
-            className="max-w-max w-full h-7 md:h-9"
-            alt={"Rashak logo"}
-            quality={100}
-            sizes="max-w-max"
-            width={108}
-            height={28}
-            aria-hidden="true"
-          />
-        </Link>
-      </div>
-      <div className="mt-8 relative pb-4 overflow-y-auto w-full bg-white h-full">
-        <List className="space-y-4 font-medium relative">
-          <ListItem>
-            <Link href={"/profile"}>
-              <WelcomeCard />
-            </Link>
-          </ListItem>
-          <div className="flex justify-between flex-col">
-            <div className="flex justify-center flex-col">
-              {sidebarItems.map((item, index) => (
-                <SidebarItem
-                  key={index}
-                  icon={item.icon}
-                  text={item.text}
-                  href={item.href}
-                  isActive={router === item.href}
-                  handleCloseSidebar={handleCloseSidebar as () => void}
-                />
-              ))}
-            </div>
-          </div>
-        </List>
-      </div>
-      {/* <ListItem> */}
-      <div className="flex self-start py-4">
-        <Link
-          href={"/login"}
-          className="bottom flex justify-center items-center float-left"
-        >
-          <div className="bg-[#FF000033] rounded-full w-10 h-10 flex justify-center items-center">
-            <FaSignOutAlt
-              size={26}
-              className="flex-shrink-0 w-5 h-5 transition duration-75 text-[#fe5252] text-sm"
+    <aside className=" pl-8 bg-white" aria-label="Sidebar">
+      <div className="h-[80dvh] w-80 flex flex-col items-center justify-start">
+        <div className="w-64 h-[10dvh] sm:hidden flex md:px-8 items-center border-b border-gray-300 gap-y-10">
+          <Link href="/" as={"/"} className="-m-1.5 p-1.5 max-w-max max-h-12">
+            <span className="sr-only">Rashak logo</span>
+            <Image
+              src={"/rashak-logo-svg.svg"}
+              loading="eager"
+              priority={true}
+              className="max-w-max w-full h-7 md:h-9"
+              alt={"Rashak logo"}
+              quality={100}
+              sizes="max-w-max"
+              width={108}
+              height={28}
               aria-hidden="true"
             />
-          </div>
-          <ListItemText
-            primary={"Sign Out"}
-            className="text-sm ml-3 whitespace-nowrap text-[#484848]"
-          />
-        </Link>
+          </Link>
+        </div>
+        <div className="mt-8 relative pb-4 overflow-y-auto w-full bg-white h-full">
+          <List className="space-y-4 font-medium relative">
+            <ListItem>
+              <Link href={"/profile"}>
+                <WelcomeCard />
+              </Link>
+            </ListItem>
+            <div className="flex justify-between flex-col">
+              <div className="flex justify-center flex-col">
+                {sidebarItems.map((item, index) => (
+                  <SidebarItem
+                    key={index}
+                    icon={item.icon}
+                    text={item.text}
+                    href={item.href}
+                    isActive={router === item.href}
+                    handleCloseSidebar={handleCloseSidebar as () => void}
+                  />
+                ))}
+              </div>
+            </div>
+          </List>
+        </div>
+        {/* <ListItem> */}
+        <div className="flex self-start py-4">
+          <Link
+            href={"/login"}
+            className="bottom flex justify-center items-center float-left"
+          >
+            <div className="bg-[#FF000033] rounded-full w-10 h-10 flex justify-center items-center">
+              <FaSignOutAlt
+                size={26}
+                className="flex-shrink-0 w-5 h-5 transition duration-75 text-[#fe5252] text-sm"
+                aria-hidden="true"
+              />
+            </div>
+            <ListItemText
+              primary={"Sign Out"}
+              className="text-sm ml-3 whitespace-nowrap text-[#484848]"
+            />
+            <div className="w-10 h-10 flex justify-center items-center">
+              <FaChevronRight
+                size={26}
+                className="flex-shrink-0 w-5 h-5 transition duration-75 text-[#484848] text-sm"
+                aria-hidden="true"
+              />
+            </div>
+          </Link>
+        </div>
       </div>
     </aside>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, ChangeEvent } from "react";
 import {
   FormControl,
   InputLabel,
@@ -15,7 +15,6 @@ import {
   CircularProgress,
   Paper,
   Pagination,
-  Stack,
   Button,
 } from "@mui/material";
 import EditOptionMenu from "@/components/ui/Tables/table.options";
@@ -25,12 +24,22 @@ import { MdAutoDelete } from "react-icons/md";
 import { RiEditFill } from "react-icons/ri";
 import useFetchData from "@/hooks/useFetchData";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import DeleteConfirmModal from "../confirmation/deleteContentModal";
+import useDeletePost from "@/hooks/useDeletePost";
 
 const NewsTable: React.FC = () => {
   const [sortBy, setSortBy] = useState("newest");
   const [page, setPage] = React.useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const { loading, data } = useFetchData();
+  useDeletePost;
+  const [openModal, setOpenModal] = React.useState<boolean>(false);
+  const [contentId, setContentId] = React.useState<string>("");
+  const [selectedContent, setSelectedContent] = React.useState<
+    string | undefined
+  >("");
+  const router = useRouter();
 
   const handleChangePage = (event: ChangeEvent<unknown>, newPage: number) => {
     setPage(newPage);
@@ -54,13 +63,19 @@ const NewsTable: React.FC = () => {
     },
   ];
 
-  const handleOptionClick = (optionName: string, clickedAdminId: string) => {
-    if (optionName.toLowerCase() === "re-assign") {
-      //   setModalType("re-assign");
-      console.log("Post edited Successfully");
+  const handleOptionClick = (
+    optionName: string,
+    clickedContentId: string,
+    selectedContent?: string
+  ) => {
+    if (optionName.toLowerCase() === "edit") {
+      router.push(`content-management/news/${clickedContentId}`);
     } else if (optionName.toLowerCase() === "delete") {
       //   setModalType("delete");
-      console.log("you Just deleted this post");
+      // console.log("you Just deleted post with id", clickedContentId);
+      setSelectedContent((prev) => (prev = selectedContent));
+      setContentId((prev) => (prev = clickedContentId));
+      setOpenModal(true);
     } else {
       return;
     }
@@ -81,8 +96,8 @@ const NewsTable: React.FC = () => {
               style={{ minWidth: "150px" }}
               onChange={(e: SelectChangeEvent) => setSortBy(e.target.value)}
             >
-              <MenuItem value="newest">Newest First</MenuItem>
-              <MenuItem value="oldest">Oldest First</MenuItem>
+              <MenuItem value="newest">Newest</MenuItem>
+              <MenuItem value="oldest">Oldest</MenuItem>
             </Select>
           </FormControl>
         </div>
@@ -154,9 +169,10 @@ const NewsTable: React.FC = () => {
                       </TableCell>
                       <TableCell className="p-4 border-b border-gray-200">
                         <EditOptionMenu
-                          adminId={""}
+                          adminId={item.id}
                           options={options}
                           handleOptionClick={handleOptionClick}
+                          title={item.title}
                         />
                       </TableCell>
                     </TableRow>
@@ -189,6 +205,14 @@ const NewsTable: React.FC = () => {
             Add New post {` `} <BiPlus size={25} />
           </Button>
         </div>
+
+        {openModal && (
+          <DeleteConfirmModal
+            contentId={contentId}
+            selectedContent={selectedContent}
+            handleClose={() => setOpenModal(false)}
+          />
+        )}
       </Paper>
     </div>
   );
