@@ -1,6 +1,3 @@
-Certainly! I've expanded the README to include information about content management for blog posts, farmer stories, media, news posts, as well as details about user and admin management. Please review it, and let me know if you'd like any further adjustments:
-
-````markdown
 # Rashak Management System - Frontend Dashboard
 
 ## Introduction
@@ -43,6 +40,7 @@ The Rashak Management System Frontend Dashboard is a Content Management System (
    ```bash
    git clone https://github.com/udexmickey/rashak-dashboard.git
    ```
+
 ````
 
 2. Install dependencies.
@@ -130,8 +128,5 @@ This project is licensed under the [MIT License](LICENSE). See the LICENSE file 
 
 ---
 
-For more information, visit the [Rashak Management System](https://web.rashakagro.com/) website.
-
-```
-
-```
+For more information, visit the [Rashak](https://web.rashakagro.com/) website.
+````
