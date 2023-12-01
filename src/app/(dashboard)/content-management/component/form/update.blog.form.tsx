@@ -157,7 +157,7 @@ const UpdateBlogPostForm: React.FC<UpdateBlogPostFormProps> = ({
             htmlFor="hero-image-update"
             className="mb-4 max-w-[458px] w-full"
           >
-            <div className="h-full cursor-grab min-h-full relative flex md:justify-start items-center justify-center mt-4 md:mt-6">
+            <div className="h-full cursor-grab min-h-full relative flex md:justify-start items-center justify-center">
               {heroImage ? (
                 <Image
                   src={
@@ -166,16 +166,18 @@ const UpdateBlogPostForm: React.FC<UpdateBlogPostFormProps> = ({
                       : URL.createObjectURL(heroImage)
                   }
                   width={450}
-                  height={350}
+                  height={450}
+                  priority
+                  quality={100}
                   alt="File Preview"
-                  className="max-w-xl w-full h-[30vh] object-cover bg-slate-200"
+                  className="max-w-xl w-full h-[35dvh] object-cover bg-slate-200"
                 />
               ) : (
                 <Box
-                  sx={{ bgcolor: "#D9D9D9", height: "30vh" }}
+                  sx={{ bgcolor: "#D9D9D9", height: "35dvh" }}
                   className="max-w-[458px] w-full"
                 >
-                  <div className="flex flex-col items-center justify-center pt-5 pb-6 max-w-[458px] w-full h-[30vh]">
+                  <div className="flex flex-col items-center justify-center pt-5 pb-6 max-w-[458px] w-full h-[35dvh]">
                     <svg
                       className="w-8 h-8 mb-4 text-gray-500 bg-[#D9D9D9]"
                       aria-hidden="true"

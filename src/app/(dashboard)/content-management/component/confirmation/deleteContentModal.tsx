@@ -48,7 +48,9 @@ const DeleteConfirmModal: React.FC<ConfirmationModalProps> = ({
 
   const handleConfirmDeletion = async () => {
     //the delete function from useDeletePost hook
-    await deletePost();
+    await deletePost(
+      "https://6567770364fcff8d73106d0b.mockapi.io/api/v1/content-magament"
+    );
   };
 
   useEffect(() => {

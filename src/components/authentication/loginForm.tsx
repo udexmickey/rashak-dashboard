@@ -1,9 +1,10 @@
-'use client'
-import { useState, ChangeEvent, FormEvent } from 'react';
-import { Paper, TextField, Button } from '@mui/material';
-import { BsEyeSlash, BsEye } from 'react-icons/bs';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+"use client";
+import { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import { Paper, TextField, Button } from "@mui/material";
+import { BsEyeSlash, BsEye } from "react-icons/bs";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import useAuthRedirect from "@/hooks/UseIsLoggedIn";
 
 interface Values {
   email: string;
@@ -15,29 +16,34 @@ interface Values {
 
 const LoginForm = () => {
   const [values, setValues] = useState<Values>({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
     showPassword: false,
     emailError: false,
     passwordError: false,
   });
-
-  const [showPassword, setShowPassword] = useState<boolean>(true)
-
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const router = useRouter();
-  
-  const handleChange = (prop: keyof Values) => (event: ChangeEvent<HTMLInputElement>) => {
-    setValues({ ...values, [prop]: event.target.value });
+
+  const handleChange =
+    (prop: keyof Values) => (event: ChangeEvent<HTMLInputElement>) => {
+      setValues({ ...values, [prop]: event.target.value });
+    };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const redirectAfterLogin = localStorage.getItem("redirectAfterLogin");
+  const handleLoginSuccess = () => {
+    if (redirectAfterLogin) {
+      // Clear the stored route
+      localStorage.removeItem("redirectAfterLogin");
+      router.push(redirectAfterLogin);
+    } else {
+      // If no stored route, redirect to a default page (e.g., dashboard)
+      router.push("/dashboard");
+    }
   };
 
-  const handleClickShowPassword = () => {
-    setValues({ ...values });
-  };
-
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-  };
-
+  //Handle sumbit logic
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
 
@@ -58,51 +64,62 @@ const LoginForm = () => {
     const submitForm = () => {
       return new Promise((resolve) => {
         setTimeout(() => {
-          resolve({ message: 'Login successful' });
+          resolve({ message: "Login successful" });
         }, 1000);
       });
     };
 
     submitForm()
       .then((response) => {
-        console.log('Form submitted:', values);
-        console.log('API Response:', response);
+        console.log("Form submitted:", values);
+        console.log("API Response:", response);
 
-        // After successful signup
-        localStorage.setItem('isLoggedIn', 'true');
-
-        // Redirect to the check page
-      router.push('/dashboard');
+        // After successful login
+        localStorage.setItem("isLoggedIn", "true");
+        handleLoginSuccess();
       })
       .catch((error) => {
-        console.error('Error:', error);
+        throw new Error(error);
       });
   };
-  
+
+  //onpage load redirect if loggedin in
+  // useEffect(() => {
+  //   isLoggedIn === true && router.back();
+  // }, [isLoggedIn]);
+
   return (
     <div className="flex flex-col items-center justify-start h-screen w-[100%] max-w-2xl isolate box-border md:gap-y-20 gap-y-10">
       <div className="flex justify-end md:w-[90%] w-[90%]">
-          <Link href={'/signup'}>
-        <Button 
-        variant="contained"
-            style={{ backgroundColor: '#00A651', color: '#ffffff' }}
+        <Link href={"/signup"}>
+          <Button
+            variant="contained"
+            style={{ backgroundColor: "#00A651", color: "#ffffff" }}
             type="submit"
             className="rounded-[2.5rem] text-base px-3 py-3 md:px-6 md:py-5 capitalize"
             sx={{
-              '&:focus': { backgroundColor: '#00A651' },
-              '&.Mui-error': { backgroundColor: 'red' },
+              "&:focus": { backgroundColor: "#00A651" },
+              "&.Mui-error": { backgroundColor: "red" },
             }}
-        >
+          >
             Create Account
-        </Button>
-          </Link>
+          </Button>
+        </Link>
       </div>
-      <Paper elevation={0} className="p-8 text-center rounded-[1rem] w-full flex gap-y-6 flex-col">
+      <Paper
+        elevation={0}
+        className="p-8 text-center rounded-[1rem] w-full flex gap-y-6 flex-col"
+      >
         <div className="mb-4">
-        <label className="text-base text-left mb-2 block text-[#A0A3BD]">Welcome back</label>
+          <label className="text-base text-left mb-2 block text-[#A0A3BD]">
+            Welcome back
+          </label>
           <h2 className="text-left text-3xl !text-[#00a651] ">Log in</h2>
         </div>
-        <form className="text-left flex gap-y-6 flex-col" onSubmit={handleSubmit}>
+        <form
+          className="text-left flex gap-y-6 flex-col"
+          onSubmit={handleSubmit}
+        >
           <div className="mb-4">
             <label className="text-base mb-2 block text-[#A0A3BD]">Email</label>
             <div className="relative">
@@ -114,10 +131,10 @@ const LoginForm = () => {
                 required
                 value={values.email}
                 size="medium"
-                onChange={handleChange('email')}
+                onChange={handleChange("email")}
                 InputProps={{
                   classes: {
-                    root: 'border-none rounded-[2.5rem] h-16 text-base',
+                    root: "border-none rounded-[2.5rem] h-16 text-base",
                   },
                 }}
                 InputLabelProps={{
@@ -125,37 +142,42 @@ const LoginForm = () => {
                 }}
                 error={values.emailError}
                 sx={{
-                  '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                    borderColor: values.emailError ? '#F5821F' : '#00A651',
-                  },
+                  "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+                    {
+                      borderColor: values.emailError ? "#F5821F" : "#00A651",
+                    },
                 }}
               />
               {values.emailError && (
-                <p className="text-[#F5821F] mt-2 text-xs">Please enter a valid email</p>
+                <p className="text-[#F5821F] mt-2 text-xs">
+                  Please enter a valid email
+                </p>
               )}
             </div>
           </div>
           <div className="mb-4 relative">
-            <label className="text-base mb-2 block text-[#A0A3BD]">Password</label>
+            <label className="text-base mb-2 block text-[#A0A3BD]">
+              Password
+            </label>
             <div className="relative">
               <TextField
                 variant="outlined"
                 fullWidth
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
                 required
                 value={values.password}
                 size="medium"
-                onChange={handleChange('password')}
+                onChange={handleChange("password")}
                 InputProps={{
                   classes: {
-                    root: 'border-none rounded-[2.5rem] h-16 text-base',
+                    root: "border-none rounded-[2.5rem] h-16 text-base",
                   },
                   endAdornment: (
                     <span className="absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer">
                       {showPassword ? (
-                        <BsEye onClick={() => setShowPassword(false)}/>
-                        ) : (
+                        <BsEye onClick={() => setShowPassword(false)} />
+                      ) : (
                         <BsEyeSlash onClick={() => setShowPassword(true)} />
                       )}
                     </span>
@@ -166,32 +188,33 @@ const LoginForm = () => {
                 }}
                 error={values.passwordError}
                 sx={{
-                  '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                    borderColor: values.passwordError ? '#F5821F' : '#00A651',
-                  },
+                  "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+                    {
+                      borderColor: values.passwordError ? "#F5821F" : "#00A651",
+                    },
                 }}
               />
               {values.passwordError && (
-                <p className="text-[#F5821F] mt-2 text-xs">Password must be at least 8 characters long</p>
+                <p className="text-[#F5821F] mt-2 text-xs">
+                  Password must be at least 8 characters long
+                </p>
               )}
             </div>
           </div>
           <Button
             variant="contained"
-            style={{ backgroundColor: '#00A651', color: '#ffffff' }}
+            style={{ backgroundColor: "#00A651", color: "#ffffff" }}
             type="submit"
             className="rounded-[2.5rem] md:w-44 w-28 text-base py-2 md:py-4 md:text-xl capitalize"
             sx={{
-              '&:focus': { backgroundColor: '#00A651' },
-              '&.Mui-error': { backgroundColor: 'red' },
+              "&:focus": { backgroundColor: "#00A651" },
+              "&.Mui-error": { backgroundColor: "red" },
             }}
           >
             Log In
           </Button>
           <label className="text-xs text-left mb-2 block text-[#9f9f9f]">
-            <Link href={'/forget-password'}>
-              Forgot Password?
-            </Link>
+            <Link href={"/forget-password"}>Forgot Password?</Link>
           </label>
         </form>
       </Paper>

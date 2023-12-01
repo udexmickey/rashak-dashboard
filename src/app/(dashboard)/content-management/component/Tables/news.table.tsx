@@ -26,14 +26,12 @@ import useFetchData from "@/hooks/useFetchData";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import DeleteConfirmModal from "../confirmation/deleteContentModal";
-import useDeletePost from "@/hooks/useDeletePost";
 
 const NewsTable: React.FC = () => {
   const [sortBy, setSortBy] = useState("newest");
   const [page, setPage] = React.useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const { loading, data } = useFetchData();
-  useDeletePost;
   const [openModal, setOpenModal] = React.useState<boolean>(false);
   const [contentId, setContentId] = React.useState<string>("");
   const [selectedContent, setSelectedContent] = React.useState<

@@ -30,7 +30,7 @@ The Rashak Management System Frontend Dashboard is a Content Management System (
 
 ### Prerequisites
 
-- Node.js (v16.20.2)
+- Node.js (v18.18.2)
 - yarn (v1.22.19)
 
 ### Installation

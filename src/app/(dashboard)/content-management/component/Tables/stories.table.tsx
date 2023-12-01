@@ -52,10 +52,10 @@ const StoryTable: React.FC = () => {
   });
 
   const options = [
-    {
-      icon: RiEditFill,
-      text: "Edit",
-    },
+    // {
+    //   icon: RiEditFill,
+    //   text: "Edit",
+    // },
     {
       icon: MdAutoDelete,
       text: "Delete",
@@ -136,30 +136,30 @@ const StoryTable: React.FC = () => {
                   .map((item) => (
                     <TableRow key={item.id}>
                       <TableCell className="p-4 border-b border-gray-200">
-                        <Link href={`content-management/stories/${item.id}`}>
-                          <div className="flex items-center px-2 whitespace-nowrap ">
-                            <Image
-                              className="w-10 h-10 rounded-full"
-                              src={item.image as string}
-                              alt="Jese image"
-                              width={40}
-                              height={40}
-                            />
-                            <div className="ps-3">
-                              <div className="text-base font-semibold">
-                                {`${item.title.slice(0, 25)} ${
-                                  item.title.length >
-                                  item.title.slice(0, 22).length
-                                    ? "..."
-                                    : ""
-                                }`}
-                              </div>
-                              {/* <div className="font-normal text-gray-500">
+                        {/* <Link href={`content-management/stories/${item.id}`}> */}
+                        <div className="flex items-center px-2 whitespace-nowrap ">
+                          <Image
+                            className="w-10 h-10 rounded-full"
+                            src={item.image as string}
+                            alt="Jese image"
+                            width={40}
+                            height={40}
+                          />
+                          <div className="ps-3">
+                            <div className="text-base font-semibold">
+                              {`${item.title.slice(0, 25)} ${
+                                item.title.length >
+                                item.title.slice(0, 22).length
+                                  ? "..."
+                                  : ""
+                              }`}
+                            </div>
+                            {/* <div className="font-normal text-gray-500">
                               neil.sims@flowbite.com
                             </div> */}
-                            </div>
                           </div>
-                        </Link>
+                        </div>
+                        {/* </Link> */}
                       </TableCell>
                       <TableCell className="p-4 border-b border-gray-200">
                         {new Date(item.createdAt).toDateString()}
