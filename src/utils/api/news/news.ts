@@ -1,4 +1,4 @@
-const baseUrl = process.env.NEXT_PUBLIC_TEST_URL as RequestInfo | URL
+const baseUrl = process.env.NEXT_PUBLIC_API_URL as RequestInfo | URL
 
 export const fetchCache = 'force-no-store';
 

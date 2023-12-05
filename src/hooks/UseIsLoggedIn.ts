@@ -1,5 +1,7 @@
+// useAuthRedirect.ts
 import { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
+import useAuth from './useAuth'; // Import your useAuth hook
 
 interface UseAuthRedirectResult {
   isLoggedIn: boolean;
@@ -9,28 +11,34 @@ interface UseAuthRedirectResult {
 const useAuthRedirect = (): UseAuthRedirectResult => {
   const router = useRouter();
   const path = usePathname();
-  
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const { isLoggedIn: isAuthLoggedIn } = useAuth(); // Use your existing useAuth hook
+  const [isLoggedIn, setIsLoggedIn] = useState(isAuthLoggedIn);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const checkAuthAndRedirect = () => {
-    // Implement your logic to check if the user is logged in
-    // For example, you might check if there's a valid authentication token
-    const isAuthenticated = localStorage.getItem('isLoggedIn') !== null;
-    
-    setIsLoggedIn(isAuthenticated);
+  const checkAuthAndRedirect = async () => {
+    const isAuthenticated = localStorage.getItem('authToken') !== null;
 
-    // If not logged in or token has expired, redirect to login
-    if (!isAuthenticated) {
-      // Save the current route in localStorage for redirection after login
-      localStorage.setItem('redirectAfterLogin', path);
-      router.push('/login');
+    if (isAuthenticated) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+
+      // Token is not present or expired, try refreshing
+      try {
+        setIsLoggedIn(true); // Set user as logged in after successful refresh
+      } catch (error) {
+        // If refresh fails or there's an error, redirect to login
+        localStorage.setItem('redirectAfterLogin', path);
+        router.push('/login');
+      }
     }
   };
 
   useEffect(() => {
     checkAuthAndRedirect();
-  }, [checkAuthAndRedirect]); // Check login status on component mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return { isLoggedIn, checkAuthAndRedirect };
 };

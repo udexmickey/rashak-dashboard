@@ -1,10 +1,10 @@
 "use client";
-import { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { Paper, TextField, Button } from "@mui/material";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import useAuthRedirect from "@/hooks/UseIsLoggedIn";
+import useAuth from "@/hooks/useAuth";
 
 interface Values {
   email: string;
@@ -22,16 +22,14 @@ const LoginForm = () => {
     emailError: false,
     passwordError: false,
   });
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-  const router = useRouter();
 
-  const handleChange =
-    (prop: keyof Values) => (event: ChangeEvent<HTMLInputElement>) => {
-      setValues({ ...values, [prop]: event.target.value });
-    };
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const { isLoggedIn, login } = useAuth();
+  const router = useRouter();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const redirectAfterLogin = localStorage.getItem("redirectAfterLogin");
+
   const handleLoginSuccess = () => {
     if (redirectAfterLogin) {
       // Clear the stored route
@@ -43,50 +41,30 @@ const LoginForm = () => {
     }
   };
 
-  //Handle sumbit logic
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
-
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!values.email.match(emailRegex)) {
-      setValues({ ...values, emailError: true });
-      return;
-    }
-
-    // Password validation (minimum 8 characters)
-    if (values.password.length < 8) {
-      setValues({ ...values, passwordError: true });
-      return;
-    }
-
-    // Mock API Call (replace this with actual API call)
-    const submitForm = () => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve({ message: "Login successful" });
-        }, 1000);
-      });
+  const handleChange =
+    (prop: keyof Values) => (event: ChangeEvent<HTMLInputElement>) => {
+      setValues({ ...values, [prop]: event.target.value });
     };
 
-    submitForm()
-      .then((response) => {
-        console.log("Form submitted:", values);
-        console.log("API Response:", response);
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+    try {
+      // Email and password validation logic remains the same
 
-        // After successful login
-        localStorage.setItem("isLoggedIn", "true");
-        handleLoginSuccess();
-      })
-      .catch((error) => {
-        throw new Error(error);
-      });
+      const { success, message } = await login(values.email, values.password);
+
+      if (success) {
+        // Handle successful login (redirect, etc.)
+        // console.log(message);
+        isLoggedIn && handleLoginSuccess();
+      } else {
+        // Handle login failure
+        console.error(message);
+      }
+    } catch (error: any) {
+      throw new Error(error);
+    }
   };
-
-  //onpage load redirect if loggedin in
-  // useEffect(() => {
-  //   isLoggedIn === true && router.back();
-  // }, [isLoggedIn]);
 
   return (
     <div className="flex flex-col items-center justify-start h-screen w-[100%] max-w-2xl isolate box-border md:gap-y-20 gap-y-10">
