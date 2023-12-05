@@ -14,9 +14,11 @@ import Image from "next/image";
 // import ReactQuill from "react-quill";
 // import "react-quill/dist/quill.snow.css";
 import useUnsavedFormChanges from "@/hooks/useUnsavedFormChanges";
+import usePostData from "@/hooks/usePostData";
 
 const NewsPostForm: React.FC = () => {
   const { setUnsavedChanges } = useUnsavedFormChanges();
+  const { postData, isError, loading, error } = usePostData();
 
   const [title, setTitle] = useState<string>("");
   const [heroImage, setHeroImage] = useState<File | null>(null);
@@ -92,6 +94,10 @@ const NewsPostForm: React.FC = () => {
     };
 
     console.log("Form Data:", formData);
+    postData(
+      "https://6567770364fcff8d73106d0b.mockapi.io/api/v1/content-magament",
+      formData
+    );
     setUnsavedChanges(false);
   };
 
@@ -335,6 +341,14 @@ const NewsPostForm: React.FC = () => {
               }}
             />
           </div>
+          {isError && (
+            <p>
+              Error: {` `}
+              <span className="text-[#ff0000]">
+                {` `} {error}
+              </span>
+            </p>
+          )}
         </div>
 
         <Button
@@ -346,6 +360,7 @@ const NewsPostForm: React.FC = () => {
             "&:focus": { backgroundColor: "#00A651" },
             "&.Mui-error": { backgroundColor: "red" },
           }}
+          disabled={loading}
         >
           Add +
         </Button>

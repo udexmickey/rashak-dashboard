@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import useFetchData from "@/hooks/useFetchData";
 import UpdateBlogPostForm from "../../component/form/update.blog.form";
+import { useFetchOneblog } from "@/hooks/useFetchAllBlogs";
 
 export const revalidate = 3600; // revalidate at most every hour
 
@@ -13,17 +13,11 @@ type Props = {
 
 export default function BlogsPost({ params }: Props) {
   const { id } = params;
-  const { loading, data } = useFetchData();
-
-  const initialBlogsData =
-    data &&
-    data?.find((data) => {
-      return data.id === id;
-    });
+  const { isLoading, data: initialBlogsData } = useFetchOneblog(id);
 
   return (
     <div>
-      {loading ? (
+      {isLoading ? (
         <div>Loading...</div>
       ) : (
         <UpdateBlogPostForm initialData={initialBlogsData} />

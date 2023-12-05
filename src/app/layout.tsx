@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import Maintance from "@/components/ui/placeholders/maintance.placeholder";
+import TanstackQueryContextWrapper from "@/context/tanstack.context.wrapper";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -77,20 +78,22 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${montserrat.className}`}>
         {/* The line below clears the mobile designs till they want it */}
-        <div
-          className={`${
-            process.env.NODE_ENV !== "development" ? "sm:block hidden" : null
-          }`}
-        >
-          {children}
-        </div>
-        <div
-          className={`${
-            process.env.NODE_ENV !== "development" ? "block sm:hidden" : null
-          }`}
-        >
-          <Maintance />
-        </div>
+        <TanstackQueryContextWrapper>
+          <div
+            className={`${
+              process.env.NODE_ENV !== "development" ? "sm:block hidden" : null
+            }`}
+          >
+            {children}
+          </div>
+          <div
+            className={`${
+              process.env.NODE_ENV !== "development" ? "block sm:hidden" : null
+            }`}
+          >
+            <Maintance />
+          </div>
+        </TanstackQueryContextWrapper>
       </body>
     </html>
   );

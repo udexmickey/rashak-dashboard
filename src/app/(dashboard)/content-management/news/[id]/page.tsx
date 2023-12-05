@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import useFetchData from "@/hooks/useFetchData";
 import UpdateNewsPostForm from "../../component/form/update.news.form";
+import { useFetchOnenews } from "@/hooks/useFetchNews";
 
 export const revalidate = 3600; // revalidate at most every hour
 
@@ -13,20 +13,14 @@ type Props = {
 
 export default function NewsPost({ params }: Props) {
   const { id } = params;
-  const { loading, data } = useFetchData();
-
-  const initialNewsData =
-    data &&
-    data?.find((data) => {
-      return data.id === id;
-    });
+  const { isLoading, data: initialNewsData } = useFetchOnenews(id);
 
   return (
     <div>
-      {loading ? (
+      {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <UpdateNewsPostForm initialData={initialNewsData} />
+        <UpdateNewsPostForm initialData={initialNewsData} contentId={id} />
       )}
     </div>
   );
