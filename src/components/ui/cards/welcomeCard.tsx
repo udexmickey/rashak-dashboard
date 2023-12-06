@@ -1,8 +1,11 @@
 import React from "react";
 import BackgroundLetterAvatars from "../../menu/stringAvatar";
 import { Typography } from "@mui/material";
+import { useFetchOneprofile } from "@/hooks/useProfile";
 
 export default function WelcomeCard() {
+  const { data, isError } = useFetchOneprofile();
+
   const loggedInAdmin = {
     name: "Azeez Saliu",
   };
@@ -12,7 +15,7 @@ export default function WelcomeCard() {
       <div className="bg-white h-full pb-4">
         <div className="w-full flex flex-col justify-center items-center gap-y-2">
           <BackgroundLetterAvatars
-            name={loggedInAdmin && loggedInAdmin.name}
+            name={isError ? loggedInAdmin?.name : data && data?.name}
             width={"7rem"}
             height={"7rem"}
             fontSize={"3rem"}
@@ -29,7 +32,7 @@ export default function WelcomeCard() {
               component={"small"}
               className="text-black text-xl font-medium"
             >
-              {loggedInAdmin && loggedInAdmin.name}
+              {isError ? loggedInAdmin?.name : data && data?.name}
             </Typography>
           </div>
         </div>

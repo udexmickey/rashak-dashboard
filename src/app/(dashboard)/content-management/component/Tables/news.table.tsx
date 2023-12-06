@@ -18,7 +18,7 @@ const NewsTable: React.FC = () => {
   const [sortBy, setSortBy] = useState("newest");
   const [page, setPage] = React.useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const { isLoading, data } = useFetchAllNews({
+  const { isLoading, data, isError } = useFetchAllNews({
     searchText: "",
     pageNumber: page,
     pageSize: rowsPerPage,
@@ -91,28 +91,32 @@ const NewsTable: React.FC = () => {
         style={{ maxHeight: "60dvh", overflowY: "auto", height: "100dvh" }}
         className="flex flex-col justify-between items-around"
       >
-        <ContentTable
-          data={sortedData && sortedData}
-          options={options}
-          handleOptionClick={handleOptionClick}
-          headers={headers && headers}
-          isLoading={isLoading}
-        />
+        {!isError && (
+          <>
+            <ContentTable
+              data={sortedData && sortedData}
+              options={options}
+              handleOptionClick={handleOptionClick}
+              headers={headers && headers}
+              isLoading={isLoading}
+            />
 
-        <div className="flex justify-around items-end my-8 rounded-lg">
-          <Pagination
-            count={data && Math.ceil(data?.totalItems / rowsPerPage)}
-            onChange={handleChangePage}
-            page={page}
-            siblingCount={0}
-            boundaryCount={4}
-          />
+            <div className="flex justify-around items-end my-8 rounded-lg">
+              <Pagination
+                count={data && Math.ceil(data?.totalItems / rowsPerPage)}
+                onChange={handleChangePage}
+                page={page}
+                siblingCount={0}
+                boundaryCount={4}
+              />
 
-          <AddContentBtn
-            href={"/content-management/news"}
-            label="Add New post"
-          />
-        </div>
+              <AddContentBtn
+                href={"/content-management/news"}
+                label="Add New post"
+              />
+            </div>
+          </>
+        )}
 
         {/* The following will only be displayed/rendered when the edit button is clicked on the table */}
         {openModal && (

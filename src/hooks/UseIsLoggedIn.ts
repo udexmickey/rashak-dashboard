@@ -1,23 +1,23 @@
 // useAuthRedirect.ts
 import { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import useAuth from './useAuth'; // Import your useAuth hook
+// import useAuth from './useAuth'; // Import your useAuth hook
 
 interface UseAuthRedirectResult {
   isLoggedIn: boolean;
   checkAuthAndRedirect: () => void;
 }
 
+const isAuthenticated = localStorage.getItem('authToken') !== null;
+
 const useAuthRedirect = (): UseAuthRedirectResult => {
   const router = useRouter();
   const path = usePathname();
 
-  const { isLoggedIn: isAuthLoggedIn } = useAuth(); // Use your existing useAuth hook
-  const [isLoggedIn, setIsLoggedIn] = useState(isAuthLoggedIn);
+  const [isLoggedIn, setIsLoggedIn] = useState(isAuthenticated);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const checkAuthAndRedirect = async () => {
-    const isAuthenticated = localStorage.getItem('authToken') !== null;
 
     if (isAuthenticated) {
       setIsLoggedIn(true);

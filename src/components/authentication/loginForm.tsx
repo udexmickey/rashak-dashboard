@@ -24,6 +24,7 @@ const LoginForm = () => {
   });
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null); // New state for error message
   const { isLoggedIn, login } = useAuth();
   const router = useRouter();
 
@@ -49,16 +50,18 @@ const LoginForm = () => {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     try {
-      // Email and password validation logic remains the same
+      // Reset error state before making a new login attempt
+      setError(null);
 
+      // Email and password validation logic remains the same
       const { success, message } = await login(values.email, values.password);
 
       if (success) {
         // Handle successful login (redirect, etc.)
-        // console.log(message);
-        isLoggedIn && handleLoginSuccess();
+        handleLoginSuccess();
       } else {
         // Handle login failure
+        setError(message); // Set the error message in the state
         console.error(message);
       }
     } catch (error: any) {
@@ -178,6 +181,7 @@ const LoginForm = () => {
                 </p>
               )}
             </div>
+            {error && <p className="text-[#F5821F] mt-2 text-xs">{error}</p>}
           </div>
           <Button
             variant="contained"
