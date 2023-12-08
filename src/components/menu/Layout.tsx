@@ -14,11 +14,11 @@ const Layout: React.FC<LayoutProps> = ({ pageName, children }) => {
 
   useEffect(() => {
     checkAuthAndRedirect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className="flex flex-col">
-      {/* {isLoggedIn && ( */}
       <>
         <TopNav pageName={pageName} />
         <div className="flex-col md:flex-row flex overflow-y-none h-[90vh]">
@@ -30,7 +30,6 @@ const Layout: React.FC<LayoutProps> = ({ pageName, children }) => {
           </main>
         </div>
       </>
-      {/* )} */}
     </div>
   );
 };

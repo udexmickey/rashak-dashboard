@@ -7,7 +7,7 @@ import Link from "next/link";
 
 const CheckPage = () => {
   const router = useRouter();
-  
+
   useEffect(() => {
     // Check if user is registered
     const isRegistered = localStorage.getItem("isRegistered");
@@ -19,75 +19,60 @@ const CheckPage = () => {
     // After user visits the CheckPage
     const timeSession = setTimeout(() => {
       localStorage.removeItem("isRegistered");
-      
-    }, 2000);
+    }, 3000);
 
     return () => clearTimeout(timeSession);
-
   }, [router]);
 
   return (
     <Grid
       container
       justifyContent="center"
-      alignItems="center"
-      style={{ height: "70vh", textAlign: "center" }}
+      alignItems="flex-start"
+      style={{ height: "100dvh", textAlign: "center", display: "flex" }}
     >
       <Grid item xs={12}>
-        <div style={{ position: "absolute", top: 20, left: 20 }}>
+        <div style={{ position: "absolute", top: 40, left: 40 }}>
           <Image
             src="/rashak-logo-svg.svg"
             alt="Logo"
-            width={100}
-            height={100}
+            width={170}
+            height={170}
           />
         </div>
       </Grid>
-      <Grid item xs={12} className="max-w-xl mx-auto px-4">
-        <Typography variant="h4" gutterBottom color={"#00A651"}>
+      <Grid xs={12} className="max-w-4xl mx-auto px-4">
+        <Typography variant="h4" color={"#00A651"}>
           Welcome to Rashak
         </Typography>
-        <Typography variant="body1" paragraph className="">
+        <Typography variant="body1" paragraph className="text-2xl">
           Your account was registered successfully. Please check your email for
           confirmation within the next hour. If you do not receive an email or
           have any issues, please contact the IT department.
         </Typography>
-        {/* </Grid>
-      <Grid item xs={12}> */}
-        <Typography variant="body1" paragraph>
-          In the meantime..{" "}
+        <br />
+        <br />
+        <Typography variant="body1" paragraph className="text-xl">
+          In the meantime...{" "}
         </Typography>
         <div className="gap-x-8 flex justify-center items-center flex-col md:flex-row gap-y-4 mt-12">
-          <Link href="https://web.rashakagro.com/">
-            <Button
-              variant="contained"
-              style={{ backgroundColor: "#00A651", color: "#ffffff" }}
-              type="submit"
-              className="rounded-[2.5rem] px-6 !text-base py-2 md:py-4 capitalize"
-              sx={{
-                "&:focus": { backgroundColor: "#00A651" },
-                "&.Mui-error": { backgroundColor: "red" },
-              }}
-            >
-              Visit our website
-            </Button>
+          <Link
+            href="https://web.rashakagro.com/"
+            target="_blank"
+            style={{ backgroundColor: "#00A651", color: "#ffffff" }}
+            className="rounded-[2.5rem] px-6 text-xl py-2 md:py-4 capitalize"
+          >
+            Visit our website
           </Link>
 
           <span>OR</span>
 
-          <Link href={"/login"}>
-            <Button
-              variant="contained"
-              style={{ backgroundColor: "#00A651", color: "#ffffff" }}
-              type="submit"
-              className="rounded-[2.5rem] px-6 !text-base py-2 md:py-4 capitalize"
-              sx={{
-                "&:focus": { backgroundColor: "#00A651" },
-                "&.Mui-error": { backgroundColor: "red" },
-              }}
-            >
-              Log In
-            </Button>
+          <Link
+            href={"/login"}
+            style={{ backgroundColor: "#00A651", color: "#ffffff" }}
+            className="rounded-[2.5rem] px-6 text-xl py-2 md:py-4 capitalize"
+          >
+            Log In
           </Link>
         </div>
       </Grid>
