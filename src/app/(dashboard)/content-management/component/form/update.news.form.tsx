@@ -9,7 +9,7 @@ import { NewsImageGalleryProps } from "@/utils/types/PostData.types";
 import UpdateContentButton from "../button/updateContent.button";
 import InputTextField from "../InputTextField/InputTextField";
 import HeroImage from "../HeroImage/HeroImage";
-import RelatedPictures from "../RelatedPictures/RelatedPictures";
+import RelatedPicturesUpdate from "../RelatedPictures/RelatedPicturesUpdate";
 
 const UpdateNewsPostForm: React.FC<UpdateNewsProps> = ({
   initialData,
@@ -166,7 +166,7 @@ const UpdateNewsPostForm: React.FC<UpdateNewsProps> = ({
         <label htmlFor="related-pictures" className="block mb-1">
           Related Pictures
         </label>
-        <RelatedPictures
+        <RelatedPicturesUpdate
           relatedPictures={relatedPictures}
           handleRelatedPictureChange={handleRelatedPictureChange}
         />

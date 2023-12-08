@@ -1,4 +1,5 @@
 import { Button } from "@mui/material";
+import Link from "next/link";
 import React from "react";
 import { BiPlus } from "react-icons/bi";
 // import { IconType } from "react-icons/lib";
@@ -19,21 +20,24 @@ export default function AddContentBtn({
 }: IContentBtn) {
   return (
     <>
-      <Button
+      <Link
         variant="contained"
-        LinkComponent={"a"}
+        // LinkComponent={"a"}
         href={href}
         style={{ backgroundColor: "#00A651", color: "#ffffff" }}
         type={type ?? "submit"}
-        className="px-6 !text-base py-2 capitalize float-right "
+        className="px-6 !text-base py-2 capitalize float-right hover:opacity-80 duration-300 ease-in-out"
         sx={{
           "&:focus": { backgroundColor: "#00A651" },
           "&.Mui-error": { backgroundColor: "red" },
         }}
         {...props}
       >
-        {label ?? "Add New post"} {` `} <BiPlus size={25} />
-      </Button>
+        <span>
+          {label ?? "Add New post"} {` `}
+        </span>
+        <span>{/* <BiPlus size={25} /> */}</span>
+      </Link>
     </>
   );
 }

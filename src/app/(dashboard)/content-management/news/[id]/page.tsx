@@ -2,7 +2,7 @@
 
 import React from "react";
 import UpdateNewsPostForm from "../../component/form/update.news.form";
-import { useFetchOnenews } from "@/hooks/useFetchNews";
+import { useFetchOnenews } from "@/hooks/useNewsHook";
 
 export const revalidate = 3600; // revalidate at most every hour
 

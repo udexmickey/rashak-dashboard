@@ -9,7 +9,7 @@ import { BlogImageGalleryProps } from "@/utils/types/PostData.types";
 import UpdateContentButton from "../button/updateContent.button";
 import InputTextField from "../InputTextField/InputTextField";
 import HeroImage from "../HeroImage/HeroImage";
-import RelatedPictures from "../RelatedPictures/RelatedPictures";
+import RelatedPicturesUpdate from "../RelatedPictures/RelatedPicturesUpdate";
 
 const UpdateBlogPostForm: React.FC<UpdateBlogProps> = ({
   initialData,
@@ -166,7 +166,7 @@ const UpdateBlogPostForm: React.FC<UpdateBlogProps> = ({
         <label htmlFor="related-pictures" className="block mb-1">
           Related Pictures
         </label>
-        <RelatedPictures
+        <RelatedPicturesUpdate
           // label={"related-pictures"}
           relatedPictures={relatedPictures}
           handleRelatedPictureChange={handleRelatedPictureChange}

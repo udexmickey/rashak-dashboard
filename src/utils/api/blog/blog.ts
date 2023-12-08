@@ -7,7 +7,7 @@ export async function getOneBlog(id: any) {
         const posts = await authApi.get(`/blogs/${id}`)
         return await posts.data; 
     } catch (error: any) {
-        throw new Error(error.message || error.cause || error)
+        throw new Error(error?.response?.data.message ?? error?.message)
     }
 }
 
@@ -21,7 +21,7 @@ export async function getAllSearchBlogs({ pageNumber, searchText, pageSize } : {
 
         return await response.data;
     } catch (error: any) {
-        throw new Error(error.message || error);
+        throw new Error(error?.response?.data.message ?? error?.message)
     }
 
 }

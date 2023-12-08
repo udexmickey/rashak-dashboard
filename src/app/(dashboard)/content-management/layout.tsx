@@ -1,7 +1,6 @@
 import React from "react";
-import Link from "next/link";
-import { HiArrowNarrowLeft } from "react-icons/hi";
-import { Button, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
+import LayoutBackButton from "./component/button/layoutBack.button";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -15,16 +14,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           component={"div"}
           className="justify-self-end cursor-pointer sm:mb-0 mb-4"
         >
-          <Button
-            LinkComponent={"a"}
-            href={"/content-management"}
-            className="text-[#00A651] text-[1.08588rem] flex items-center gap-x-2"
-          >
-            <span>
-              <HiArrowNarrowLeft className="text-[1.08588rem]" />
-            </span>
-            <span>Go back</span>
-          </Button>
+          <LayoutBackButton />
         </Typography>
       </div>
       <div>{children}</div>

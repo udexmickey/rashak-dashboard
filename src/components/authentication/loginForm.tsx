@@ -1,10 +1,10 @@
 "use client";
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { Paper, TextField, Button } from "@mui/material";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import useAuth from "@/hooks/useAuth";
+import { useLogin } from "@/hooks/useLogin";
 
 interface Values {
   email: string;
@@ -24,8 +24,14 @@ const LoginForm = () => {
   });
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null); // New state for error message
-  const { isLoggedIn, login } = useAuth();
+  const {
+    mutateAsync: loginFxn,
+    isPending,
+    isError,
+    error,
+    isSuccess,
+    data,
+  } = useLogin();
   const router = useRouter();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -50,24 +56,17 @@ const LoginForm = () => {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     try {
-      // Reset error state before making a new login attempt
-      setError(null);
-
-      // Email and password validation logic remains the same
-      const { success, message } = await login(values.email, values.password);
-
-      if (success) {
-        // Handle successful login (redirect, etc.)
-        handleLoginSuccess();
-      } else {
-        // Handle login failure
-        setError(message); // Set the error message in the state
-        console.error(message);
-      }
+      //login function from useLogin hook
+      await loginFxn(values);
     } catch (error: any) {
       throw new Error(error);
     }
   };
+
+  useEffect(() => {
+    isSuccess && handleLoginSuccess();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccess]);
 
   return (
     <div className="flex flex-col items-center justify-start h-screen w-[100%] max-w-2xl isolate box-border md:gap-y-20 gap-y-10">
@@ -181,19 +180,48 @@ const LoginForm = () => {
                 </p>
               )}
             </div>
-            {error && <p className="text-[#F5821F] mt-2 text-xs">{error}</p>}
+            {/* {isError && (
+              <p className="text-[#F5821F] mt-2 text-xs">{error?.message}</p>
+            )} */}
+            {isError && (
+              <p>
+                Login Error: {` `}
+                <span className="text-[#ff0000]">
+                  {` `} {error?.message}
+                </span>
+              </p>
+            )}
+            {isPending && (
+              <p>
+                Please wait: {` `}
+                <span className="text-[#f1c557]">
+                  {` `} While verify you login credentials...
+                </span>
+              </p>
+            )}
+            {isSuccess && (
+              <p>
+                {data && data?.message}: {` `}
+                <span className="text-[#00A651]">{` `} welcome back</span>
+              </p>
+            )}
           </div>
           <Button
             variant="contained"
-            style={{ backgroundColor: "#00A651", color: "#ffffff" }}
+            style={{
+              backgroundColor: `${"#00A651"}`,
+              color: "#ffffff",
+              opacity: `${isPending ? ".6" : "1"}`,
+            }}
             type="submit"
             className="rounded-[2.5rem] md:w-44 w-28 text-base py-2 md:py-4 md:text-xl capitalize"
             sx={{
               "&:focus": { backgroundColor: "#00A651" },
               "&.Mui-error": { backgroundColor: "red" },
             }}
+            disabled={isPending}
           >
-            Log In
+            {isPending ? "verifying..." : "Log In"}
           </Button>
           <label className="text-xs text-left mb-2 block text-[#9f9f9f]">
             <Link href={"/forget-password"}>Forgot Password?</Link>

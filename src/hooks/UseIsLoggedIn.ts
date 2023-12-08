@@ -8,18 +8,18 @@ interface UseAuthRedirectResult {
   checkAuthAndRedirect: () => void;
 }
 
-const isAuthenticated = localStorage.getItem('authToken') !== null;
 
 const useAuthRedirect = (): UseAuthRedirectResult => {
+  // const isAuthenticated = localStorage.getItem('authToken') !== null;
   const router = useRouter();
   const path = usePathname();
 
-  const [isLoggedIn, setIsLoggedIn] = useState(isAuthenticated);
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('authToken') !== null);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const checkAuthAndRedirect = async () => {
 
-    if (isAuthenticated) {
+    if (localStorage.getItem('authToken') !== null) {
       setIsLoggedIn(true);
     } else {
       setIsLoggedIn(false);

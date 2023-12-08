@@ -9,7 +9,7 @@ import { MdAutoDelete } from "react-icons/md";
 import { RiEditFill } from "react-icons/ri";
 import { useRouter } from "next/navigation";
 import DeleteConfirmModal from "../confirmation/deleteContentModal";
-import { useFetchAllNews } from "@/hooks/useFetchNews";
+import { useFetchAllNews } from "@/hooks/useNewsHook";
 import ContentTable from "./table";
 import AddContentBtn from "../button/addContent.button";
 import SortBy from "../sortby";
@@ -107,7 +107,7 @@ const NewsTable: React.FC = () => {
                 onChange={handleChangePage}
                 page={page}
                 siblingCount={0}
-                boundaryCount={4}
+                boundaryCount={2}
               />
 
               <AddContentBtn

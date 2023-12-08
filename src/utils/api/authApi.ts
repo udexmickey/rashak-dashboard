@@ -37,11 +37,17 @@ authApi.interceptors.response.use(
       // Attempt to refresh the access token
       try {
         const currentPath = window.location.pathname;
-        
-        const refreshedToken = currentPath !== '/login' && await refreshToken(); // Implement refreshToken function
-        // Retry the original request with the new token
-        error.config.headers.Authorization = `Bearer ${refreshedToken}`;
-        return authApi(error.config);
+        const refreshTokenKey = localStorage.getItem('refreshToken');
+
+        if (refreshTokenKey && currentPath !== '/login') {
+          const refreshedToken = await refreshToken(); // Implement refreshToken function
+          // Retry the original request with the new token
+          error.config.headers.Authorization = `Bearer ${refreshedToken}`;
+          return authApi(error.config);
+
+        } else {
+          return Promise.reject(error);
+        }
       } catch (refreshError) {
         // If refresh fails or there's an error, redirect to login or handle as needed
         handleAuthenticationError(refreshError);
@@ -57,7 +63,7 @@ const refreshToken = async () => {
     // Implement logic to refresh the access token using the refresh token
     const refreshToken = localStorage.getItem('refreshToken');
     const response = await authApi.post('/auth/refresh-token', { refreshToken });
-    const newAccessToken = response.data.authorization.access_token;
+    const newAccessToken = response.data.accessToken;
 
     // Update the access token in localStorage
     localStorage.setItem('authToken', newAccessToken);

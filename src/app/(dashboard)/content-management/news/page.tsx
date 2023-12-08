@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
 import {
   TextField,
   Button,
@@ -14,19 +14,29 @@ import Image from "next/image";
 // import ReactQuill from "react-quill";
 // import "react-quill/dist/quill.snow.css";
 import useUnsavedFormChanges from "@/hooks/useUnsavedFormChanges";
-import usePostData from "@/hooks/usePostData";
+import { usePostNews } from "@/hooks/useNewsHook";
 
 const NewsPostForm: React.FC = () => {
   const { setUnsavedChanges } = useUnsavedFormChanges();
-  const { postData, isError, loading, error } = usePostData();
+  // const { postData, isError, loading, error } = usePostData();
+  const {
+    mutateAsync: postData,
+    isError,
+    error,
+    isPending,
+    isSuccess,
+    isIdle,
+    isPaused,
+    reset,
+  } = usePostNews();
 
   const [title, setTitle] = useState<string>("");
   const [heroImage, setHeroImage] = useState<File | null>(null);
   const [blogContent, setBlogContent] = useState<string>("");
   const [youtubeLink, setYoutubeLink] = useState<string>("");
-  const [pressReleaseLinks, setPressReleaseLinks] = useState<string>("");
+  const [pressReleaseLink, setPressReleaseLink] = useState<string>("");
 
-  const [relatedPictures, setRelatedPictures] = useState<(File | null)[]>(
+  const [imageGallery, setImageGallery] = useState<(File | null)[]>(
     Array.from({ length: 6 }, () => null)
   );
 
@@ -52,7 +62,7 @@ const NewsPostForm: React.FC = () => {
   ) => {
     const files = event.target.files;
     if (files) {
-      setRelatedPictures((prevPictures) => {
+      setImageGallery((prevPictures) => {
         const updatedPictures = [...prevPictures];
         // Assuming you only want the first file
         updatedPictures[index] = Array.from(files)[0];
@@ -64,42 +74,74 @@ const NewsPostForm: React.FC = () => {
   const handleYoutubeLinkChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setYoutubeLink((prev) => (prev = event.target.value));
+    setYoutubeLink((prev) => (prev = event.target.value.trim()));
     setUnsavedChanges(true);
   };
 
-  const handlePressReleaseLinksChange = (
+  const handlePressReleaseLinkChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setPressReleaseLinks((prev) => (prev = event.target.value));
+    setPressReleaseLink((prev) => (prev = event.target.value.trim()));
     setUnsavedChanges(true);
   };
 
+  const formRef: any = React.useRef();
+
   // Inside handleSubmit
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const formDataObject = relatedPictures.reduce((acc, picture, index) => {
-      acc[`related-picture-${index}`] = picture;
-      return acc;
-    }, {} as Record<string, File | null>);
+    const imageGalleryFiles = imageGallery.filter((image) => ({
+      imageGallery: image !== null,
+    }));
+
+    // Filter out null values and create an array of objects with 'imageGallery' property
+    const imageGalleryObjects = imageGallery
+      .filter((image) => image !== null)
+      .map((image) => ({ imageGallery: image }));
 
     const formData = {
       title,
       youtubeLink,
-      pressReleaseLinks,
-      heroImage,
-      blogContent,
-      relatedPictures: formDataObject,
+      pressReleaseLink,
+      media: heroImage,
+      content: blogContent,
+      mediaType: "image",
+      newsType: "news",
+      author: "Rashak Agro",
+      // imageGallery: imageGalleryFiles,
+      ...Object.assign({}, ...imageGalleryObjects),
     };
 
-    console.log("Form Data:", formData);
-    postData(
-      "https://6567770364fcff8d73106d0b.mockapi.io/api/v1/content-magament",
-      formData
-    );
+    console.log("formData object", formData);
+
+    await postData({ ...formData });
     setUnsavedChanges(false);
+
+    formRef.current.reset();
   };
+
+  useEffect(() => {
+    if (isSuccess && !isIdle) {
+      setYoutubeLink((prev) => (prev = ""));
+      setPressReleaseLink((prev) => (prev = ""));
+      setHeroImage((prev) => (prev = null));
+      // setImageGallery([null]);
+      setBlogContent((prev) => (prev = ""));
+      setTitle((prev) => (prev = ""));
+
+      const resetTime = setTimeout(() => {
+        reset();
+      }, 3000);
+
+      return () => clearTimeout(resetTime);
+    }
+  }, [isIdle, isSuccess, reset]);
+
+  console.log("isSuccess", isSuccess);
+  console.log("isPending", isPending);
+  console.log("isIdle", isIdle);
+  console.log("isPaused", isPaused);
 
   return (
     <Paper elevation={3} className="p-8 max-w-7xl mx-auto w-full">
@@ -114,10 +156,13 @@ const NewsPostForm: React.FC = () => {
             width: "100%",
           },
         }}
-        noValidate
-        autoComplete="off"
+        // noValidate
+        autoComplete="on"
+        autoCorrect="on"
+        autoFocus
         className="flex flex-col space-y-4 md:space-y-8"
         onSubmit={handleSubmit}
+        ref={formRef}
       >
         {/* Title */}
         <TextField
@@ -131,6 +176,7 @@ const NewsPostForm: React.FC = () => {
               borderRadius: "2rem",
             },
           }}
+          required={true}
         />
 
         {/* Hero Image */}
@@ -141,6 +187,7 @@ const NewsPostForm: React.FC = () => {
             onChange={handleHeroImageChange}
             className="hidden"
             id="hero-image"
+            // required
           />
           <label htmlFor="hero-image" className="mb-4 max-w-[458px] w-full">
             <div className="h-full cursor-grab min-h-full relative flex md:justify-start items-center justify-center mt-4 md:mt-6">
@@ -236,6 +283,7 @@ const NewsPostForm: React.FC = () => {
                 height: "300px",
               },
             }}
+            required
           />
         </div>
 
@@ -244,7 +292,7 @@ const NewsPostForm: React.FC = () => {
           Related Pictures
         </label>
         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-2">
-          {relatedPictures.map((picture, index) => (
+          {imageGallery.map((picture, index) => (
             <div key={index} className="relative group">
               <input
                 type="file"
@@ -253,6 +301,7 @@ const NewsPostForm: React.FC = () => {
                 accept="image/*"
                 onChange={(e) => handleRelatedPictureChange(e, index)}
                 multiple
+                // required
               />
               <label
                 htmlFor={`related-picture-${index}`}
@@ -331,8 +380,8 @@ const NewsPostForm: React.FC = () => {
             <TextField
               label="Press Release Link"
               variant="outlined"
-              value={pressReleaseLinks}
-              onChange={handlePressReleaseLinksChange}
+              value={pressReleaseLink}
+              onChange={handlePressReleaseLinkChange}
               className="mb-4 max-w-[458px] w-full"
               InputProps={{
                 style: {
@@ -345,24 +394,43 @@ const NewsPostForm: React.FC = () => {
             <p>
               Error: {` `}
               <span className="text-[#ff0000]">
-                {` `} {error}
+                {` `} {error?.message}
               </span>
+            </p>
+          )}
+          {isPending && (
+            <p>
+              Please wait: {` `}
+              <span className="text-[#f1c557]">
+                {` `} While post is submmiting...
+              </span>
+            </p>
+          )}
+          {isSuccess && (
+            <p>
+              Successfully: {` `}
+              <span className="text-[#00A651]">{` `} posted</span>
             </p>
           )}
         </div>
 
         <Button
           variant="contained"
-          style={{ backgroundColor: "#00A651", color: "#ffffff" }}
+          style={{
+            backgroundColor: `${"#00A651"}`,
+            color: "#ffffff",
+            opacity: `${isPending ? ".6" : "1"}`,
+          }}
           type="submit"
           className="px-6 !text-base py-2 mt-12 float-right mr-8 max-w-max w-full justify-end self-end justify-self-end"
           sx={{
             "&:focus": { backgroundColor: "#00A651" },
             "&.Mui-error": { backgroundColor: "red" },
           }}
-          disabled={loading}
+          disabled={isPending}
+          onClick={() => formRef.current?.reportValidity()}
         >
-          Add +
+          {isPending ? "Posting..." : "Add +"}
         </Button>
       </Box>
     </Paper>
