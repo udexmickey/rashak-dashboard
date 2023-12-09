@@ -8,7 +8,7 @@ import DeleteConfirmationModal from "../confirmationUI/deleteAdminConfirmationMo
 import { useFetchAllTeam } from "@/hooks/useMembersHook";
 import { Pagination, Paper } from "@mui/material";
 import { useRouter } from "next/navigation";
-import MemberTable from "@/app/(dashboard)/content-management/component/Tables/Members.table";
+import MemberTable from "@/components/ui/Tables/Members.table";
 
 export default function TeamMemberTable() {
   const [openModal, setOpenModal] = useState(false);
@@ -70,7 +70,7 @@ export default function TeamMemberTable() {
     setPage((prev) => (prev = newPage));
   };
 
-  const headers = ["Name", "Date Created", "Role", "Linkedin"];
+  const headers = ["Name", "Role", "Linkedin", "Date Created"];
 
   return (
     <div className="relative overflow-x-auto sm:rounded-lg">
@@ -87,6 +87,7 @@ export default function TeamMemberTable() {
               handleOptionClick={handleOptionClick}
               headers={headers && headers}
               isLoading={isLoading}
+              member="team"
             />
 
             <div className="flex justify-around items-end my-8 rounded-lg">

@@ -6,7 +6,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { postUpload } from "@/utils/types/PostData.types";
 import EditOptionMenu from "@/components/ui/Tables/table.options";
 import { IconType } from "react-icons/lib";
 import Image from "next/image";
@@ -27,6 +26,7 @@ type Props = {
     clickedMemberId: string,
     selectedMember?: string
   ) => void;
+  member: string;
   headers: string[];
   isLoading: boolean;
 };
@@ -37,6 +37,7 @@ export default function MemberTable({
   handleOptionClick,
   headers,
   isLoading,
+  member,
 }: Props) {
   return (
     <TableContainer component={Paper}>
@@ -70,7 +71,7 @@ export default function MemberTable({
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell className="p-4 border-b border-gray-200">
-                  <Link href={`member-management/news/${row?._id}`}>
+                  <Link href={`member-${member}/${row?._id}`}>
                     <div className="flex items-center px-0 whitespace-nowrap ">
                       {(row.image || null) && (
                         <Image
@@ -98,14 +99,14 @@ export default function MemberTable({
                   </Link>
                 </TableCell>
                 <TableCell className="p-4 border-b border-gray-200">
-                  {row &&
-                    new Date(row?.createdAt as string | Date).toDateString()}
-                </TableCell>
-                <TableCell className="p-4 border-b border-gray-200">
                   {row?.role || ""}
                 </TableCell>
                 <TableCell className="p-4 border-b border-gray-200">
                   {row?.linkdenLink || ""}
+                </TableCell>
+                <TableCell className="p-4 border-b border-gray-200">
+                  {row &&
+                    new Date(row?.createdAt as string | Date).toDateString()}
                 </TableCell>
                 <TableCell className="p-4 border-b border-gray-200">
                   <EditOptionMenu
