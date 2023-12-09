@@ -7,7 +7,7 @@ import activityLogData from "./notification.activitylogs.json";
 import React, { useState } from "react";
 
 export default function Notification() {
-  const [isEmpty, setIsEmpty] = useState<boolean>(false);
+  const [isEmpty, setIsEmpty] = useState<boolean>(true);
   const [data, setData] = useState<NotificationProps[]>(activityLogData);
   return (
     <div>

@@ -20,7 +20,6 @@ const TopNav: React.FC<{ pageName: string }> = ({ pageName }) => {
     setIsSidebarOpen(false);
   };
 
-
   return (
     <div className="relative">
       <header className="h-[10vh] lg:pl-10 pl-6 flex justify-between items-center p-4 text-[#1E1E1E] md:pr-16 pr-8 bg-white">
@@ -57,13 +56,13 @@ const TopNav: React.FC<{ pageName: string }> = ({ pageName }) => {
           <Link href="/notification">
             <IconButton
               size="large"
-              aria-label="show 17 new notifications"
+              aria-label="show new notifications"
               color="inherit"
-              onClick={() => setOpenNotification(prev => !prev)}
+              onClick={() => setOpenNotification((prev) => !prev)}
             >
-              <Badge badgeContent={17} color="error">
-                <FaBell size={24} className="text-[#ED7524]" />
-              </Badge>
+              {/* <Badge badgeContent={""} color="error"> */}
+              <FaBell size={24} className="text-[#ED7524]" />
+              {/* </Badge> */}
             </IconButton>
           </Link>
           {/* {openNotification && <NotificationsMenu />} */}
