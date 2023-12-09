@@ -23,24 +23,23 @@ export default function DeleteConfirmationModal() {
             />
           </svg>
           <Typography
-            component={"h3"}
+            component={"h5"}
             variant="h3"
             className="mb-5 text-lg font-normal text-gray-500 "
           >
             Are you sure you want to delete this Admin?
           </Typography>
           <div className="flex justify-center items-center">
-
-          <Button
+            <Button
               variant="contained"
               color="success"
               className="inline-flex items-center justify-start w-full text-[#484848] text-xl font-medium bg-[#C7FFE2] border border-gray-200 rounded-lg cursor-pointer 
            hover:text-gray-600 hover:bg-gray-100 md:px-8 px-4 py-5 h-24"
-           onClick={() => {
-            <Alert severity="success" color="success">
-              Admin was Deleted successfully
-            </Alert>;
-          }}
+              onClick={() => {
+                <Alert severity="success" color="success">
+                  Admin was Deleted successfully
+                </Alert>;
+              }}
             >
               <span className="bg-white rounded-full h-9 w-9 justify-center items-center flex me-4 -ms-1">
                 <IoCheckmarkSharp
@@ -54,9 +53,9 @@ export default function DeleteConfirmationModal() {
               variant="contained"
               className="inline-flex items-center justify-start w-full text-[#484848] text-xl font-medium bg-[#ff000033] border border-gray-200 rounded-lg cursor-pointer 
            hover:text-gray-600 hover:bg-gray-100 md:px-8 px-4 py-5 h-24"
-           onClick={() => {
-            alert("close ");
-          }}
+              onClick={() => {
+                alert("close ");
+              }}
               sx={{ ml: 2 }}
             >
               <span className="bg-white rounded-full h-9 w-9 justify-center items-center flex me-4 -ms-1">

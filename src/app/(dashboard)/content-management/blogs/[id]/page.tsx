@@ -20,7 +20,7 @@ export default function BlogsPost({ params }: Props) {
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <UpdateBlogPostForm initialData={initialBlogsData} />
+        <UpdateBlogPostForm initialData={initialBlogsData} contentId={""} />
       )}
     </div>
   );

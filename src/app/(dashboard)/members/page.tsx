@@ -60,11 +60,11 @@ export default function MembersManagement() {
 
   return (
     <Box
-      sx={{ width: "100%", bgcolor: "white", minHeight: "63vh" }}
+      sx={{ width: "100%", bgcolor: "white", minHeight: "60vh" }}
       component={"div"}
-      className={'shadow-md'}
+      className={"shadow-md"}
     >
-      <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%", }}>
+      <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
         <Tabs
           value={value}
           TabIndicatorProps={{ style: { background: "#00A651" } }}
@@ -99,9 +99,14 @@ export default function MembersManagement() {
 
       <Button
         variant="contained"
-        style={{ backgroundColor: "#00A651", color: "#ffffff" }}
+        style={{
+          backgroundColor: "#00A651",
+          color: "#ffffff",
+          marginRight: "2rem",
+          marginBottom: "2rem",
+        }}
         type="submit"
-        className="px-6 !text-base py-2 capitalize mt-12 float-right mr-8"
+        className="px-6 !text-base py-2 capitalize mt-12 float-right mr-8 ml-10"
         sx={{
           "&:focus": { backgroundColor: "#00A651" },
           "&.Mui-error": { backgroundColor: "red" },

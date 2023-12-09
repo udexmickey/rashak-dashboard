@@ -10,7 +10,7 @@ import { RiEditFill } from "react-icons/ri";
 import { useRouter } from "next/navigation";
 import DeleteConfirmModal from "../confirmation/deleteContentModal";
 import { useFetchAllNews } from "@/hooks/useNewsHook";
-import ContentTable from "./table";
+import ContentTable from "./ContentTable";
 import AddContentBtn from "../button/addContent.button";
 import SortBy from "../sortby";
 

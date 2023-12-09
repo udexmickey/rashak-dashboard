@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default async function NotFound() {
   return (
-    <main className="px-4 py-4 sm:py-8 lg:px-8 flex flex-col items-center">
+    <main className="px-4 py-4 sm:py-8 lg:px-8 flex flex-col h-[100dvh] items-center">
       {/* logo section */}
       <div className="lg:w-72 grid place-items-start place-self-start">
         <Link href="/" as={"/"} className="-m-1.5 p-1.5 max-w-max max-h-12">

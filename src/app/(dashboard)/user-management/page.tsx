@@ -1,11 +1,11 @@
-'use client'
-import * as React from 'react';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import CustomPaginationActionsTable from '@/components/ui/Tables/users.table';
-import AdminTable from '@/components/ui/Tables/admins.table';
+"use client";
+import * as React from "react";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import CustomPaginationActionsTable from "@/components/ui/Tables/users.table";
+import AdminTable from "@/components/ui/Tables/admins.table";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -28,7 +28,7 @@ function CustomTabPanel(props: TabPanelProps) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography component={'div'}>{children}</Typography>
+          <Typography component={"div"}>{children}</Typography>
         </Box>
       )}
     </div>
@@ -37,12 +37,12 @@ function CustomTabPanel(props: TabPanelProps) {
 
 function a11yProps(index: number) {
   return {
-  //   id: `simple-tab-${index}`,
-  //   'aria-controls': `simple-tabpanel-${index}`,
-  // };
-  id: `full-width-tab-${index}`,
-  'aria-controls': `full-width-tabpanel-${index}`,
-};
+    //   id: `simple-tab-${index}`,
+    //   'aria-controls': `simple-tabpanel-${index}`,
+    // };
+    id: `full-width-tab-${index}`,
+    "aria-controls": `full-width-tabpanel-${index}`,
+  };
 }
 
 export default function UserManagement() {
@@ -53,31 +53,36 @@ export default function UserManagement() {
   };
 
   return (
-<Box sx={{ width: '100%' }}>
-  <Box sx={{ borderBottom: 1, borderColor: 'divider', width: '100%' }}>
-    <Tabs 
-    value={value} 
-    TabIndicatorProps={{style: {background:'#00A651'}}}
-    // onChange={handleChange} 
-    // aria-label="basic tabs example"
-    // value={value}
-    onChange={handleChange}
-    // indicatorColor="secondary"
-    textColor="inherit"
-    variant="fullWidth"
-    aria-label="full width tabs example"
-    >
-      <Tab label="Manage Admins" {...a11yProps(0)} className='text-[#484848] text-lg capitalize' style={{ flexBasis: '100%' }} />
-      <Tab label="Admin Requests" {...a11yProps(1)} className='text-[#484848] text-lg capitalize' style={{ flexBasis: '100%' }} />
-    </Tabs>
-  </Box>
-  <CustomTabPanel value={value} index={0}>
-    <AdminTable />
-  </CustomTabPanel>
-  <CustomTabPanel value={value} index={1}>
-    <CustomPaginationActionsTable />
-  </CustomTabPanel>
-</Box>
-
+    <Box sx={{ width: "100%" }}>
+      <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
+        <Tabs
+          value={value}
+          TabIndicatorProps={{ style: { background: "#00A651" } }}
+          onChange={handleChange}
+          textColor="inherit"
+          variant="fullWidth"
+          aria-label="full width tabs example"
+        >
+          <Tab
+            label="Manage Admins"
+            {...a11yProps(0)}
+            className="text-[#484848] text-lg capitalize"
+            style={{ flexBasis: "100%" }}
+          />
+          <Tab
+            label="Admin Requests"
+            {...a11yProps(1)}
+            className="text-[#484848] text-lg capitalize"
+            style={{ flexBasis: "100%" }}
+          />
+        </Tabs>
+      </Box>
+      <CustomTabPanel value={value} index={0}>
+        <AdminTable />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={1}>
+        <CustomPaginationActionsTable />
+      </CustomTabPanel>
+    </Box>
   );
 }

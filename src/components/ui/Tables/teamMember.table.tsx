@@ -1,17 +1,30 @@
 "use client";
-import Link from "next/link";
-import React, { useState } from "react";
-import EditOptionMenu from "./table.options";
+import React, { ChangeEvent, useState } from "react";
 import NestedModal from "../modal";
 import { BiEditAlt } from "react-icons/bi";
 import { MdAutoDelete } from "react-icons/md";
-import { teamMembersData } from "@/app/(dashboard)/members/seed";
 import TeamMemberUpdateForm from "../Form/teamUpdate.form";
 import DeleteConfirmationModal from "../confirmationUI/deleteAdminConfirmationModal";
+import { useFetchAllTeam } from "@/hooks/useMembersHook";
+import { Pagination, Paper } from "@mui/material";
+import { useRouter } from "next/navigation";
+import MemberTable from "@/app/(dashboard)/content-management/component/Tables/Members.table";
 
 export default function TeamMemberTable() {
   const [openModal, setOpenModal] = useState(false);
   const [modalType, setModalType] = useState("");
+  const [page, setPage] = React.useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(6);
+  const [memberId, setMemberId] = useState<string>("");
+  const {
+    isLoading,
+    data: teamMembersData,
+    isError,
+  } = useFetchAllTeam({
+    searchText: "",
+    pageNumber: page,
+    pageSize: rowsPerPage,
+  });
 
   const options = [
     {
@@ -31,73 +44,85 @@ export default function TeamMemberTable() {
     if (optionName.toLowerCase() === "edit") {
       setModalType("edit");
       setOpenModal(true);
-      console.log("me and edit");
+      setMemberId((prev) => (prev = clickedTeamMemberId));
     } else if (optionName.toLowerCase() === "remove") {
       setModalType("remove");
       setOpenModal(true);
-      console.log("remove you");
+      setMemberId((prev) => (prev = clickedTeamMemberId));
     } else {
       return;
     }
   };
 
-const teamMembersDatas = teamMembersData && teamMembersData.find((member) => member.id === '1')
+  const teamMembersDatas =
+    teamMembersData &&
+    teamMembersData?.data?.find((member: any) => member?._id === memberId);
 
-   // Handler for updating the team member
-   const handleUpdate = (formData: FormData) => {
+  // Handler for updating the team member
+  const handleUpdate = (formData: FormData) => {
     // Perform the update logic with the formData
     console.log("Updating team member with data:", formData);
   };
 
+  const router = useRouter();
+
+  const handleChangePage = (event: ChangeEvent<unknown>, newPage: number) => {
+    setPage((prev) => (prev = newPage));
+  };
+
+  const headers = ["Name", "Date Created", "Role", "Linkedin"];
+
   return (
     <div className="relative overflow-x-auto sm:rounded-lg">
-      <table className="text-sm text-left w-full">
-        <thead className="text-sm text-gray-700 bg-white border-b uppercase">
-          <tr>
-            <th scope="col" className="px-6 py-8 text-base">
-              Name
-            </th>
-            <th scope="col" className=" py-8 text-base">
-              Role
-            </th>
-            <th scope="col" className="px-6 py-8 text-base">
-              Edit
-            </th>
-          </tr>
-        </thead>
-        <tbody className="bg-white text-lg text-[#1E1E1E]">
-          {teamMembersData &&
-            teamMembersData.map((admin, idx) => (
-              <tr className="bg-white border-b" key={admin.name}>
-                <th
-                  scope="row"
-                  className="px-6 py-3 font-medium whitespace-nowrap list-decimal max-w-max"
-                >
-                  {idx + 1}. &nbsp; {admin.name}
-                </th>
-                <td>{admin.role}</td>
-                <td className="px-6 py-3 text-[#1E1E1E]">
-                  <EditOptionMenu
-                    adminId={admin.id}
-                    options={options}
-                    handleOptionClick={handleOptionClick}
-                  />
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
-      {openModal && (
-        <NestedModal
-          handleClose={() => setOpenModal(false)}
-          title={modalType === "edit" ? "Edit Team Member" : "Remove Team Member"} 
-          modalClassName={""}>
-          {modalType === "edit" ? 
-          <TeamMemberUpdateForm initialValues={teamMembersDatas as any} handleUpdate={handleUpdate} />
-          : null}
-          {modalType === "remove" ?  <DeleteConfirmationModal /> : null}
-        </NestedModal>
-      )}
+      <Paper
+        elevation={3}
+        style={{ maxHeight: "70dvh", overflowY: "auto", height: "100dvh" }}
+        className="flex flex-col justify-between items-around"
+      >
+        {!isError && (
+          <>
+            <MemberTable
+              data={teamMembersData && teamMembersData?.data}
+              options={options}
+              handleOptionClick={handleOptionClick}
+              headers={headers && headers}
+              isLoading={isLoading}
+            />
+
+            <div className="flex justify-around items-end my-8 rounded-lg">
+              <Pagination
+                count={
+                  teamMembersData &&
+                  Math.ceil(teamMembersData?.totalItems / rowsPerPage)
+                }
+                onChange={handleChangePage}
+                page={page}
+                siblingCount={0}
+                boundaryCount={2}
+              />
+            </div>
+          </>
+        )}
+
+        {openModal && (
+          <NestedModal
+            handleClose={() => setOpenModal(false)}
+            title={
+              modalType === "edit" ? "Edit Team Member" : "Remove Team Member"
+            }
+            modalClassName={""}
+          >
+            {modalType === "edit" ? (
+              <TeamMemberUpdateForm
+                initialValues={teamMembersDatas as any}
+                handleUpdate={handleUpdate}
+              />
+            ) : modalType === "remove" ? (
+              <DeleteConfirmationModal />
+            ) : null}
+          </NestedModal>
+        )}
+      </Paper>
     </div>
   );
 }

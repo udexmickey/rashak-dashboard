@@ -9,7 +9,7 @@ import { MdAutoDelete } from "react-icons/md";
 import { RiEditFill } from "react-icons/ri";
 import { useRouter } from "next/navigation";
 import DeleteConfirmModal from "../confirmation/deleteContentModal";
-import ContentTable from "./table";
+import ContentTable from "./ContentTable";
 import SortBy from "../sortby";
 import AddContentBtn from "../button/addContent.button";
 import { useFetchAllBlogs } from "@/hooks/useFetchAllBlogs";
