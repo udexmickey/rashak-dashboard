@@ -1,6 +1,8 @@
 "use client";
 import axios from 'axios';
 
+export const fetchCache = 'force-no-store';
+
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const authApi = axios.create({
@@ -13,12 +15,12 @@ const authApi = axios.create({
 
 // Interceptor to add Bearer token to each request
 authApi.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('authToken');
+  async (config) => {
+    const token = await localStorage.getItem('authToken');
 
-    if (token) {
+    // if (token) {
       config.headers.Authorization = `Bearer ${token}`;
-    }
+    // }
 
     return config;
   },
