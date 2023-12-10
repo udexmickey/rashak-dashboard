@@ -10,7 +10,7 @@ const authApi = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  // withCredentials: true,
+  withCredentials: true,
 });
 
 // Interceptor to add Bearer token to each request
@@ -43,9 +43,9 @@ authApi.interceptors.response.use(
         const refreshTokenKey = localStorage.getItem('refreshToken');
           
         if (refreshTokenKey || currentPath !== '/login') {
-          const refreshedToken = await refreshToken(); // Implement refreshToken function
+          // const refreshedToken = await refreshToken(); // Implement refreshToken function
           // Retry the original request with the new token
-          error.config.headers.Authorization = `Bearer ${refreshedToken}`;
+          // error.config.headers.Authorization = `Bearer ${refreshedToken}`;
           return authApi(error.config);
 
         } else {
