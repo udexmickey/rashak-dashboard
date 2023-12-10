@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 export default function Home() {
   const router = useRouter();
 
-  const { isLoggedIn, checkAuthAndRedirect } = useIsLoggedIn();
+  // const { isLoggedIn, checkAuthAndRedirect } = useIsLoggedIn();
 
   useEffect(() => {
     // Check if user is LoggedIn
