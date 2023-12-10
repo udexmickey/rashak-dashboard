@@ -1,3 +1,4 @@
+"use client";
 import axios from 'axios';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -38,19 +39,11 @@ authApi.interceptors.response.use(
       try {
         const currentPath = window.location.pathname;
         const refreshTokenKey = localStorage.getItem('refreshToken');
-        
-          console.log('an error status', error.response.status);
-
-        if (refreshTokenKey || currentPath !== '/login') {
-
-          console.log('an error should refresh', error.response.status);
-
-          // const refreshedToken = await refreshToken(); // Implement refreshToken function
           
-          console.log('an error was refreshed', error.response.status);
-
+        if (refreshTokenKey || currentPath !== '/login') {
+          const refreshedToken = await refreshToken(); // Implement refreshToken function
           // Retry the original request with the new token
-          // error.config.headers.Authorization = `Bearer ${refreshedToken}`;
+          error.config.headers.Authorization = `Bearer ${refreshedToken}`;
           return authApi(error.config);
 
         } else {
