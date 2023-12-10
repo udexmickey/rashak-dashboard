@@ -1,7 +1,7 @@
 import authApi from "../authApi";
 import { NewsDataType } from "@/utils/types/news.types";
 
-export const fetchCache = 'force-no-store';
+ 
 
 interface ErrorResponse {
   message: string;

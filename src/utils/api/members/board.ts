@@ -2,7 +2,7 @@ import authApi from "../authApi";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL as RequestInfo | URL
 
-export const fetchCache = 'force-no-store';
+ 
 
 export async function getAllBoardMember({ pageNumber, searchText, pageSize } : { pageNumber?: number, searchText?: string | number | undefined, pageSize?: number }) {
     try {

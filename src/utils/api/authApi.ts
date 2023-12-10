@@ -1,6 +1,8 @@
 "use client";
 import axios from 'axios';
 
+ 
+
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const authApi = axios.create({
@@ -8,7 +10,7 @@ const authApi = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true, // Set this to true
+  withCredentials: true,
 });
 
 // Interceptor to add Bearer token to each request

@@ -1,6 +1,6 @@
 import authApi from "../authApi";
 
-export const fetchCache = 'force-no-store';
+ 
 
 export async function getOneBlog(id: any) {
     try {

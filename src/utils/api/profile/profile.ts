@@ -4,7 +4,7 @@ const baseUrl = process.env.NEXT_PUBLIC_API_URL as RequestInfo | URL
 
 export async function getProfile() {
     try {
-        const response = await authApi.get('/profile')
+        const response = await authApi.post('/profile')
 
         return await response.data; 
     } catch (error: any) {
