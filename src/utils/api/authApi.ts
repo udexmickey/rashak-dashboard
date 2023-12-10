@@ -10,13 +10,13 @@ const authApi = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true,
+  // withCredentials: true,
 });
 
 // Interceptor to add Bearer token to each request
 authApi.interceptors.request.use(
-  async (config) => {
-    const token = await localStorage.getItem('authToken');
+  (config) => {
+    const token = localStorage.getItem('authToken');
 
     // if (token) {
       config.headers.Authorization = `Bearer ${token}`;
