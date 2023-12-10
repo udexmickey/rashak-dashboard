@@ -1,8 +1,6 @@
 "use client";
 import axios from 'axios';
 
-export const fetchCache = 'force-no-store';
-
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const authApi = axios.create({
