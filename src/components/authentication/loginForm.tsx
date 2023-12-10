@@ -1,4 +1,4 @@
-"use client";
+// loginForm.tsx
 import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { Paper, TextField, Button } from "@mui/material";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
@@ -34,8 +34,11 @@ const LoginForm = () => {
   } = useLogin();
   const router = useRouter();
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const redirectAfterLogin = localStorage.getItem("redirectAfterLogin");
+  // Check if running on the client (browser) before accessing localStorage
+  const redirectAfterLogin =
+    typeof window !== "undefined"
+      ? localStorage.getItem("redirectAfterLogin")
+      : null;
 
   const handleLoginSuccess = () => {
     if (redirectAfterLogin) {

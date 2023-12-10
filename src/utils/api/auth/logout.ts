@@ -1,3 +1,4 @@
+"use client";
 import authApi from "../authApi";
 
 export async function logOutApi () {

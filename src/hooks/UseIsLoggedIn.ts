@@ -1,44 +1,47 @@
 // useAuthRedirect.ts
 import { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-// import useAuth from './useAuth'; // Import your useAuth hook
 
 interface UseAuthRedirectResult {
   isLoggedIn: boolean;
   checkAuthAndRedirect: () => void;
 }
 
-
 const useAuthRedirect = (): UseAuthRedirectResult => {
-  // const isAuthenticated = localStorage.getItem('authToken') !== null;
   const router = useRouter();
   const path = usePathname();
 
-  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('authToken') !== null);
+  // Ensure localStorage is available (client-side)
+  const isLocalStorageAvailable = typeof window !== 'undefined' && window.localStorage;
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    isLocalStorageAvailable ? localStorage.getItem('authToken') !== null : false
+  );
+
   const checkAuthAndRedirect = async () => {
+    if (isLocalStorageAvailable) {
+      if (localStorage.getItem('authToken') !== null) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
 
-    if (localStorage.getItem('authToken') !== null) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-
-      // Token is not present or expired, try refreshing
-      try {
-        setIsLoggedIn(true); // Set user as logged in after successful refresh
-      } catch (error) {
-        // If refresh fails or there's an error, redirect to login
-        localStorage.setItem('redirectAfterLogin', path);
-        router.push('/login');
+        // Token is not present or expired, try refreshing
+        try {
+          // Simulate a successful refresh
+          setIsLoggedIn(true);
+        } catch (error) {
+          // If refresh fails or there's an error, redirect to login
+          localStorage.setItem('redirectAfterLogin', path);
+          router.push('/login');
+        }
       }
     }
   };
 
   useEffect(() => {
     checkAuthAndRedirect();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLocalStorageAvailable]); // Run the effect when localStorage becomes available
 
   return { isLoggedIn, checkAuthAndRedirect };
 };
