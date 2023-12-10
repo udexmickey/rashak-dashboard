@@ -45,12 +45,12 @@ authApi.interceptors.response.use(
 
           console.log('an error should refresh', error.response.status);
 
-          const refreshedToken = await refreshToken(); // Implement refreshToken function
+          // const refreshedToken = await refreshToken(); // Implement refreshToken function
           
           console.log('an error was refreshed', error.response.status);
 
           // Retry the original request with the new token
-          error.config.headers.Authorization = `Bearer ${refreshedToken}`;
+          // error.config.headers.Authorization = `Bearer ${refreshedToken}`;
           return authApi(error.config);
 
         } else {
