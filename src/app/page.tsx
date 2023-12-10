@@ -12,7 +12,7 @@ export default function Home() {
 
   useEffect(() => {
     // Check if user is LoggedIn
-    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const isLoggedIn = localStorage.getItem("authToken") !== null;
 
     if (!isLoggedIn) {
       router.push("/login");
@@ -20,7 +20,6 @@ export default function Home() {
       router.push("/dashboard");
     }
   }, [router]);
-  console.log("isLoggedIn", isLoggedIn);
 
   return <div>{/* Welcome Are you logged in ?  */}</div>;
 }
