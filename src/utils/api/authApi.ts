@@ -18,9 +18,9 @@ authApi.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('authToken');
 
-    // if (token) {
+    if (token) {
       config.headers.Authorization = `Bearer ${token}`;
-    // }
+    }
 
     return config;
   },
@@ -43,9 +43,9 @@ authApi.interceptors.response.use(
         const refreshTokenKey = localStorage.getItem('refreshToken');
           
         if (refreshTokenKey || currentPath !== '/login') {
-          // const refreshedToken = await refreshToken(); // Implement refreshToken function
+          const refreshedToken = await refreshToken(); // Implement refreshToken function
           // Retry the original request with the new token
-          // error.config.headers.Authorization = `Bearer ${refreshedToken}`;
+          error.config.headers.Authorization = `Bearer ${refreshedToken}`;
           return authApi(error.config);
 
         } else {
