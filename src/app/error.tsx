@@ -15,22 +15,22 @@ export default function Error({
     <div className="flex justify-center items-center min-h-[96dvh] md:px-8 px-4 mx-auto max-w-[114rem] w-screen break-words custom-overflow-wrap-anywhere h-full bg-slate-800 text-white">
       <div className="flex justify-center items-center flex-col gap-y-4">
         <h1 className="md:text-4xl text-2xl text-red-600">
-          Opps!!! An Error Occured
+          Oops!!! An Error Occured
         </h1>
         <h4 className="md:text-5xl text-2xl text-center font-extrabold text-gray-600">
           {`There's no post available at the moment`}
         </h4>
-        {process.env.NODE_ENV !== "production" && (
-          <>
-            <div className="md:text-2xl text-xl text-gray-600">
-              {`Error message => ${error.message}`}
-            </div>
-            <div>
-              {`Error Cause => ${error.cause}`}
-              {`Error stack => ${error.stack}`}
-            </div>
-          </>
-        )}
+        {/* {process.env.NODE_ENV !== "production" && ( */}
+        <>
+          <div className="md:text-2xl text-xl text-gray-600">
+            {`Error message => ${error.message}`}
+          </div>
+          <div>
+            {`Error Cause => ${error.cause}`}
+            {/* {`Error stack => ${error.stack}`} */}
+          </div>
+        </>
+        {/* )} */}
 
         <div className="md:text-base text-sm text-gray-600 mx-auto">
           <button
