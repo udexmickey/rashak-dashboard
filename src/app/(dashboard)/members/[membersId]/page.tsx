@@ -20,17 +20,17 @@ export async function generateMetadata(
 
   // fetch data / api data
   const members = membersData?.find((data) => {
-    return data.id === membersId;
+    return data._id === membersId;
   });
 
-  if(!members?.id) {
+  if (!members?._id) {
     return {
-        title: 'Not Found',
-        description: 'The page is not found',
-        alternates: {
-            canonical: `/members/${membersId}`
-        }
-    }
+      title: "Not Found",
+      description: "The page is not found",
+      alternates: {
+        canonical: `/members/${membersId}`,
+      },
+    };
   }
   // optionally access and extend (rather than replace) parent metadata
   const previousImages = (await parent).openGraph?.images || [];
@@ -41,19 +41,19 @@ export async function generateMetadata(
       // images: [`${members && members.url}`, ...previousImages],
       images: [
         {
-          url: `${members && members.id}`,
+          url: `${members && members._id}`,
           width: 1200,
-          height: 630, 
+          height: 630,
         },
-        ...previousImages
+        ...previousImages,
       ],
       description: members && members.Department,
       title: members && members?.name,
     },
     alternates: {
-        canonical: `/members/${membersId}`
+      canonical: `/members/${membersId}`,
     },
-    description: members && members.Department
+    description: members && members.Department,
   };
 }
 
@@ -67,7 +67,7 @@ export default async function MembersPost({
   const { membersId } = params;
 
   const members = membersData?.find((data) => {
-    return data.id === membersId;
+    return data._id === membersId;
   });
 
   return (

@@ -9,11 +9,18 @@ import {
   FaChevronRight,
 } from "react-icons/fa";
 import { FaUserGroup } from "react-icons/fa6";
-import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
+import {
+  Button,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
 import WelcomeCard from "../ui/cards/welcomeCard";
 import { IoIosReturnRight } from "react-icons/io";
+import { useLogout } from "@/hooks/useLogout";
 
 interface SidebarItemProps {
   icon: IconType;
@@ -80,6 +87,12 @@ const sidebarItems = [
 const Sidebar: React.FC<SidebarProps> = ({ handleCloseSidebar }) => {
   let router = usePathname();
 
+  const { mutateAsync: logoutMutate } = useLogout();
+
+  const handleLogout = async () => {
+    await logoutMutate();
+  };
+
   return (
     <aside className=" pl-8 bg-white" aria-label="Sidebar">
       <div className="h-[80dvh] w-80 flex flex-col items-center justify-start">
@@ -125,9 +138,10 @@ const Sidebar: React.FC<SidebarProps> = ({ handleCloseSidebar }) => {
         </div>
         {/* <ListItem> */}
         <div className="flex self-start py-4">
-          <Link
-            href={"/login"}
-            className="bottom flex justify-center items-center float-left"
+          <Button
+            // href={"/login"}
+            className="bottom flex justify-center items-center float-left capitalize"
+            onClick={handleLogout}
           >
             <div className="bg-[#FF000033] rounded-full w-10 h-10 flex justify-center items-center">
               <FaSignOutAlt
@@ -147,7 +161,7 @@ const Sidebar: React.FC<SidebarProps> = ({ handleCloseSidebar }) => {
                 aria-hidden="true"
               />
             </div>
-          </Link>
+          </Button>
         </div>
       </div>
     </aside>

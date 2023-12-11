@@ -47,8 +47,7 @@ export default async function MembersById({
   params: { membersId: string };
 }) {
   const members =
-    membersData &&
-    membersData.find((admin) => admin.id === params.membersId);
+    membersData && membersData.find((admin) => admin._id === params.membersId);
 
   return (
     <div className="">

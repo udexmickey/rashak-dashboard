@@ -20,17 +20,17 @@ export async function generateMetadata(
 
   // fetch data / api data
   const usermanagement = usermanagementData?.find((data) => {
-    return data.id === usermanagementId;
+    return data._id === usermanagementId;
   });
 
-  if(!usermanagement?.id) {
+  if (!usermanagement?._id) {
     return {
-        title: 'Not Found',
-        description: 'The page is not found',
-        alternates: {
-            canonical: `/usermanagement/${usermanagementId}`
-        }
-    }
+      title: "Not Found",
+      description: "The page is not found",
+      alternates: {
+        canonical: `/usermanagement/${usermanagementId}`,
+      },
+    };
   }
   // optionally access and extend (rather than replace) parent metadata
   const previousImages = (await parent).openGraph?.images || [];
@@ -41,19 +41,19 @@ export async function generateMetadata(
       // images: [`${usermanagement && usermanagement.url}`, ...previousImages],
       images: [
         {
-          url: `${usermanagement && usermanagement.id}`,
+          url: `${usermanagement && usermanagement._id}`,
           width: 1200,
-          height: 630, 
+          height: 630,
         },
-        ...previousImages
+        ...previousImages,
       ],
       description: usermanagement && usermanagement.Department,
       title: usermanagement && usermanagement?.name,
     },
     alternates: {
-        canonical: `/usermanagement/${usermanagementId}`
+      canonical: `/usermanagement/${usermanagementId}`,
     },
-    description: usermanagement && usermanagement.Department
+    description: usermanagement && usermanagement.Department,
   };
 }
 
@@ -67,7 +67,7 @@ export default async function UsermanagementPost({
   const { usermanagementId } = params;
 
   const usermanagement = usermanagementData?.find((data) => {
-    return data.id === usermanagementId;
+    return data._id === usermanagementId;
   });
 
   return (

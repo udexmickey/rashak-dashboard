@@ -25,9 +25,7 @@ export async function generateMetadata(
       canonical: `/user-management/${usermanagementId}`,
     },
     openGraph: {
-      images: [
-        ...previousImages,
-      ],
+      images: [...previousImages],
     },
   };
 }
@@ -41,7 +39,7 @@ export default async function UsermanagementById({
 }) {
   const usermanagement =
     usermanagementData &&
-    usermanagementData.find((admin) => admin.id === params.usermanagementId);
+    usermanagementData.find((admin) => admin._id === params.usermanagementId);
 
   return (
     <div className="">

@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import EditOptionMenu from "./table.options";
 import NestedModal from "../modal";
 import ConfirmationModal from "../confirmationUI/deleteAdminConfirmationModal";
@@ -10,6 +10,7 @@ import DepartmentCard from "../cards/DepartmentCard";
 import { useFetchAllAdmin } from "@/hooks/useAdminsHook";
 import { Pagination, Paper } from "@mui/material";
 import EmptyStateBox from "../placeholders/notification.placeholder";
+import { useReassignDepartment } from "@/hooks/useDepartment";
 
 export default function AdminTable() {
   const [openModal, setOpenModal] = useState(false);
@@ -17,7 +18,7 @@ export default function AdminTable() {
   const [modalType, setModalType] = useState("");
   const [page, setPage] = React.useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(6);
-  const [memberId, setMemberId] = useState<string>("");
+  const [adminId, setAdminId] = useState<string>("");
   const {
     isLoading,
     data: usermanagementData,
@@ -39,26 +40,41 @@ export default function AdminTable() {
     },
   ];
 
+  const [showConfirmationModal, setShowConfirmationModal] =
+    useState<boolean>(false);
+
   const handleOptionClick = (optionName: string, clickedAdminId: string) => {
     if (optionName.toLowerCase() === "re-assign") {
+      setAdminId(clickedAdminId);
       setModalType("re-assign");
       setOpenModal(true);
     } else if (optionName.toLowerCase() === "delete") {
       setModalType("delete");
       setOpenModal(true);
       setModalContent(<ConfirmationModal />);
+      setAdminId(clickedAdminId);
     } else {
       return;
     }
   };
 
-  function handleReassign(adminId: string, selectedDepartment: string): void {
-    throw new Error("Function not implemented.");
-  }
-
   const handleChangePage = (event: ChangeEvent<unknown>, newPage: number) => {
     setPage((prev) => (prev = newPage));
   };
+  const {
+    mutateAsync: ReassignAdmin,
+    isPending: ReassignLoading,
+    isError: ReassignError,
+    isSuccess: ReassignSuccess,
+  } = useReassignDepartment();
+
+  const handleReassign = async () => {
+    await ReassignAdmin(adminId);
+  };
+
+  useEffect(() => {
+    ReassignSuccess && setOpenModal(false);
+  }, [ReassignSuccess]);
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -121,7 +137,7 @@ export default function AdminTable() {
                       </td>
                       <td className="px-6 py-4 text-[#1E1E1E]">
                         <EditOptionMenu
-                          adminId={admin.id}
+                          adminId={admin._id}
                           options={options}
                           handleOptionClick={handleOptionClick}
                         />
@@ -130,6 +146,7 @@ export default function AdminTable() {
                   ))}
               </tbody>
             </table>
+
             <div className="flex justify-around items-end my-8 rounded-lg bg-white">
               <Pagination
                 count={
@@ -154,7 +171,8 @@ export default function AdminTable() {
             <DepartmentCard
               title="Re-Assign Admin Department"
               handleReassign={handleReassign}
-              adminId={""}
+              adminId={adminId}
+              handleConfirm={handleReassign}
             />
           ) : null}
           {modalType === "delete" ? <ConfirmationModal /> : null}

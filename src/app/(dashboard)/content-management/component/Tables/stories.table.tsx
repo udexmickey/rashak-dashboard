@@ -139,9 +139,9 @@ const StoryTable: React.FC = () => {
                         (page - 1) * rowsPerPage + rowsPerPage
                       )
                       .map((item) => (
-                        <TableRow key={item.id}>
+                        <TableRow key={item._id}>
                           <TableCell className="p-4 border-b border-gray-200">
-                            {/* <Link href={`content-management/stories/${item.id}`}> */}
+                            {/* <Link href={`content-management/stories/${item._id}`}> */}
                             <div className="flex items-center px-2 whitespace-nowrap ">
                               <Image
                                 className="w-10 h-10 rounded-full"
@@ -171,7 +171,7 @@ const StoryTable: React.FC = () => {
                           </TableCell>
                           <TableCell className="p-4 border-b border-gray-200">
                             <EditOptionMenu
-                              adminId={item.id}
+                              adminId={item._id}
                               options={options}
                               handleOptionClick={handleOptionClick}
                               title={item.title}

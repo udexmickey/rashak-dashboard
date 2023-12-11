@@ -1,7 +1,7 @@
 import { logOutApi } from '@/utils/api/auth/logout';
 import { useMutation } from '@tanstack/react-query';
 
-export const useLogin = () => {
+export const useLogout = () => {
   // Use react-query's useMutation hook
   const logOutMutation = useMutation({
     mutationFn: async () => await logOutApi(),

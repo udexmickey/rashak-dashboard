@@ -9,9 +9,17 @@ interface DepartmentCardProps {
   title: string;
   adminId: string;
   handleReassign: (adminId: string, selectedDepartment: string) => void;
+  handleConfirm: () => void;
+  // showConfirmationModal: boolean;
+  // setShowConfirmationModal: (prev: boolean) => void;
+  // handleNestedClose: () => void;
 }
 
-const DepartmentCard: React.FC<DepartmentCardProps> = ({ title, adminId }) => {
+const DepartmentCard: React.FC<DepartmentCardProps> = ({
+  title,
+  adminId,
+  handleConfirm,
+}) => {
   const [selectedDepartment, setSelectedDepartment] = useState<string>("");
   const [showConfirmationModal, setShowConfirmationModal] =
     useState<boolean>(false);
@@ -24,9 +32,10 @@ const DepartmentCard: React.FC<DepartmentCardProps> = ({ title, adminId }) => {
     setSelectedDepartment((event.target as HTMLInputElement).value);
   };
 
-  useEffect(() => {
-    console.log("selectedDepartment", selectedDepartment);
-  }, [selectedDepartment]);
+  // useEffect(() => {
+  //   console.log("selectedDepartment", selectedDepartment);
+  //   console.log("adminId", adminId);
+  // }, [adminId, selectedDepartment]);
 
   return (
     <>
@@ -102,7 +111,7 @@ const DepartmentCard: React.FC<DepartmentCardProps> = ({ title, adminId }) => {
         <Button
           variant="contained"
           color="primary"
-          style={{ color: "#fff", backgroundColor: '#00A651' }}
+          style={{ color: "#fff", backgroundColor: "#00A651" }}
           className="max-w-max w-full grid place-items-center px-12 py-4 rounded-2xl"
           onClick={handleAssignClick}
           disabled={selectedDepartment === ""}
@@ -115,6 +124,7 @@ const DepartmentCard: React.FC<DepartmentCardProps> = ({ title, adminId }) => {
             adminId={adminId}
             selectedDepartment={selectedDepartment}
             handleClose={() => setShowConfirmationModal(false)}
+            handleConfirm={handleConfirm}
           />
         )}
       </FormControl>

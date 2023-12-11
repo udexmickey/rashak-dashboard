@@ -28,20 +28,22 @@ interface ConfirmationModalProps {
   adminId: string;
   selectedDepartment: string;
   handleClose: () => void;
+  handleConfirm: () => void;
 }
 
 const AssignedConfirmModal: React.FC<ConfirmationModalProps> = ({
-  adminId,
+  // adminId,
   selectedDepartment,
   handleClose,
+  handleConfirm,
 }) => {
-  const handleConfirm = () => {
-    console.log(
-      `Admin ID: ${adminId}, Selected Department: ${selectedDepartment}`
-    );
-    // handleClose();
-    <PositionedSnackbar />;
-  };
+  // const handleConfirm = () => {
+  // console.log(
+  //   `Admin ID: ${adminId}, Selected Department: ${selectedDepartment}`
+  // );
+  //   // handleClose();
+  //   <PositionedSnackbar />;
+  // };
 
   return (
     <div>
@@ -62,13 +64,13 @@ const AssignedConfirmModal: React.FC<ConfirmationModalProps> = ({
             <IoClose />
           </Typography>
           <Typography
-          component="div"
+            component="div"
             className="text-[#1E1E1E] text-2xl text-center"
           >
             Are you sure you want to Re-assign this admin to
             <Typography className="block text-2xl">
               <span className="text-[#00A651]">{selectedDepartment}</span>
-              {` `}Department?
+              {` `} Department?
             </Typography>
           </Typography>
           <div className="flex justify-center items-center">
