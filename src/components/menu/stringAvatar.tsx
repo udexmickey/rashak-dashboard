@@ -16,13 +16,34 @@ function stringToColor(string: string) {
 }
 
 function stringAvatar(name: string) {
+  const words = name?.split(" ");
+
+  // Handle the case where there's only one word
+  if (words && words.length === 1) {
+    return {
+      sx: {
+        bgcolor: stringToColor(name),
+      },
+      children: `${name[0]}`,
+    };
+  }
+
+  // Handle the case where there are more than two words
+  if (words && words.length > 1) {
+    return {
+      sx: {
+        bgcolor: stringToColor(name),
+      },
+      children: `${words[0][0]}${words[1][0]}`,
+    };
+  }
+
+  // Default case (empty or undefined name)
   return {
     sx: {
-      bgcolor: stringToColor(name && name),
+      bgcolor: "#00A651",
     },
-    children: `${name && name?.split(" ")[0][0]}${
-      name && name?.split(" ")[1][0]
-    }`,
+    children: "",
   };
 }
 

@@ -20,17 +20,17 @@ export default function Error({
         <h4 className="md:text-5xl text-2xl text-center font-extrabold text-gray-600">
           {`There's no post available at the moment`}
         </h4>
-        {/* {process.env.NODE_ENV !== "production" && ( */}
-        <>
-          <div className="md:text-2xl text-xl text-gray-600">
-            {`Error message => ${error.message}`}
-          </div>
-          <div>
-            {`Error Cause => ${error.cause}`}
-            {/* {`Error stack => ${error.stack}`} */}
-          </div>
-        </>
-        {/* )} */}
+        {process.env.NODE_ENV !== "production" && (
+          <>
+            <div className="md:text-2xl text-xl text-gray-600">
+              {`Error message => ${error.message}`}
+            </div>
+            <div>
+              {`Error Cause => ${error.cause}`}
+              {`Error stack => ${error.stack}`}
+            </div>
+          </>
+        )}
 
         <div className="md:text-base text-sm text-gray-600 mx-auto">
           <button
