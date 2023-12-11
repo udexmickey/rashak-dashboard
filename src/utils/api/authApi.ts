@@ -43,9 +43,9 @@ authApi.interceptors.response.use(
         const refreshTokenKey = localStorage.getItem('refreshToken');
           
         if (refreshTokenKey || currentPath !== '/login') {
-          const refreshedToken = await refreshToken(); // Implement refreshToken function
-          // Retry the original request with the new token
-          error.config.headers.Authorization = `Bearer ${refreshedToken}`;
+          // const refreshedToken = await refreshToken(); // Implement refreshToken function
+          // // Retry the original request with the new token
+          // error.config.headers.Authorization = `Bearer ${refreshedToken}`;
           return authApi(error.config);
 
         } else {
