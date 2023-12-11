@@ -4,6 +4,7 @@ import axios from 'axios';
  
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+// const TEST_API_URL = process.env.NEXT_PUBLIC_TEST_API_URL;
 
 const authApi = axios.create({
   baseURL: `${BASE_URL}/api/v1`,
@@ -43,9 +44,9 @@ authApi.interceptors.response.use(
         const refreshTokenKey = localStorage.getItem('refreshToken');
           
         if (refreshTokenKey || currentPath !== '/login') {
-          // const refreshedToken = await refreshToken(); // Implement refreshToken function
-          // // Retry the original request with the new token
-          // error.config.headers.Authorization = `Bearer ${refreshedToken}`;
+          const refreshedToken = await refreshToken(); // Implement refreshToken function
+          // Retry the original request with the new token
+          error.config.headers.Authorization = `Bearer ${refreshedToken}`;
           return authApi(error.config);
 
         } else {

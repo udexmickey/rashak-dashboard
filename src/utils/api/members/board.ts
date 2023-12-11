@@ -1,9 +1,5 @@
 import authApi from "../authApi";
 
-const baseUrl = process.env.NEXT_PUBLIC_API_URL as RequestInfo | URL
-
- 
-
 export async function getAllBoardMember({ pageNumber, searchText, pageSize } : { pageNumber?: number, searchText?: string | number | undefined, pageSize?: number }) {
     try {
         const response = await authApi.get(`/board-member?${searchText && `searchQuery=${searchText}`}&${pageNumber && `page=${pageNumber}`}&${pageSize && `pageSize=${pageSize}`}`);
