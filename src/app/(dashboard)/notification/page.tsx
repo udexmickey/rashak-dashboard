@@ -2,7 +2,7 @@
 import NotificationCard, {
   NotificationProps,
 } from "@/components/ui/cards/notificationCard";
-import EmptyStateNotification from "@/components/ui/placeholders/notification.placeholder";
+import EmptyStateBox from "@/components/ui/placeholders/notification.placeholder";
 import activityLogData from "./notification.activitylogs.json";
 import React, { useState } from "react";
 
@@ -12,7 +12,7 @@ export default function Notification() {
   return (
     <div>
       {isEmpty ? (
-        <EmptyStateNotification />
+        <EmptyStateBox page={"notification"} />
       ) : (
         <NotificationCard initialValues={data && data} />
       )}

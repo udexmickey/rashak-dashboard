@@ -13,6 +13,7 @@ import { useFetchAllNews } from "@/hooks/useNewsHook";
 import ContentTable from "./ContentTable";
 import AddContentBtn from "../button/addContent.button";
 import SortBy from "../sortby";
+import EmptyStateBox from "@/components/ui/placeholders/notification.placeholder";
 
 const NewsTable: React.FC = () => {
   const [sortBy, setSortBy] = useState("newest");
@@ -91,7 +92,9 @@ const NewsTable: React.FC = () => {
         style={{ maxHeight: "60dvh", overflowY: "auto", height: "100dvh" }}
         className="flex flex-col justify-between items-around"
       >
-        {!isError && (
+        {(!isError && data?.data?.length) <= 1 ? (
+          <EmptyStateBox page={"News"} />
+        ) : (
           <>
             <ContentTable
               data={sortedData && sortedData}
@@ -117,7 +120,6 @@ const NewsTable: React.FC = () => {
             </div>
           </>
         )}
-
         {/* The following will only be displayed/rendered when the edit button is clicked on the table */}
         {openModal && (
           <DeleteConfirmModal

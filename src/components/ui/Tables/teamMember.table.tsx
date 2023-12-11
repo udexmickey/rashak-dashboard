@@ -9,6 +9,7 @@ import { useFetchAllTeam } from "@/hooks/useMembersHook";
 import { Pagination, Paper } from "@mui/material";
 import { useRouter } from "next/navigation";
 import MemberTable from "@/components/ui/Tables/Members.table";
+import EmptyStateBox from "../placeholders/notification.placeholder";
 
 export default function TeamMemberTable() {
   const [openModal, setOpenModal] = useState(false);
@@ -79,7 +80,9 @@ export default function TeamMemberTable() {
         style={{ maxHeight: "70dvh", overflowY: "auto", height: "100dvh" }}
         className="flex flex-col justify-between items-around"
       >
-        {!isError && (
+        {(!isError && teamMembersData?.data?.length) <= 1 ? (
+          <EmptyStateBox page={"Board Member"} />
+        ) : (
           <>
             <MemberTable
               data={teamMembersData && teamMembersData?.data}
@@ -87,7 +90,7 @@ export default function TeamMemberTable() {
               handleOptionClick={handleOptionClick}
               headers={headers && headers}
               isLoading={isLoading}
-              member="team"
+              member="board"
             />
 
             <div className="flex justify-around items-end my-8 rounded-lg">

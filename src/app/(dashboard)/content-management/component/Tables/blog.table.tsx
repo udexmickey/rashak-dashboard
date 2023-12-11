@@ -13,12 +13,13 @@ import ContentTable from "./ContentTable";
 import SortBy from "../sortby";
 import AddContentBtn from "../button/addContent.button";
 import { useFetchAllBlogs } from "@/hooks/useFetchAllBlogs";
+import EmptyStateBox from "@/components/ui/placeholders/notification.placeholder";
 
 const BlogsTable: React.FC = () => {
   const [sortBy, setSortBy] = useState("newest");
   const [page, setPage] = React.useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const { isLoading, data } = useFetchAllBlogs({
+  const { isLoading, data, isError } = useFetchAllBlogs({
     searchText: "",
     pageNumber: page,
     pageSize: rowsPerPage,
@@ -91,28 +92,34 @@ const BlogsTable: React.FC = () => {
         style={{ maxHeight: "60dvh", overflowY: "auto", height: "100dvh" }}
         className="flex flex-col justify-between items-around"
       >
-        <ContentTable
-          data={sortedData && sortedData}
-          options={options}
-          handleOptionClick={handleOptionClick}
-          headers={headers && headers}
-          isLoading={isLoading}
-        />
+        {(!isError && data?.data?.length) <= 1 ? (
+          <EmptyStateBox page={"Blog"} />
+        ) : (
+          <>
+            <ContentTable
+              data={sortedData && sortedData}
+              options={options}
+              handleOptionClick={handleOptionClick}
+              headers={headers && headers}
+              isLoading={isLoading}
+            />
 
-        <div className="flex justify-around items-end my-8 rounded-lg">
-          <Pagination
-            count={data && Math.ceil(data?.totalItems / rowsPerPage)}
-            onChange={handleChangePage}
-            page={page}
-            siblingCount={0}
-            boundaryCount={4}
-          />
+            <div className="flex justify-around items-end my-8 rounded-lg">
+              <Pagination
+                count={data && Math.ceil(data?.totalItems / rowsPerPage)}
+                onChange={handleChangePage}
+                page={page}
+                siblingCount={0}
+                boundaryCount={4}
+              />
 
-          <AddContentBtn
-            href={"/content-management/blogs"}
-            label="Add New post"
-          />
-        </div>
+              <AddContentBtn
+                href={"/content-management/blogs"}
+                label="Add New post"
+              />
+            </div>
+          </>
+        )}
 
         {openModal && (
           <DeleteConfirmModal

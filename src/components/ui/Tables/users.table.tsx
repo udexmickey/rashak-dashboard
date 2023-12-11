@@ -9,8 +9,9 @@ import { Alert, AlertTitle, Paper } from "@mui/material";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { CustomizedSnackbars } from "../alert/toast";
+import EmptyStateBox from "../placeholders/notification.placeholder";
 
-export default function AdminTable() {
+export default function UserTable() {
   const { isMobile } = useIsMobile();
   const [messsage, setMesssage] = useState("");
   const [status, setStatus] = useState<
@@ -135,48 +136,55 @@ export default function AdminTable() {
         style={{ maxHeight: "70dvh", overflowY: "auto", height: "100dvh" }}
         className="flex flex-col justify-between items-around bg-white"
       >
-        <table className="text-sm text-left w-full">
-          <tbody className="bg-white text-base text-[#1E1E1E] ">
-            {usermanagementData &&
-              usermanagementData?.data?.map((admin: any, idx: number) => (
-                <tr className="bg-white text-lg border-b" key={admin?._id}>
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium whitespace-nowrap list-decimal max-w-max"
-                  >
-                    <Link href={"#"}>
-                      {idx + 1}. &nbsp; {isMobile && <span> &nbsp;</span>}{" "}
-                      {admin?.name}
-                    </Link>
-                  </th>
-                  <td
-                    className="px-6 py-4 text-[#00A651]"
-                    onClick={() => handleAccept(admin._id)}
-                  >
-                    <div
-                      className={`cursor-pointer hover:opacity-60 max-w-max ${
-                        isApprovingUser && "opacity-90"
-                      }`}
-                    >
-                      Accept
-                    </div>
-                  </td>
-                  <td
-                    className="px-6 py-4 text-[#FF0000]"
-                    onClick={() => handleDelete(admin._id)}
-                  >
-                    <div
-                      className={`cursor-pointer hover:opacity-60 max-w-max ${
-                        isDeletingUser && "opacity-90"
-                      }`}
-                    >
-                      Delete
-                    </div>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+        {(!isError && usermanagementData?.data?.length) <= 1 ? (
+          <EmptyStateBox page={"Board Member"} />
+        ) : (
+          <>
+            <table className="text-sm text-left w-full">
+              <tbody className="bg-white text-base text-[#1E1E1E] ">
+                {usermanagementData &&
+                  usermanagementData?.data?.map((admin: any, idx: number) => (
+                    <tr className="bg-white text-lg border-b" key={admin?._id}>
+                      <th
+                        scope="row"
+                        className="px-6 py-4 font-medium whitespace-nowrap list-decimal max-w-max"
+                      >
+                        <Link href={"#"}>
+                          {idx + 1}. &nbsp; {isMobile && <span> &nbsp;</span>}{" "}
+                          {admin?.name}
+                        </Link>
+                      </th>
+                      <td
+                        className="px-6 py-4 text-[#00A651]"
+                        onClick={() => handleAccept(admin._id)}
+                      >
+                        <div
+                          className={`cursor-pointer hover:opacity-60 max-w-max ${
+                            isApprovingUser && "opacity-90"
+                          }`}
+                        >
+                          Accept
+                        </div>
+                      </td>
+                      <td
+                        className="px-6 py-4 text-[#FF0000]"
+                        onClick={() => handleDelete(admin._id)}
+                      >
+                        <div
+                          className={`cursor-pointer hover:opacity-60 max-w-max ${
+                            isDeletingUser && "opacity-90"
+                          }`}
+                        >
+                          Delete
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </>
+        )}
+
         {isError ||
           isErrorApprovingUser ||
           (isErrorDeletingUser && (

@@ -9,6 +9,7 @@ import { MdAssignmentAdd, MdAutoDelete } from "react-icons/md";
 import DepartmentCard from "../cards/DepartmentCard";
 import { useFetchAllAdmin } from "@/hooks/useAdminsHook";
 import { Pagination, Paper } from "@mui/material";
+import EmptyStateBox from "../placeholders/notification.placeholder";
 
 export default function AdminTable() {
   const [openModal, setOpenModal] = useState(false);
@@ -66,77 +67,83 @@ export default function AdminTable() {
         style={{ maxHeight: "70dvh", overflowY: "auto", height: "100dvh" }}
         className="flex flex-col justify-between items-around"
       >
-        <table className="text-sm text-left w-full">
-          <thead className="text-sm text-gray-700 bg-white border-b uppercase">
-            <tr>
-              <th scope="col" className="px-6 py-3">
-                Name
-              </th>
-              {/* <th scope="col" className="px-6 py-3">
+        {(usermanagementData && usermanagementData?.data?.length) <= 1 ? (
+          <EmptyStateBox page={"Admin"} />
+        ) : (
+          <>
+            <table className="text-sm text-left w-full">
+              <thead className="text-sm text-gray-700 bg-white border-b uppercase">
+                <tr>
+                  <th scope="col" className="px-6 py-3">
+                    Name
+                  </th>
+                  {/* <th scope="col" className="px-6 py-3">
               Email
             </th> */}
-              <th scope="col" className="px-6 py-3">
-                Department
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Edit
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white text-lg text-[#1E1E1E]">
-            {/* <NestedModal /> */}
-            {usermanagementData &&
-              usermanagementData.data.map((admin: any, idx: number) => (
-                <tr className="bg-white border-b" key={admin._id}>
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium whitespace-nowrap list-decimal max-w-max"
-                  >
-                    <Link href={`/user-management/${admin?._id}`}>
-                      <div className="flex items-center px-0 whitespace-nowrap ">
-                        <div className="ps-3">
-                          <div className="text-base font-semibold">
-                            {`${admin?.name?.slice(0, 25)} ${
-                              (admin?.name as string).length >
-                              (admin?.name as string).slice(0, 22)?.length
-                                ? "..."
-                                : ""
-                            }`}
-                          </div>
-                          <div className="font-normal text-gray-500">
-                            {admin?.email || ""}
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
+                  <th scope="col" className="px-6 py-3">
+                    Department
                   </th>
-                  {/* <td className="px-6 py-4 text-[#1E1E1E]">{admin.email}</td> */}
-                  <td className="px-6 py-4 text-[#1E1E1E]">
-                    {admin.department}
-                  </td>
-                  <td className="px-6 py-4 text-[#1E1E1E]">
-                    <EditOptionMenu
-                      adminId={admin.id}
-                      options={options}
-                      handleOptionClick={handleOptionClick}
-                    />
-                  </td>
+                  <th scope="col" className="px-6 py-3">
+                    Edit
+                  </th>
                 </tr>
-              ))}
-          </tbody>
-        </table>
-        <div className="flex justify-around items-end my-8 rounded-lg bg-white">
-          <Pagination
-            count={
-              usermanagementData &&
-              Math.ceil(usermanagementData?.totalItems / rowsPerPage)
-            }
-            onChange={handleChangePage}
-            page={page}
-            siblingCount={0}
-            boundaryCount={2}
-          />
-        </div>
+              </thead>
+              <tbody className="bg-white text-lg text-[#1E1E1E]">
+                {/* <NestedModal /> */}
+                {usermanagementData &&
+                  usermanagementData.data.map((admin: any, idx: number) => (
+                    <tr className="bg-white border-b" key={admin._id}>
+                      <th
+                        scope="row"
+                        className="px-6 py-4 font-medium whitespace-nowrap list-decimal max-w-max"
+                      >
+                        <Link href={`/user-management/${admin?._id}`}>
+                          <div className="flex items-center px-0 whitespace-nowrap ">
+                            <div className="ps-3">
+                              <div className="text-base font-semibold">
+                                {`${admin?.name?.slice(0, 25)} ${
+                                  (admin?.name as string).length >
+                                  (admin?.name as string).slice(0, 22)?.length
+                                    ? "..."
+                                    : ""
+                                }`}
+                              </div>
+                              <div className="font-normal text-gray-500">
+                                {admin?.email || ""}
+                              </div>
+                            </div>
+                          </div>
+                        </Link>
+                      </th>
+                      {/* <td className="px-6 py-4 text-[#1E1E1E]">{admin.email}</td> */}
+                      <td className="px-6 py-4 text-[#1E1E1E]">
+                        {admin.department}
+                      </td>
+                      <td className="px-6 py-4 text-[#1E1E1E]">
+                        <EditOptionMenu
+                          adminId={admin.id}
+                          options={options}
+                          handleOptionClick={handleOptionClick}
+                        />
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+            <div className="flex justify-around items-end my-8 rounded-lg bg-white">
+              <Pagination
+                count={
+                  usermanagementData &&
+                  Math.ceil(usermanagementData?.totalItems / rowsPerPage)
+                }
+                onChange={handleChangePage}
+                page={page}
+                siblingCount={0}
+                boundaryCount={2}
+              />
+            </div>
+          </>
+        )}
       </Paper>
       {openModal && (
         <NestedModal

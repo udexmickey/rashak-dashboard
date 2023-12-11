@@ -9,6 +9,7 @@ import { useFetchAllBoard } from "@/hooks/useMembersHook";
 import { Pagination, Paper } from "@mui/material";
 import { useRouter } from "next/navigation";
 import MemberTable from "@/components/ui/Tables/Members.table";
+import EmptyStateBox from "../placeholders/notification.placeholder";
 
 export default function BoardMemberTable() {
   const [openModal, setOpenModal] = useState(false);
@@ -79,7 +80,9 @@ export default function BoardMemberTable() {
         style={{ maxHeight: "70dvh", overflowY: "auto", height: "100dvh" }}
         className="flex flex-col justify-between items-around"
       >
-        {!isError && (
+        {(!isError && boardMembersData?.data?.length) <= 1 ? (
+          <EmptyStateBox page={"Board Member"} />
+        ) : (
           <>
             <MemberTable
               data={boardMembersData && boardMembersData?.data}
