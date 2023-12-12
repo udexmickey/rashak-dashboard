@@ -115,12 +115,24 @@ const TeamMemberUpdateForm: React.FC<TeamMemberUpdateFormProps> = ({
             <br />
             <div className="h-full cursor-grab min-h-full relative flex md:justify-start items-center justify-center mt-4 md:mt-6">
               {file ? (
+                // <Image
+                //   src={URL.createObjectURL(file)}
+                //   width={400}
+                //   height={400}
+                //   alt="File Preview"
+                //   className="max-w-full aspect-square"
+                // />
+
                 <Image
-                  src={URL.createObjectURL(file)}
+                  src={
+                    typeof file === "string" ? file : URL.createObjectURL(file)
+                  }
                   width={400}
                   height={400}
+                  priority
+                  quality={100}
                   alt="File Preview"
-                  className="max-w-full aspect-square"
+                  className="max-w-xl w-full h-[35dvh] object-cover bg-slate-200"
                 />
               ) : (
                 <Box

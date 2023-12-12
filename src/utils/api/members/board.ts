@@ -23,3 +23,21 @@ export async function getOneBoardMember(id: string) {
         throw new Error(error?.response?.data.message ?? error?.message)
     }
 }
+
+export async function addBoardMember(body: any) {
+    try {
+      const response = await authApi.post(`/board-member/create`, { ...body }, { headers: {
+            "Content-Type": "multipart/form-data",
+            contentType: "multipart/form-data",
+            // ...data.getHeaders(),
+            maxBodyLength: Infinity
+        }});
+      console.log('file name changed api', body.file);
+      console.log('body changed api', body);
+
+      return { success: true, message: response.data.message }; 
+    } catch (error: any) {
+        // throw new Error('Login failed:', error ?? error);
+        throw new Error(error?.response?.data.message ?? error?.message)
+    }
+  };

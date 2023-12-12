@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -5,6 +6,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import useUnsavedFormChanges from "@/hooks/useUnsavedFormChanges";
+import { usePostTeamMember } from "@/hooks/useMembersHook";
 
 const TeamMemberForm: React.FC = () => {
   const { setUnsavedChanges } = useUnsavedFormChanges();
@@ -56,7 +58,16 @@ const TeamMemberForm: React.FC = () => {
     return isValid;
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const {
+    mutateAsync: addTeamMemberFxn,
+    isPending,
+    isSuccess,
+    isError,
+    error,
+    reset,
+  } = usePostTeamMember();
+
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
     if (validateForm()) {
@@ -67,10 +78,25 @@ const TeamMemberForm: React.FC = () => {
         file,
       };
 
-      console.log("Form Data:", formData);
+      await addTeamMemberFxn(formData);
       setUnsavedChanges(false);
     }
   };
+
+  React.useEffect(() => {
+    if (isSuccess) {
+      setName((prev) => (prev = ""));
+      setRole((prev) => (prev = ""));
+      setLinkedinLink((prev) => (prev = ""));
+      setFile((prev) => (prev = null));
+
+      const resetTime = setTimeout(() => {
+        reset();
+      }, 3000);
+
+      return () => clearTimeout(resetTime);
+    }
+  }, [isSuccess, reset]);
 
   return (
     <form onSubmit={handleSubmit}>

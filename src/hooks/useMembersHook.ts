@@ -1,8 +1,9 @@
 "use client";
 
-import { getAllBoardMember, getOneBoardMember } from "@/utils/api/members/board";
-import { getAllTeamMember, getOneTeamMember } from "@/utils/api/members/team";
+import { getAllBoardMember, getOneBoardMember, addBoardMember } from "@/utils/api/members/board";
+import { addTeamMember, getAllTeamMember, getOneTeamMember } from "@/utils/api/members/team";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { BiBody } from "react-icons/bi";
 
 export function useFetchAllBoard({
   searchText,
@@ -34,26 +35,30 @@ export function useFetchOneboard(id: string) {
   return board;
 }
 
-// export const usePostBoard = () => {
-//   const queryClient = useQueryClient();
+export const usePostBoardMember = () => {
+  const queryClient = useQueryClient();
 
-//   // Use react-query's useMutation hook
-//   const postBoardMutation = useMutation({
-//     mutationFn: async (body: any) => await postBoard(body), // TODO change the body type checking
-//     onSuccess: () => {
-//       // Invalidate and refetch andv Handle success if needed
-//       queryClient.invalidateQueries({
-//         queryKey: ["board", { searchText: "", pageNumber: 1 }],
-//       });
-//     },
-//     onError: (error: any) => {
-//       // Handle error if needed
-//     },
-//   });
+  // Use react-query's useMutation hook
+  const postBoardMutation = useMutation({
+    mutationFn: async (body: Record<string, any> ) =>{
+      return await addBoardMember({ ...body })
+    },
+    onSuccess: () => {
+      // Invalidate and refetch andv Handle success if needed
+      queryClient.invalidateQueries({
+        queryKey: ["board", { pageNumber: 1, searchText: "" }],
+      });
+    },
+    onError: (error: any) => {
+      // Handle error if needed
+    },
+  });
 
-//   return postBoardMutation;
-// };
+  return postBoardMutation;
+};
 
+
+///Team members
 export function useFetchAllTeam({
   searchText,
   pageNumber,
@@ -83,3 +88,25 @@ export function useFetchOneteam(id: string) {
   });
   return team;
 }
+
+export const usePostTeamMember = () => {
+  const queryClient = useQueryClient();
+
+  // Use react-query's useMutation hook
+  const postTeamMutation = useMutation({
+    mutationFn: async (body: Record<string, any> ) =>{
+      return await addTeamMember({ ...body })
+    },
+    onSuccess: () => {
+      // Invalidate and refetch andv Handle success if needed
+      queryClient.invalidateQueries({
+        queryKey: ["team", { pageNumber: 1, searchText: "" }],
+      });
+    },
+    onError: (error: any) => {
+      // Handle error if needed
+    },
+  });
+
+  return postTeamMutation;
+};
