@@ -2,7 +2,7 @@ import authApi from "../authApi";
 
  
 
-export async function getOnePendingUser(id: any) {
+export async function getOnePendingUser(id: string) {
     try {
         const posts = await authApi.get(`/users/${id}`)
         return await posts.data; 

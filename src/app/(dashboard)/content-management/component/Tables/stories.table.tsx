@@ -106,7 +106,7 @@ const StoryTable: React.FC = () => {
         style={{ maxHeight: "60dvh", overflowY: "auto", height: "100dvh" }}
         className="flex flex-col justify-between items-around"
       >
-        {(data && data?.length) <= 1 ? ( /// TODo add react-query to this and include .data
+        {(data && data?.length) < 1 ? ( /// TODo add react-query to this and include .data
           <EmptyStateBox page={"Story"} />
         ) : (
           <>

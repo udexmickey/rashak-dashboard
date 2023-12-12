@@ -3,11 +3,11 @@ import Link from "next/link";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import EditOptionMenu from "./table.options";
 import NestedModal from "../modal";
-import ConfirmationModal from "../confirmationUI/deleteAdminConfirmationModal";
+import DeleteConfirmationModal from "../confirmationUI/deleteAdminConfirmationModal";
 // import { usermanagementData } from "@/app/(dashboard)/user-management/usermanagementData.seed";
 import { MdAssignmentAdd, MdAutoDelete } from "react-icons/md";
 import DepartmentCard from "../cards/DepartmentCard";
-import { useFetchAllAdmin } from "@/hooks/useAdminsHook";
+import { useDeleteAdmin, useFetchAllAdmin } from "@/hooks/useAdminsHook";
 import { Pagination, Paper } from "@mui/material";
 import EmptyStateBox from "../placeholders/notification.placeholder";
 import { useReassignDepartment } from "@/hooks/useDepartment";
@@ -19,6 +19,8 @@ export default function AdminTable() {
   const [page, setPage] = React.useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(6);
   const [adminId, setAdminId] = useState<string>("");
+  // const [department, setDepartdepartment] = useState<string>("");
+  const [selectedDepartment, setSelectedDepartment] = useState<string>("");
   const {
     isLoading,
     data: usermanagementData,
@@ -51,7 +53,7 @@ export default function AdminTable() {
     } else if (optionName.toLowerCase() === "delete") {
       setModalType("delete");
       setOpenModal(true);
-      setModalContent(<ConfirmationModal />);
+      // setModalContent(<DeleteConfirmationModal />);
       setAdminId(clickedAdminId);
     } else {
       return;
@@ -61,6 +63,7 @@ export default function AdminTable() {
   const handleChangePage = (event: ChangeEvent<unknown>, newPage: number) => {
     setPage((prev) => (prev = newPage));
   };
+
   const {
     mutateAsync: ReassignAdmin,
     isPending: ReassignLoading,
@@ -68,13 +71,36 @@ export default function AdminTable() {
     isSuccess: ReassignSuccess,
   } = useReassignDepartment();
 
-  const handleReassign = async () => {
-    await ReassignAdmin(adminId);
+  const handleConfirmReassignAdmin = async () => {
+    const body = {
+      id: adminId,
+      department: selectedDepartment,
+    };
+
+    await ReassignAdmin(body);
   };
 
+  const {
+    mutateAsync: deleteAdmin,
+    isPending: deleteLoading,
+    isError: deleteError,
+    isSuccess: deleteSuccess,
+  } = useDeleteAdmin();
+
+  const handleConfirmDeleteAdmin = async () => {
+    const body = {
+      id: adminId,
+    };
+
+    console.log("Delete Admin", body);
+
+    await deleteAdmin(body);
+  };
+
+  //close modal when request is successful
   useEffect(() => {
-    ReassignSuccess && setOpenModal(false);
-  }, [ReassignSuccess]);
+    (ReassignSuccess || deleteSuccess) && setOpenModal(false);
+  }, [ReassignSuccess, deleteSuccess]);
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -83,7 +109,7 @@ export default function AdminTable() {
         style={{ maxHeight: "70dvh", overflowY: "auto", height: "100dvh" }}
         className="flex flex-col justify-between items-around"
       >
-        {(usermanagementData && usermanagementData?.data?.length) <= 1 ? (
+        {(usermanagementData && usermanagementData?.data?.length) < 1 ? (
           <EmptyStateBox page={"Admin"} />
         ) : (
           <>
@@ -170,12 +196,21 @@ export default function AdminTable() {
           {modalType === "re-assign" ? (
             <DepartmentCard
               title="Re-Assign Admin Department"
-              handleReassign={handleReassign}
+              handleReassign={handleConfirmReassignAdmin}
               adminId={adminId}
-              handleConfirm={handleReassign}
+              handleConfirm={handleConfirmReassignAdmin}
+              selectedDepartment={selectedDepartment}
+              setSelectedDepartment={setSelectedDepartment} // department={department}
             />
           ) : null}
-          {modalType === "delete" ? <ConfirmationModal /> : null}
+          {modalType === "delete" ? (
+            <DeleteConfirmationModal
+              adminId={adminId}
+              // selectedDepartment={selectedDepartment}
+              handleClose={() => setOpenModal(false)}
+              handleConfirm={handleConfirmDeleteAdmin}
+            />
+          ) : null}
         </NestedModal>
       )}
     </div>

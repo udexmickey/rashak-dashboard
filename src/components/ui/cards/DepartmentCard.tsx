@@ -7,9 +7,12 @@ import AssignedConfirmModal from "../confirmationUI/confirm.assign.modal";
 
 interface DepartmentCardProps {
   title: string;
+  // department: string;
   adminId: string;
   handleReassign: (adminId: string, selectedDepartment: string) => void;
   handleConfirm: () => void;
+  selectedDepartment: string;
+  setSelectedDepartment: (event: any) => void;
   // showConfirmationModal: boolean;
   // setShowConfirmationModal: (prev: boolean) => void;
   // handleNestedClose: () => void;
@@ -17,10 +20,14 @@ interface DepartmentCardProps {
 
 const DepartmentCard: React.FC<DepartmentCardProps> = ({
   title,
+  // department,
   adminId,
+  handleReassign,
   handleConfirm,
+  selectedDepartment,
+  setSelectedDepartment,
 }) => {
-  const [selectedDepartment, setSelectedDepartment] = useState<string>("");
+  // const [selectedDepartment, setSelectedDepartment] = useState<string>("");
   const [showConfirmationModal, setShowConfirmationModal] =
     useState<boolean>(false);
 
@@ -30,6 +37,14 @@ const DepartmentCard: React.FC<DepartmentCardProps> = ({
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedDepartment((event.target as HTMLInputElement).value);
+  };
+
+  const handleMenuItemClick = (text: string) => {
+    // Call the callback function passed as a prop with the selected option text and adminId
+    handleReassign(adminId, selectedDepartment);
+
+    // Close the menu
+    // handleClose();
   };
 
   // useEffect(() => {

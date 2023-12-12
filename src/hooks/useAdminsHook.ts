@@ -1,7 +1,11 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getAllSearchAdmins, getOneAdmin } from "@/utils/api/admins/admins";
+import {
+  DeleteAdmin,
+  getAllSearchAdmins,
+  getOneAdmin,
+} from "@/utils/api/admins/admins";
 import { getAllSearchPendingUsers } from "@/utils/api/admins/pending-user";
 import { getAllTeamMember, getOneTeamMember } from "@/utils/api/members/team";
 
@@ -45,7 +49,7 @@ export function useFetchAllPendingUsers({
   return fetchedData;
 }
 
-export function useFetchOneadmin(id: any) {
+export function useFetchOneadmin(id: string) {
   const admin = useQuery({
     queryKey: ["admin", id],
     queryFn: async () => await getOneAdmin(id),
@@ -75,6 +79,27 @@ export function useFetchOneadmin(id: any) {
 //   return postAdminMutation;
 // };
 
+export const useDeleteAdmin = () => {
+  const queryClient = useQueryClient();
+
+  // Use react-query's useMutation hook
+  const DeleteAdminrMutation = useMutation({
+    mutationFn: async (body: Record<string, any>) => await DeleteAdmin(body.id),
+    onSuccess: () => {
+      // Invalidate and refetch andv Handle success if needed
+      queryClient.invalidateQueries({
+        queryKey: ["admins", { searchText: "", pageNumber: 1 }],
+      });
+    },
+    onError: (error: any) => {
+      // Handle error if needed
+      console.log("this is the cause of the error delete", error);
+    },
+  });
+
+  return DeleteAdminrMutation;
+};
+
 export function useFetchAllTeam({
   searchText,
   pageNumber,
@@ -95,7 +120,7 @@ export function useFetchAllTeam({
   return fetchedData;
 }
 
-export function useFetchOneteam(id: any) {
+export function useFetchOneteam(id: string) {
   const team = useQuery({
     queryKey: ["team", id],
     queryFn: async () => await getOneTeamMember(id),

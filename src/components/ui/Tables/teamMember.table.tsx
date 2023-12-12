@@ -80,8 +80,8 @@ export default function TeamMemberTable() {
         style={{ maxHeight: "70dvh", overflowY: "auto", height: "100dvh" }}
         className="flex flex-col justify-between items-around"
       >
-        {(!isError && teamMembersData?.data?.length) <= 1 ? (
-          <EmptyStateBox page={"Board Member"} />
+        {(!isError && teamMembersData?.data?.length) < 1 ? (
+          <EmptyStateBox page={"Team Member"} />
         ) : (
           <>
             <MemberTable
@@ -121,9 +121,20 @@ export default function TeamMemberTable() {
                 initialValues={teamMembersDatas as any}
                 handleUpdate={handleUpdate}
               />
-            ) : modalType === "remove" ? (
-              <DeleteConfirmationModal />
-            ) : null}
+            ) : //Uncomment this when team member is available
+            // :
+            // modalType === "remove" ? (
+            //   <DeleteConfirmationModal
+            //     adminId={""}
+            //     handleClose={function (): void {
+            //       throw new Error("Function not implemented.");
+            //     }}
+            //     handleConfirm={function (): void {
+            //       throw new Error("Function not implemented.");
+            //     }}
+            //   />
+            // )
+            null}
           </NestedModal>
         )}
       </Paper>

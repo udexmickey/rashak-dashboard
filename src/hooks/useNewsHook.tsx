@@ -26,7 +26,7 @@ export function useFetchAllNews({
   return fetchedData;
 }
 
-export function useFetchOnenews(id: any) {
+export function useFetchOnenews(id: string) {
   const news = useQuery({
     queryKey: ["news", id],
     queryFn: async () => await getOneNews(id),

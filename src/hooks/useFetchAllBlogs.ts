@@ -13,7 +13,7 @@ export function useFetchAllBlogs({ searchText, pageNumber, pageSize }: { searchT
 }
 
 //Fetch single blog
-export function useFetchOneblog(id: any) {
+export function useFetchOneblog(id: string) {
   const blogs = useQuery({ queryKey: ['blog', id], queryFn: async () => await getOneBlog(id)})
   return blogs
 }

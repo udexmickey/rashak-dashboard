@@ -15,7 +15,7 @@ export async function getAllBoardMember({ pageNumber, searchText, pageSize } : {
 
 }
 
-export async function getOneBoardMember(id: any) {
+export async function getOneBoardMember(id: string) {
     try {
         const posts = await authApi.get(`/board-member/${id}`)
         return await posts.data; 

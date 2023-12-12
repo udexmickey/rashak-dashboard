@@ -2,7 +2,7 @@ import authApi from "../authApi";
 
  
 
-export async function getOneAdmin(id: any) {
+export async function getOneAdmin(id: string) {
     try {
         const posts = await authApi.get(`/admin/${id}`)
         return await posts.data; 
@@ -24,4 +24,14 @@ export async function getAllSearchAdmins({ pageNumber, searchText, pageSize } : 
         throw new Error(error?.response?.data.message ?? error?.message)
     }
 
+}
+
+
+export async function DeleteAdmin(id: string) {
+    try {
+        const posts = await authApi.delete(`/admin/${id}`)
+        return await posts.data; 
+    } catch (error: any) {
+        throw new Error(error?.response?.data.message ?? error?.message)
+    }
 }

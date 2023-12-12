@@ -24,7 +24,7 @@ export function useFetchAllBoard({
   return fetchedData;
 }
 
-export function useFetchOneboard(id: any) {
+export function useFetchOneboard(id: string) {
   const board = useQuery({
     queryKey: ["board", id],
     queryFn: async () => await getOneBoardMember(id),
@@ -74,7 +74,7 @@ export function useFetchAllTeam({
   return fetchedData;
 }
 
-export function useFetchOneteam(id: any) {
+export function useFetchOneteam(id: string) {
   const team = useQuery({
     queryKey: ["team", id],
     queryFn: async () => await getOneTeamMember(id),

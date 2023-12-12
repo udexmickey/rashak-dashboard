@@ -2,7 +2,7 @@ import authApi from "../authApi";
 
  
 
-export async function getOneBlog(id: any) {
+export async function getOneBlog(id: string) {
     try {
         const posts = await authApi.get(`/blogs/${id}`)
         return await posts.data; 

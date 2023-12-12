@@ -32,15 +32,15 @@ interface ConfirmationModalProps {
 }
 
 const AssignedConfirmModal: React.FC<ConfirmationModalProps> = ({
-  // adminId,
+  adminId,
   selectedDepartment,
   handleClose,
   handleConfirm,
 }) => {
   // const handleConfirm = () => {
-  // console.log(
-  //   `Admin ID: ${adminId}, Selected Department: ${selectedDepartment}`
-  // );
+  //   console.log(
+  //     `Admin ID: ${adminId}, Selected Department: ${selectedDepartment}`
+  //   );
   //   // handleClose();
   //   <PositionedSnackbar />;
   // };

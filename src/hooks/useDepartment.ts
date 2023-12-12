@@ -1,6 +1,6 @@
 "use client";
 
-import { ReassignDepartment } from "@/utils/api/admins/reassignDepartment.admin";
+import { ReassignDepartment } from "@/utils/api/admins/department.admin";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useReassignDepartment = () => {
@@ -8,7 +8,8 @@ export const useReassignDepartment = () => {
 
   // Use react-query's useMutation hook
   const ReassignDepartmentMutation = useMutation({
-    mutationFn: async (AdminId: string) => await ReassignDepartment(AdminId),
+    mutationFn: async (body: any) =>
+      await ReassignDepartment(body.id, body.department),
     onSuccess: () => {
       // Invalidate and refetch andv Handle success if needed
       queryClient.invalidateQueries({
@@ -20,7 +21,7 @@ export const useReassignDepartment = () => {
     },
     onError: (error: any) => {
       // Handle error if needed
-      console.log('this is the cause of the error pending', error);
+      console.log("this is the cause of the error pending", error);
     },
   });
 

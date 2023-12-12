@@ -80,7 +80,7 @@ export default function BoardMemberTable() {
         style={{ maxHeight: "70dvh", overflowY: "auto", height: "100dvh" }}
         className="flex flex-col justify-between items-around"
       >
-        {(!isError && boardMembersData?.data?.length) <= 1 ? (
+        {(!isError && boardMembersData?.data?.length) < 1 ? (
           <EmptyStateBox page={"Board Member"} />
         ) : (
           <>

@@ -77,13 +77,13 @@ export default function UserTable() {
 
   const handleAccept = async (id: string) => {
     // Add your logic to handle accept action here
-    console.log(`Accepted: ${id}`);
+    // console.log(`Accepted: ${id}`);
     await approveUserMutateAsync(id);
   };
 
   const handleDelete = async (id: string) => {
     // Add your logic to handle delete action here
-    console.log(`Deleted: ${id}`);
+    // console.log(`Deleted: ${id}`);
     await deleteUserMutateAsync(id);
   };
 
@@ -136,8 +136,8 @@ export default function UserTable() {
         style={{ maxHeight: "70dvh", overflowY: "auto", height: "100dvh" }}
         className="flex flex-col justify-between items-around bg-white"
       >
-        {(!isError && usermanagementData?.data?.length) <= 1 ? (
-          <EmptyStateBox page={"Board Member"} />
+        {(usermanagementData && usermanagementData?.data?.length) < 1 ? (
+          <EmptyStateBox page={"Pending User"} />
         ) : (
           <>
             <table className="text-sm text-left w-full">

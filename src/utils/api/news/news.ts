@@ -9,7 +9,7 @@ interface ErrorResponse {
   response?: Record<string, any>;
 }
 
-export async function getOneNews(id: any) {
+export async function getOneNews(id: string) {
     try {
         const posts = await authApi.get(`/news/${id}`)
         // const newsPost =  await posts

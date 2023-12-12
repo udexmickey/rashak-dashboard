@@ -92,7 +92,7 @@ const NewsTable: React.FC = () => {
         style={{ maxHeight: "60dvh", overflowY: "auto", height: "100dvh" }}
         className="flex flex-col justify-between items-around"
       >
-        {(!isError && data?.data?.length) <= 1 ? (
+        {(!isError && data?.data?.length) < 1 ? (
           <EmptyStateBox page={"News"} />
         ) : (
           <>

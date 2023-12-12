@@ -16,7 +16,7 @@ export async function getAllTeamMember({ pageNumber, searchText, pageSize } : { 
 
 }
 
-export async function getOneTeamMember(id: any) {
+export async function getOneTeamMember(id: string) {
     try {
         const posts = await authApi.get(`/team-member/${id}`)
         return await posts.data; 

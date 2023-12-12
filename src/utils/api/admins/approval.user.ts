@@ -1,6 +1,6 @@
 import authApi from "../authApi";
 
-export async function ApprovePendingUser(id: any) {
+export async function ApprovePendingUser(id: string) {
     try {
         const posts = await authApi.post(`/admin/register-admin/${id}`)
         return await posts.data; 
@@ -9,7 +9,7 @@ export async function ApprovePendingUser(id: any) {
     }
 }
 
-export async function DeletePendingUser(id: any) {
+export async function DeletePendingUser(id: string) {
     try {
         const posts = await authApi.delete(`/users/${id}`)
         return await posts.data; 

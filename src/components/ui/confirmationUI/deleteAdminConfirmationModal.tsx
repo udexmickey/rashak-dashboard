@@ -2,7 +2,19 @@ import React from "react";
 import { Alert, Button, Typography } from "@mui/material";
 import { IoCheckmarkSharp, IoClose } from "react-icons/io5";
 
-export default function DeleteConfirmationModal() {
+interface DeleteConfirmationProps {
+  adminId: string;
+  // selectedDepartment: string;
+  handleClose: () => void;
+  handleConfirm: () => void;
+}
+
+export default function DeleteConfirmationModal({
+  adminId,
+  // selectedDepartment,
+  handleClose,
+  handleConfirm,
+}: DeleteConfirmationProps) {
   return (
     <div className="relative w-full max-h-full">
       <div className="relative rounded-lg">
@@ -28,6 +40,7 @@ export default function DeleteConfirmationModal() {
             className="mb-5 text-lg font-normal text-gray-500 "
           >
             Are you sure you want to delete this Admin?
+            {/* {` `} {adminId} */}
           </Typography>
           <div className="flex justify-center items-center">
             <Button
@@ -35,11 +48,7 @@ export default function DeleteConfirmationModal() {
               color="success"
               className="inline-flex items-center justify-start w-full text-[#484848] text-xl font-medium bg-[#C7FFE2] border border-gray-200 rounded-lg cursor-pointer 
            hover:text-gray-600 hover:bg-gray-100 md:px-8 px-4 py-5 h-24"
-              onClick={() => {
-                <Alert severity="success" color="success">
-                  Admin was Deleted successfully
-                </Alert>;
-              }}
+              onClick={handleConfirm}
             >
               <span className="bg-white rounded-full h-9 w-9 justify-center items-center flex me-4 -ms-1">
                 <IoCheckmarkSharp
@@ -53,9 +62,7 @@ export default function DeleteConfirmationModal() {
               variant="contained"
               className="inline-flex items-center justify-start w-full text-[#484848] text-xl font-medium bg-[#ff000033] border border-gray-200 rounded-lg cursor-pointer 
            hover:text-gray-600 hover:bg-gray-100 md:px-8 px-4 py-5 h-24"
-              onClick={() => {
-                alert("close ");
-              }}
+              onClick={handleClose}
               sx={{ ml: 2 }}
             >
               <span className="bg-white rounded-full h-9 w-9 justify-center items-center flex me-4 -ms-1">
