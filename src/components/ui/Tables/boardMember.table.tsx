@@ -122,7 +122,11 @@ export default function BoardMemberTable() {
                 handleUpdate={handleUpdate}
               />
             ) : null}
-            {modalType === "remove" ? <DeleteConfirmationModal /> : null}
+            {/* {modalType === "remove" ? <DeleteConfirmationModal adminId={""} handleClose={function (): void {
+              throw new Error("Function not implemented.");
+            } } handleConfirm={function (): void {
+              throw new Error("Function not implemented.");
+            } } /> : null} */}
           </NestedModal>
         )}
       </Paper>

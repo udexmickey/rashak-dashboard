@@ -3,7 +3,7 @@ import Link from "next/link";
 import * as React from "react";
 
 export interface NotificationProps {
-  id: string;
+  _id: string;
   description: string;
   action: string;
   userId: string;

@@ -1,6 +1,6 @@
 const membersData = [
     {
-      id: "123",
+      _id: "123",
       name: "Oladapo Koiki",
       email: "races@gmail.com",
       Department: "Communications",
@@ -12,13 +12,13 @@ const membersData = [
       Department: "IT",
     },
     {
-      id: "323",
+      _id: "323",
       name: "Ibrahim Sandra",
       email: "santo@gmail.com",
       Department: "IT",
     },
     {
-      id: "423",
+      _id: "423",
       name: "Barakat Tosin",
       email: "john@gmail.com",
       Department: "Communications",
