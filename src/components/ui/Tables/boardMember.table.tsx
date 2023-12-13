@@ -71,13 +71,13 @@ export default function BoardMemberTable() {
     setPage((prev) => (prev = newPage));
   };
 
-  const headers = ["Name", "Role", "Linkedin", "Date Created"];
+  const headers = ["Name", "Role", "Date Added"];
 
   return (
     <div className="relative overflow-x-auto sm:rounded-lg">
       <Paper
         elevation={3}
-        style={{ maxHeight: "70dvh", overflowY: "auto", height: "100dvh" }}
+        style={{ maxHeight: "64dvh", overflowY: "auto", height: "100dvh" }}
         className="flex flex-col justify-between items-around"
       >
         {(!isError && boardMembersData?.data?.length) < 1 ? (

@@ -1,7 +1,8 @@
 import React from "react";
 import { Metadata, ResolvingMetadata } from "next";
-import Usermanagement from "./usermanagement";
+import UsermanagementById from "./usermanagement";
 import { usermanagementData } from "../usermanagementData.seed";
+// import { useFetchOneadmin } from "@/hooks/useAdminsHook";
 
 export const revalidate = 3600; // revalidate at most every hour
 
@@ -66,13 +67,15 @@ export default async function UsermanagementPost({
 }) {
   const { usermanagementId } = params;
 
-  const usermanagement = usermanagementData?.find((data) => {
-    return data._id === usermanagementId;
-  });
+  // const { data: usermanagementData, isLoading, isError, error } = useFetchOneadmin(usermanagementId);
+
+  // const usermanagement = usermanagementData?.find((data: any) => {
+  //   return data._id === usermanagementId;
+  // });
 
   return (
     <div className="max-w-7xl px-6 md:px-8 grid gap-6 py-6">
-      <Usermanagement params={params} />
+      <UsermanagementById params={params} />
     </div>
   );
 }

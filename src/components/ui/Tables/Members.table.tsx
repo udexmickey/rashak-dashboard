@@ -101,9 +101,9 @@ export default function MemberTable({
                 <TableCell className="p-4 border-b border-gray-200">
                   {row?.role || ""}
                 </TableCell>
-                <TableCell className="p-4 border-b border-gray-200">
+                {/* <TableCell className="p-4 border-b border-gray-200">
                   {row?.linkdenLink || ""}
-                </TableCell>
+                </TableCell> */}
                 <TableCell className="p-4 border-b border-gray-200">
                   {row &&
                     new Date(row?.createdAt as string | Date).toDateString()}

@@ -60,9 +60,9 @@ export default function MembersManagement() {
 
   return (
     <Box
-      sx={{ width: "100%", bgcolor: "white", minHeight: "60vh" }}
+      sx={{ width: "100%", minHeight: "60vh" }}
       component={"div"}
-      className={"shadow-md"}
+      // className={"shadow-md"}
     >
       <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
         <Tabs

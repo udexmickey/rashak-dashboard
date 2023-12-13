@@ -68,9 +68,15 @@ const DepartmentCard: React.FC<DepartmentCardProps> = ({
           defaultValue=""
           aria-labelledby="demo-customized-radios"
           name="customized-radios"
-          className="grid w-full gap-6 md:grid-cols-2"
+          // className="grid w-full gap-6 md:grid-cols-2"
           value={selectedDepartment}
           onChange={handleChange}
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "1.5rem",
+            width: "100%",
+          }}
         >
           <div>
             <input

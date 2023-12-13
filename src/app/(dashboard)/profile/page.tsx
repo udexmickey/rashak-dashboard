@@ -4,50 +4,15 @@ import { Metadata, ResolvingMetadata } from "next";
 import { List, ListItem, ListItemText } from "@mui/material";
 import BackgroundLetterAvatars from "@/components/menu/stringAvatar";
 import { useFetchOneadmin } from "@/hooks/useAdminsHook";
+import { useFetchOneprofile } from "@/hooks/useProfile";
 
-type Props = {
-  params: { usermanagementId: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
-
-export async function generateMetadata(
-  { params, searchParams }: Props,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
-  const { usermanagementId } = params;
-
-  // optionally access and extend (rather than replace) parent metadata
-  const previousImages = (await parent).openGraph?.images || [];
-
-  return {
-    title: "Usermanagement",
-    // description: "",
-    alternates: {
-      canonical: `/user-management/${usermanagementId}`,
-    },
-    openGraph: {
-      images: [...previousImages],
-    },
-  };
-}
-
-// +++==================The main post itself=======================
-
-export default function UsermanagementById({
-  params,
-}: {
-  params: { usermanagementId: string };
-}) {
-  const { usermanagementId } = params;
-
-  console.log("usermanagementId", usermanagementId);
-
+export default function Profile() {
   const {
     data: usermanagementData,
     isLoading,
     isError,
     error,
-  } = useFetchOneadmin(usermanagementId);
+  } = useFetchOneprofile();
 
   return (
     <div className="">

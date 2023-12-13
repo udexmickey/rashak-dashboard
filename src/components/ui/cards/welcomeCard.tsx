@@ -7,7 +7,7 @@ export default function WelcomeCard() {
   const { data, isError } = useFetchOneprofile();
 
   const loggedInAdmin = {
-    name: "Azeez Saliu",
+    name: "Rashak Admin",
   };
 
   return (

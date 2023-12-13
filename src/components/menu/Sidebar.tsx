@@ -94,8 +94,8 @@ const Sidebar: React.FC<SidebarProps> = ({ handleCloseSidebar }) => {
   };
 
   return (
-    <aside className=" pl-8 bg-white" aria-label="Sidebar">
-      <div className="h-[80dvh] w-80 flex flex-col items-center justify-start">
+    <aside className="h-[90dvh] pl-8 bg-white" aria-label="Sidebar">
+      <div className="h-[85dvh] w-80 flex flex-col items-center justify-start">
         <div className="w-64 h-[10dvh] sm:hidden flex md:px-8 items-center border-b border-gray-300 gap-y-10">
           <Link href="/" as={"/"} className="-m-1.5 p-1.5 max-w-max max-h-12">
             <span className="sr-only">Rashak logo</span>

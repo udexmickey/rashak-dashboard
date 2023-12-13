@@ -44,11 +44,18 @@ const MemberCard: React.FC<MemberCardProps> = ({ title }) => {
           defaultValue=""
           aria-labelledby="demo-customized-radios"
           name="customized-radios"
-          className="grid w-full gap-6 md:grid-cols-2"
+          // className="grid w-full gap-6 md:grid-cols-2"
           value={selectedMember}
           onChange={handleChange}
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "1.5rem",
+            width: "100%",
+          }}
         >
-          <div>
+          {/* <div className="flex w-full gap-6"> */}
+          <div className="w-full max-w-lg">
             <input
               type="radio"
               id="hosting-small"
@@ -73,7 +80,7 @@ const MemberCard: React.FC<MemberCardProps> = ({ title }) => {
               </div>
             </label>
           </div>
-          <div className="">
+          <div className="w-full max-w-lg">
             <input
               type="radio"
               id="hosting-big"
@@ -97,6 +104,7 @@ const MemberCard: React.FC<MemberCardProps> = ({ title }) => {
               </div>
             </label>
           </div>
+          {/* </div> */}
         </RadioGroup>
 
         <Button

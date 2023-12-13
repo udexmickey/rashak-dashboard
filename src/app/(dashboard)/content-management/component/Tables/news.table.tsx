@@ -71,7 +71,7 @@ const NewsTable: React.FC = () => {
     }
   };
 
-  const headers = ["Items", "Date Created"];
+  const headers = ["Items", "Date Added"];
   const SortedItems = ["Newest", "Oldest"];
 
   return (
@@ -103,23 +103,26 @@ const NewsTable: React.FC = () => {
               headers={headers && headers}
               isLoading={isLoading}
             />
-
-            <div className="flex justify-around items-end my-8 rounded-lg">
-              <Pagination
-                count={data && Math.ceil(data?.totalItems / rowsPerPage)}
-                onChange={handleChangePage}
-                page={page}
-                siblingCount={0}
-                boundaryCount={2}
-              />
-
-              <AddContentBtn
-                href={"/content-management/news"}
-                label="Add New post"
-              />
-            </div>
           </>
         )}
+        <div className="flex justify-around items-end my-8 rounded-lg">
+          {(!isError && data?.data?.length) > 1 && (
+            <Pagination
+              count={data && Math.ceil(data?.totalItems / rowsPerPage)}
+              onChange={handleChangePage}
+              page={page}
+              siblingCount={0}
+              boundaryCount={4}
+            />
+          )}
+
+          <AddContentBtn
+            href={"/content-management/news"}
+            label="Add New post"
+          />
+        </div>
+
+        <div className="flex justify-around items-end my-8 rounded-lg"></div>
         {/* The following will only be displayed/rendered when the edit button is clicked on the table */}
         {openModal && (
           <DeleteConfirmModal
