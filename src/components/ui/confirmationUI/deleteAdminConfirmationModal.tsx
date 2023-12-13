@@ -4,6 +4,7 @@ import { IoCheckmarkSharp, IoClose } from "react-icons/io5";
 
 interface DeleteConfirmationProps {
   adminId: string;
+  title?: string;
   // selectedDepartment: string;
   handleClose: () => void;
   handleConfirm: () => void;
@@ -11,6 +12,7 @@ interface DeleteConfirmationProps {
 
 export default function DeleteConfirmationModal({
   adminId,
+  title,
   // selectedDepartment,
   handleClose,
   handleConfirm,
@@ -39,7 +41,7 @@ export default function DeleteConfirmationModal({
             variant="h3"
             className="mb-5 text-lg font-normal text-gray-500 "
           >
-            Are you sure you want to delete this Admin?
+            Are you sure you want to delete this {title ?? "Admin"}?
             {/* {` `} {adminId} */}
           </Typography>
           <div className="flex justify-center items-center">

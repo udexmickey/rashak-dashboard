@@ -5,7 +5,7 @@ import { BiEditAlt } from "react-icons/bi";
 import { MdAutoDelete } from "react-icons/md";
 import TeamMemberUpdateForm from "../Form/teamUpdate.form";
 import DeleteConfirmationModal from "../confirmationUI/deleteAdminConfirmationModal";
-import { useFetchAllTeam } from "@/hooks/useMembersHook";
+import { useDeleteTeamMember, useFetchAllTeam } from "@/hooks/useMembersHook";
 import { Pagination, Paper } from "@mui/material";
 import { useRouter } from "next/navigation";
 import MemberTable from "@/components/ui/Tables/Members.table";
@@ -73,6 +73,23 @@ export default function TeamMemberTable() {
 
   const headers = ["Name", "Role", "Linkedin", "Date Created"];
 
+  const {
+    mutateAsync: deleteAdmin,
+    isPending: deleteLoading,
+    isError: deleteError,
+    isSuccess: deleteSuccess,
+  } = useDeleteTeamMember();
+
+  const handleConfirmDeleteAdmin = async () => {
+    const body = {
+      id: memberId,
+    };
+
+    console.log("Delete Admin", body);
+
+    await deleteAdmin(body);
+  };
+
   return (
     <div className="relative overflow-x-auto sm:rounded-lg">
       <Paper
@@ -122,19 +139,14 @@ export default function TeamMemberTable() {
                 handleUpdate={handleUpdate}
               />
             ) : //Uncomment this when team member is available
-            // :
-            // modalType === "remove" ? (
-            //   <DeleteConfirmationModal
-            //     adminId={""}
-            //     handleClose={function (): void {
-            //       throw new Error("Function not implemented.");
-            //     }}
-            //     handleConfirm={function (): void {
-            //       throw new Error("Function not implemented.");
-            //     }}
-            //   />
-            // )
-            null}
+            modalType === "remove" ? (
+              <DeleteConfirmationModal
+                adminId={memberId}
+                title={"Team Member"}
+                handleClose={() => setOpenModal(false)}
+                handleConfirm={handleConfirmDeleteAdmin}
+              />
+            ) : null}
           </NestedModal>
         )}
       </Paper>

@@ -41,3 +41,12 @@ export async function addBoardMember(body: any) {
         throw new Error(error?.response?.data.message ?? error?.message)
     }
   };
+
+    export async function DeleteBoardMember(id: string) {
+    try {
+        const posts = await authApi.delete(`/board-member/${id}`)
+        return await posts.data; 
+    } catch (error: any) {
+        throw new Error(error?.response?.data.message ?? error?.message)
+    }
+}

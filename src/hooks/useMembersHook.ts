@@ -1,7 +1,7 @@
 "use client";
 
-import { getAllBoardMember, getOneBoardMember, addBoardMember } from "@/utils/api/members/board";
-import { addTeamMember, getAllTeamMember, getOneTeamMember } from "@/utils/api/members/team";
+import { getAllBoardMember, getOneBoardMember, addBoardMember, DeleteBoardMember } from "@/utils/api/members/board";
+import { DeleteTeamMember, addTeamMember, getAllTeamMember, getOneTeamMember } from "@/utils/api/members/team";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { BiBody } from "react-icons/bi";
 
@@ -57,6 +57,27 @@ export const usePostBoardMember = () => {
   return postBoardMutation;
 };
 
+export const useDeleteBoardMember = () => {
+  const queryClient = useQueryClient();
+
+  // Use react-query's useMutation hook
+  const DeleteBoardMemberrMutation = useMutation({
+    mutationFn: async (body: Record<string, any>) => await DeleteBoardMember(body.id),
+    onSuccess: () => {
+      // Invalidate and refetch andv Handle success if needed
+      queryClient.invalidateQueries({
+        queryKey: ["board", { searchText: "", pageNumber: 1 }],
+      });
+    },
+    onError: (error: any) => {
+      // Handle error if needed
+      console.log("this is the cause of the error delete", error);
+    },
+  });
+
+  return DeleteBoardMemberrMutation;
+};
+
 
 ///Team members
 export function useFetchAllTeam({
@@ -109,4 +130,25 @@ export const usePostTeamMember = () => {
   });
 
   return postTeamMutation;
+};
+
+export const useDeleteTeamMember = () => {
+  const queryClient = useQueryClient();
+
+  // Use react-query's useMutation hook
+  const DeleteTeamMemberrMutation = useMutation({
+    mutationFn: async (body: Record<string, any>) => await DeleteTeamMember(body.id),
+    onSuccess: () => {
+      // Invalidate and refetch andv Handle success if needed
+      queryClient.invalidateQueries({
+        queryKey: ["team", { searchText: "", pageNumber: 1 }],
+      });
+    },
+    onError: (error: any) => {
+      // Handle error if needed
+      console.log("this is the cause of the error delete", error);
+    },
+  });
+
+  return DeleteTeamMemberrMutation;
 };

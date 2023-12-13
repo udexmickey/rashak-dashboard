@@ -102,19 +102,20 @@ const MemberCard: React.FC<MemberCardProps> = ({ title }) => {
         <Button
           variant="contained"
           color="primary"
-          style={{ color: "#fff", backgroundColor: '#00A651' }}
+          style={{ color: "#fff", backgroundColor: "#00A651" }}
           className="max-w-max w-full grid place-items-center px-12 py-4 rounded-2xl"
           onClick={handleAssignClick}
           disabled={selectedMember === ""}
         >
-          Sellect
+          Select
         </Button>
 
         {showConfirmationModal && (
           <MemberConfirmModal
-            handleClose={() => setShowConfirmationModal(false)} selectedMember={selectedMember}          />
-        )
-        }
+            handleClose={() => setShowConfirmationModal(false)}
+            selectedMember={selectedMember}
+          />
+        )}
       </FormControl>
     </>
   );

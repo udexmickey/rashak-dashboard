@@ -42,3 +42,12 @@ export async function addTeamMember(body: any) {
         throw new Error(error?.response?.data.message ?? error?.message)
     }
   };
+
+  export async function DeleteTeamMember(id: string) {
+    try {
+        const posts = await authApi.delete(`/team-member/${id}`)
+        return await posts.data; 
+    } catch (error: any) {
+        throw new Error(error?.response?.data.message ?? error?.message)
+    }
+}
