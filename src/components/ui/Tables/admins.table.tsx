@@ -7,10 +7,10 @@ import DeleteConfirmationModal from "../confirmationUI/deleteAdminConfirmationMo
 // import { usermanagementData } from "@/app/(dashboard)/user-management/usermanagementData.seed";
 import { MdAssignmentAdd, MdAutoDelete } from "react-icons/md";
 import DepartmentCard from "../cards/DepartmentCard";
-import { useDeleteAdmin, useFetchAllAdmin } from "@/hooks/useAdminsHook";
+import { useDeleteAdmin, useFetchAllAdmin } from "@/hooks/admin/useAdminsHook";
 import { Pagination, Paper } from "@mui/material";
 import EmptyStateBox from "../placeholders/notification.placeholder";
-import { useReassignDepartment } from "@/hooks/useDepartment";
+import { useReassignDepartment } from "@/hooks/member/useDepartment";
 
 export default function AdminTable() {
   const [openModal, setOpenModal] = useState(false);

@@ -2,7 +2,7 @@
 
 import React from "react";
 import UpdateBlogPostForm from "../../component/form/update.blog.form";
-import { useFetchOneblog } from "@/hooks/useFetchAllBlogs";
+import { useFetchOneblog } from "@/hooks/content-management/useBlogHook";
 
 export const revalidate = 3600; // revalidate at most every hour
 

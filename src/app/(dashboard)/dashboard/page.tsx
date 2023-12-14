@@ -2,7 +2,7 @@
 import Maintance from "@/components/ui/placeholders/maintance.placeholder";
 import React from "react";
 import { MdEventNote, MdPhoto } from "react-icons/md";
-import { FaVideo } from "react-icons/fa";
+import { FaUsers, FaVideo } from "react-icons/fa";
 import { BiNews } from "react-icons/bi";
 import { SiConvertio } from "react-icons/si";
 import Charts from "./component/ui/chart/charts";
@@ -13,6 +13,7 @@ import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
 import dynamic from "next/dynamic";
 import { useOverviewCounts } from "@/hooks/useAnalytics";
+import { TbBrandStorybook } from "react-icons/tb";
 
 const DynamicChartsComponent = dynamic(
   () => import("./component/ui/chart/charts"),
@@ -78,12 +79,6 @@ export default function Dashboard() {
           amount={(overviewData && overviewData?.totalImages) ?? "510"}
         />
 
-        {/* <SummeryCard
-          title={"Total Videos"}
-          icon={FaVideo}
-          color={"#C7FFE2"}
-          amount={(overviewData && overviewData?.totalVideos) ?? "60"}
-        /> */}
         <SummeryCard
           title={"Total Blog posts"}
           icon={MdEventNote}
@@ -99,11 +94,24 @@ export default function Dashboard() {
         />
 
         <SummeryCard
-          title={"Convertion"}
-          icon={SiConvertio}
+          title={"Team & Board members"}
+          icon={FaUsers}
           color={"#FFE8D9"}
-          amount={(overviewData && overviewData?.totalEvents) ?? "30"}
+          amount={(overviewData && overviewData?.totalMembers) ?? "30"}
         />
+
+        <SummeryCard
+          title={"Total Stories"}
+          icon={TbBrandStorybook}
+          color={"#C7FFE2"}
+          amount={(overviewData && overviewData?.totalStories) ?? "62"}
+        />
+        {/* <SummeryCard
+          title={"Total Videos"}
+          icon={FaVideo}
+          color={"#FFE8D9"}
+          amount={(overviewData && overviewData?.totalVideos) ?? "60"}
+        /> */}
       </div>
 
       {/* <div className="max-h-[510px] bg-white h-full"> */}

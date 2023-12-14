@@ -1,6 +1,6 @@
 "use client";
 
-import useIsLoggedIn from "@/hooks/UseIsLoggedIn";
+import useIsLoggedIn from "@/hooks/authentication/UseIsLoggedIn";
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";

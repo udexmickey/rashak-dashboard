@@ -9,11 +9,12 @@ import { MdAutoDelete } from "react-icons/md";
 import { RiEditFill } from "react-icons/ri";
 import { useRouter } from "next/navigation";
 import DeleteConfirmModal from "../confirmation/deleteContentModal";
-import { useFetchAllNews } from "@/hooks/useNewsHook";
+import { useFetchAllNews } from "@/hooks/content-management/useNewsHook";
 import ContentTable from "./ContentTable";
 import AddContentBtn from "../button/addContent.button";
 import SortBy from "../sortby";
 import EmptyStateBox from "@/components/ui/placeholders/notification.placeholder";
+import { useDeleteOneNews } from "@/hooks/content-management/useNewsHook";
 
 const NewsTable: React.FC = () => {
   const [sortBy, setSortBy] = useState("newest");
@@ -74,6 +75,19 @@ const NewsTable: React.FC = () => {
   const headers = ["Items", "Date Added"];
   const SortedItems = ["Newest", "Oldest"];
 
+  const {
+    isPending: isLoadingDelete,
+    mutateAsync: deletePost,
+    error: errorDelete,
+    isError: idDeleteError,
+    isSuccess: idDeleteSuccess,
+  } = useDeleteOneNews();
+
+  const handleConfirmDeletion = async () => {
+    //the delete function from useDeletePost hook
+    await deletePost(contentId);
+  };
+
   return (
     <div className="flex flex-col">
       <div className="mb-4 flex justify-between">
@@ -89,7 +103,7 @@ const NewsTable: React.FC = () => {
 
       <Paper
         elevation={3}
-        style={{ maxHeight: "60dvh", overflowY: "auto", height: "100dvh" }}
+        style={{ maxHeight: "65dvh", overflowY: "auto", height: "58dvh" }}
         className="flex flex-col justify-between items-around"
       >
         {(!isError && data?.data?.length) < 1 ? (
@@ -122,13 +136,18 @@ const NewsTable: React.FC = () => {
           />
         </div>
 
-        <div className="flex justify-around items-end my-8 rounded-lg"></div>
+        {/* <div className="flex justify-around items-end my-8 rounded-lg"></div> */}
         {/* The following will only be displayed/rendered when the edit button is clicked on the table */}
         {openModal && (
           <DeleteConfirmModal
             contentId={contentId}
             selectedContent={selectedContent}
             handleClose={() => setOpenModal(false)}
+            error={errorDelete}
+            isError={idDeleteError}
+            isLoading={isLoadingDelete}
+            handleConfirm={handleConfirmDeletion}
+            isSuccess={idDeleteSuccess}
           />
         )}
       </Paper>

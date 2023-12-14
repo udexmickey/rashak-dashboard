@@ -71,32 +71,32 @@ export default function MemberTable({
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell className="p-4 border-b border-gray-200">
-                  <Link href={`member-${member}/${row?._id}`}>
-                    <div className="flex items-center px-0 whitespace-nowrap ">
-                      {(row.image || null) && (
-                        <Image
-                          className="w-10 h-10 rounded-full"
-                          src={(row.image as unknown as string) ?? ""}
-                          alt={`${row.name} image`}
-                          width={40}
-                          height={40}
-                        />
-                      )}
-                      <div className="ps-3">
-                        <div className="text-base font-semibold">
-                          {`${row?.name?.slice(0, 25)} ${
-                            (row?.name as string).length >
-                            (row?.name as string).slice(0, 22)?.length
-                              ? "..."
-                              : ""
-                          }`}
-                        </div>
-                        <div className="font-normal text-gray-500">
-                          {row?.email || ""}
-                        </div>
+                  {/* <Link href={`member-${member}/${row?._id}`}> */}
+                  <div className="flex items-center px-0 whitespace-nowrap ">
+                    {(row.image || null) && (
+                      <Image
+                        className="w-10 h-10 rounded-full"
+                        src={(row.image as unknown as string) ?? ""}
+                        alt={`${row.name} image`}
+                        width={40}
+                        height={40}
+                      />
+                    )}
+                    <div className="ps-3">
+                      <div className="text-base font-semibold">
+                        {`${row?.name?.slice(0, 25)} ${
+                          (row?.name as string).length >
+                          (row?.name as string).slice(0, 22)?.length
+                            ? "..."
+                            : ""
+                        }`}
+                      </div>
+                      <div className="font-normal text-gray-500">
+                        {row?.email || ""}
                       </div>
                     </div>
-                  </Link>
+                  </div>
+                  {/* </Link> */}
                 </TableCell>
                 <TableCell className="p-4 border-b border-gray-200">
                   {row?.role || ""}

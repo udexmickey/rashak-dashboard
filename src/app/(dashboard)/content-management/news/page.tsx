@@ -14,11 +14,10 @@ import Image from "next/image";
 // import ReactQuill from "react-quill";
 // import "react-quill/dist/quill.snow.css";
 import useUnsavedFormChanges from "@/hooks/useUnsavedFormChanges";
-import { usePostNews } from "@/hooks/useNewsHook";
+import { usePostNews } from "@/hooks/content-management/useNewsHook";
 
 const NewsPostForm: React.FC = () => {
   const { setUnsavedChanges } = useUnsavedFormChanges();
-  // const { postData, isError, loading, error } = usePostData();
   const {
     mutateAsync: postData,
     isError,

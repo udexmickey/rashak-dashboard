@@ -4,7 +4,7 @@ import { Paper, TextField, Button } from "@mui/material";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useSignUp } from "@/hooks/useSignUp";
+import { useSignUp } from "@/hooks/authentication/useSignUp";
 
 interface Values {
   email: string;

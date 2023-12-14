@@ -5,7 +5,10 @@ import { BiEditAlt } from "react-icons/bi";
 import { MdAutoDelete } from "react-icons/md";
 import BoardMemberUpdateForm from "../Form/boardUpdate.form";
 import DeleteConfirmationModal from "../confirmationUI/deleteAdminConfirmationModal";
-import { useDeleteBoardMember, useFetchAllBoard } from "@/hooks/useMembersHook";
+import {
+  useDeleteBoardMember,
+  useFetchAllBoard,
+} from "@/hooks/member/useMembersHook";
 import { Pagination, Paper } from "@mui/material";
 import { useRouter } from "next/navigation";
 import MemberTable from "@/components/ui/Tables/Members.table";

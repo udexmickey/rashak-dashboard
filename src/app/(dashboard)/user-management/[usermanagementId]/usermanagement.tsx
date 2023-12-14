@@ -3,7 +3,7 @@ import React from "react";
 import { Metadata, ResolvingMetadata } from "next";
 import { List, ListItem, ListItemText } from "@mui/material";
 import BackgroundLetterAvatars from "@/components/menu/stringAvatar";
-import { useFetchOneadmin } from "@/hooks/useAdminsHook";
+import { useFetchOneadmin } from "@/hooks/admin/useAdminsHook";
 
 type Props = {
   params: { usermanagementId: string };

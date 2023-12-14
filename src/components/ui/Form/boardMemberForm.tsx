@@ -6,7 +6,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import useUnsavedFormChanges from "@/hooks/useUnsavedFormChanges";
-import { usePostBoardMember } from "@/hooks/useMembersHook";
+import { usePostBoardMember } from "@/hooks/member/useMembersHook";
 
 export default function BoardMemberForm({
   handleClose,

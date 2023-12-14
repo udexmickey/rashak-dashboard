@@ -53,3 +53,12 @@ export async function getAllSearchNews({ pageNumber, searchText, pageSize } : { 
         throw new Error(error?.response?.data.message ?? error?.message)
     }
 }
+
+export async function DeleteNews(id: string) {
+    try {
+        const posts = await authApi.delete(`/news/${id}`)
+        return await posts.data; 
+    } catch (error: any) {
+        throw new Error(error?.response?.data.message ?? error?.message)
+    }
+}

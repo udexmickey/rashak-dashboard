@@ -3,7 +3,7 @@ import { usePathname } from "next/navigation";
 import { IconType } from "react-icons/lib";
 import {
   FaHome,
-  FaCog,
+  // FaCog,
   FaFile,
   FaSignOutAlt,
   FaChevronRight,
@@ -19,8 +19,8 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import WelcomeCard from "../ui/cards/welcomeCard";
-import { IoIosReturnRight } from "react-icons/io";
-import { useLogout } from "@/hooks/useLogout";
+// import { IoIosReturnRight } from "react-icons/io";
+import { useLogout } from "@/hooks/authentication/useLogout";
 
 interface SidebarItemProps {
   icon: IconType;

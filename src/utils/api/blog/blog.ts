@@ -25,3 +25,12 @@ export async function getAllSearchBlogs({ pageNumber, searchText, pageSize } : {
     }
 
 }
+
+export async function DeleteBlog(id: string) {
+    try {
+        const posts = await authApi.delete(`/blogs/${id}`)
+        return await posts.data; 
+    } catch (error: any) {
+        throw new Error(error?.response?.data.message ?? error?.message)
+    }
+}

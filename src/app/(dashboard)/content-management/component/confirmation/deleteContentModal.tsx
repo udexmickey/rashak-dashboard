@@ -28,37 +28,31 @@ const style = {
 
 interface ConfirmationModalProps {
   contentId: string;
+  error: string | null;
+  isError: boolean | null;
+  isSuccess: boolean | null;
+  isLoading: boolean;
   selectedContent?: string;
   handleClose: () => void;
-  //   handleConfirm: () => void;
+  handleConfirm: () => void;
 }
 
 const DeleteConfirmModal: React.FC<ConfirmationModalProps> = ({
   contentId,
+  isError,
+  isSuccess,
+  isLoading,
+  error,
   selectedContent,
   handleClose,
-  //   handleConfirm,
+  handleConfirm,
 }) => {
-  const {
-    loading: isDeleting,
-    deletePost,
-    error,
-    isError,
-  } = useDeletePost(contentId);
-
-  const handleConfirmDeletion = async () => {
-    //the delete function from useDeletePost hook
-    await deletePost(
-      "https://6567770364fcff8d73106d0b.mockapi.io/api/v1/content-magament"
-    );
-  };
-
   useEffect(() => {
     //close modal in 500miliseconds
-    setTimeout(() => {
-      isError === false && handleClose();
-    }, 2000);
-  }, [error, handleClose, isError]);
+    // setTimeout(() => {
+    isSuccess && handleClose();
+    // }, 2000);
+  }, [error, handleClose, isSuccess]);
 
   return (
     <div>
@@ -93,7 +87,7 @@ const DeleteConfirmModal: React.FC<ConfirmationModalProps> = ({
             </Typography>
             <div className="">
               {/* Loading or error indicator */}
-              {isDeleting && (
+              {isLoading && (
                 <div className="flex items-center justify-center border rounded-lg border-gray-700">
                   <div className="px-3 py-1 text-xs font-medium leading-none text-center bg-green-200 rounded-full animate-pulse text-green-700">
                     Deleting...
@@ -115,8 +109,8 @@ const DeleteConfirmModal: React.FC<ConfirmationModalProps> = ({
                 color="success"
                 className="inline-flex items-center justify-start w-full text-[#484848] text-xl font-medium bg-[#C7FFE2] border border-gray-200 rounded-lg cursor-pointer 
            hover:text-gray-600 hover:bg-gray-100 md:px-8 px-4 py-5 h-24"
-                onClick={handleConfirmDeletion}
-                disabled={isDeleting}
+                onClick={handleConfirm}
+                disabled={isLoading}
               >
                 <span className="bg-white rounded-full h-9 w-9 justify-center items-center flex me-4 -ms-1">
                   <IoCheckmarkSharp
@@ -132,7 +126,7 @@ const DeleteConfirmModal: React.FC<ConfirmationModalProps> = ({
            hover:text-gray-600 hover:bg-gray-100 md:px-8 px-4 py-5 h-24"
                 onClick={handleClose}
                 sx={{ ml: 2 }}
-                disabled={isDeleting}
+                disabled={isLoading}
               >
                 <span className="bg-white rounded-full h-9 w-9 justify-center items-center flex me-4 -ms-1">
                   <IoClose size={16} className="w-6 h-6 text-[#ff0000]" />

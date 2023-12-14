@@ -1,5 +1,5 @@
 "use client";
-import useAuthRedirect from "@/hooks/UseIsLoggedIn";
+import useAuthRedirect from "@/hooks/authentication/UseIsLoggedIn";
 import Sidebar from "./Sidebar";
 import TopNav from "./TopNav";
 import { useEffect } from "react";

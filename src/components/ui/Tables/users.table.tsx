@@ -1,9 +1,9 @@
 "use client";
-import { useFetchAllPendingUsers } from "@/hooks/useAdminsHook";
+import { useFetchAllPendingUsers } from "@/hooks/admin/useAdminsHook";
 import {
   useApprovePendingUser,
   useDeletePendingUser,
-} from "@/hooks/useApproveHook";
+} from "@/hooks/admin/useApproveHook";
 import useIsMobile from "@/hooks/useIsMobile";
 import { Alert, AlertTitle, Paper } from "@mui/material";
 import Link from "next/link";

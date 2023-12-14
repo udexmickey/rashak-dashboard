@@ -1,6 +1,11 @@
 "use client";
 
-import { getAllSearchNews, getOneNews, postNews } from "@/utils/api/news/news";
+import {
+  DeleteNews,
+  getAllSearchNews,
+  getOneNews,
+  postNews,
+} from "@/utils/api/news/news";
 import { NewsDataType } from "@/utils/types/news.types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
@@ -54,4 +59,25 @@ export const usePostNews = () => {
   });
 
   return postNewsMutation;
+};
+
+export const useDeleteOneNews = () => {
+  const queryClient = useQueryClient();
+
+  // Use react-query's useMutation hook
+  const DeleteNewsrMutation = useMutation({
+    mutationFn: async (newsId: string) => await DeleteNews(newsId),
+    onSuccess: () => {
+      // Invalidate and refetch andv Handle success if needed
+      queryClient.invalidateQueries({
+        queryKey: ["news", { searchText: "", pageNumber: 1 }],
+      });
+    },
+    onError: (error: any) => {
+      // Handle error if needed
+      console.log("this is the cause of the error delete", error);
+    },
+  });
+
+  return DeleteNewsrMutation;
 };
