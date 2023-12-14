@@ -1,39 +1,30 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, ChangeEvent } from "react";
 import {
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
   SelectChangeEvent,
   Typography,
-  CircularProgress,
   Paper,
   Pagination,
-  Stack,
-  Button,
 } from "@mui/material";
-import EditOptionMenu from "@/components/ui/Tables/table.options";
-import { BiPlus } from "react-icons/bi";
-import Image from "next/image";
 import { MdAutoDelete } from "react-icons/md";
 import { RiEditFill } from "react-icons/ri";
-import useFetchData from "@/hooks/useFetchData";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import DeleteConfirmModal from "../confirmation/deleteContentModal";
+import { useFetchAllStory } from "@/hooks/content-management/useStoryHook";
+import ContentTable from "./ContentTable";
+import AddContentBtn from "../button/addContent.button";
+import SortBy from "../sortby";
 import EmptyStateBox from "@/components/ui/placeholders/notification.placeholder";
+import { useDeleteOneStory } from "@/hooks/content-management/useStoryHook";
 
 const StoryTable: React.FC = () => {
   const [sortBy, setSortBy] = useState("newest");
   const [page, setPage] = React.useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const { loading, data } = useFetchData();
+  const { isLoading, data, isError } = useFetchAllStory({
+    searchText: "",
+    pageNumber: page,
+    pageSize: rowsPerPage,
+  });
   const [openModal, setOpenModal] = React.useState<boolean>(false);
   const [contentId, setContentId] = React.useState<string>("");
   const [selectedContent, setSelectedContent] = React.useState<
@@ -42,21 +33,23 @@ const StoryTable: React.FC = () => {
   const router = useRouter();
 
   const handleChangePage = (event: ChangeEvent<unknown>, newPage: number) => {
-    setPage(newPage);
+    setPage((prev) => (prev = newPage));
   };
 
-  const sortedData = [...data].sort((a, b) => {
-    const dateA = new Date(a.createdAt).getTime();
-    const dateB = new Date(b.createdAt).getTime();
+  const sortedData =
+    data &&
+    data?.data?.sort((a: any, b: any) => {
+      const dateA = new Date(a.createdAt).getTime();
+      const dateB = new Date(b.createdAt).getTime();
 
-    return sortBy === "newest" ? dateB - dateA : dateA - dateB;
-  });
+      return sortBy === "newest" ? dateB - dateA : dateA - dateB;
+    });
 
   const options = [
-    // {
-    //   icon: RiEditFill,
-    //   text: "Edit",
-    // },
+    {
+      icon: RiEditFill,
+      text: "Edit",
+    },
     {
       icon: MdAutoDelete,
       text: "Delete",
@@ -69,7 +62,7 @@ const StoryTable: React.FC = () => {
     selectedContent?: string
   ) => {
     if (optionName.toLowerCase() === "edit") {
-      router.push(`content-management/blogs/${clickedContentId}`);
+      router.push(`content-management/story/${clickedContentId}`);
     } else if (optionName.toLowerCase() === "delete") {
       setSelectedContent((prev) => (prev = selectedContent));
       setContentId((prev) => (prev = clickedContentId));
@@ -79,142 +72,83 @@ const StoryTable: React.FC = () => {
     }
   };
 
+  const headers = ["Items", "Date Added"];
+  const SortedItems = ["Newest", "Oldest"];
+
+  const {
+    isPending: isLoadingDelete,
+    mutateAsync: deletePost,
+    error: errorDelete,
+    isError: idDeleteError,
+    isSuccess: idDeleteSuccess,
+  } = useDeleteOneStory();
+
+  const handleConfirmDeletion = async () => {
+    //the delete function from useDeletePost hook
+    await deletePost(contentId);
+  };
+
   return (
     <div className="flex flex-col">
       <div className="mb-4 flex justify-between">
-        <Typography>Available Stories Content</Typography>
+        <Typography>Available Media & Story Content</Typography>
         <div className="flex-row items-center">
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Sort By</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={sortBy as any}
-              label="Sort By"
-              style={{ minWidth: "150px" }}
-              onChange={(e: SelectChangeEvent) => setSortBy(e.target.value)}
-            >
-              <MenuItem value="newest">Newest</MenuItem>
-              <MenuItem value="oldest">Oldest</MenuItem>
-            </Select>
-          </FormControl>
+          <SortBy
+            sortBy={sortBy}
+            setSortBy={(e: SelectChangeEvent) => setSortBy(e.target.value)}
+            SortedItems={SortedItems}
+          />
         </div>
       </div>
 
       <Paper
         elevation={3}
-        style={{ maxHeight: "60dvh", overflowY: "auto", height: "100dvh" }}
+        style={{ maxHeight: "65dvh", overflowY: "auto", height: "58dvh" }}
         className="flex flex-col justify-between items-around"
       >
-        {(data && data?.length) < 1 ? ( /// TODo add react-query to this and include .data
+        {(!isError && data?.data?.length) < 1 ? (
           <EmptyStateBox page={"Story"} />
         ) : (
           <>
-            <TableContainer>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell className="p-6 border-b border-gray-200">
-                      Item
-                    </TableCell>
-                    <TableCell className="p-4 border-b border-gray-200">
-                      Date Created
-                    </TableCell>
-                    <TableCell className="p-4 border-b border-gray-200">
-                      Edit
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {loading ? (
-                    <TableRow>
-                      <TableCell colSpan={4} style={{ textAlign: "center" }}>
-                        <CircularProgress />
-                      </TableCell>
-                    </TableRow>
-                  ) : (
-                    sortedData
-                      .slice(
-                        (page - 1) * rowsPerPage,
-                        (page - 1) * rowsPerPage + rowsPerPage
-                      )
-                      .map((item) => (
-                        <TableRow key={item._id}>
-                          <TableCell className="p-4 border-b border-gray-200">
-                            {/* <Link href={`content-management/stories/${item._id}`}> */}
-                            <div className="flex items-center px-2 whitespace-nowrap ">
-                              <Image
-                                className="w-10 h-10 rounded-full"
-                                src={item.image as string}
-                                alt="Jese image"
-                                width={40}
-                                height={40}
-                              />
-                              <div className="ps-3">
-                                <div className="text-base font-semibold">
-                                  {`${item.title.slice(0, 25)} ${
-                                    item.title.length >
-                                    item.title.slice(0, 22).length
-                                      ? "..."
-                                      : ""
-                                  }`}
-                                </div>
-                                {/* <div className="font-normal text-gray-500">
-                              neil.sims@flowbite.com
-                            </div> */}
-                              </div>
-                            </div>
-                            {/* </Link> */}
-                          </TableCell>
-                          <TableCell className="p-4 border-b border-gray-200">
-                            {new Date(item.createdAt).toDateString()}
-                          </TableCell>
-                          <TableCell className="p-4 border-b border-gray-200">
-                            <EditOptionMenu
-                              adminId={item._id}
-                              options={options}
-                              handleOptionClick={handleOptionClick}
-                              title={item.title}
-                            />
-                          </TableCell>
-                        </TableRow>
-                      ))
-                  )}
-                </TableBody>
-              </Table>
-            </TableContainer>
-
-            <div className="flex justify-around items-end my-8 rounded-lg">
-              <Pagination
-                count={Math.ceil(sortedData.length / rowsPerPage)}
-                onChange={handleChangePage}
-                page={page}
-                siblingCount={0}
-                boundaryCount={2}
-              />
-              <Button
-                variant="contained"
-                LinkComponent={"a"}
-                href="/content-management/stories"
-                style={{ backgroundColor: "#00A651", color: "#ffffff" }}
-                type="submit"
-                className="px-6 !text-base py-2 capitalize float-right "
-                sx={{
-                  "&:focus": { backgroundColor: "#00A651" },
-                  "&.Mui-error": { backgroundColor: "red" },
-                }}
-              >
-                Add New post {` `} <BiPlus size={25} />
-              </Button>
-            </div>
+            <ContentTable
+              data={sortedData && sortedData}
+              options={options}
+              handleOptionClick={handleOptionClick}
+              headers={headers && headers}
+              isLoading={isLoading}
+              label={"story"}
+            />
           </>
         )}
+        <div className="flex justify-around items-end my-8 rounded-lg">
+          {(!isError && data?.data?.length) > 1 && (
+            <Pagination
+              count={data && Math.ceil(data?.totalItems / rowsPerPage)}
+              onChange={handleChangePage}
+              page={page}
+              siblingCount={0}
+              boundaryCount={4}
+            />
+          )}
 
+          <AddContentBtn
+            href={"/content-management/stories"}
+            label="Add New post"
+          />
+        </div>
+
+        {/* <div className="flex justify-around items-end my-8 rounded-lg"></div> */}
+        {/* The following will only be displayed/rendered when the edit button is clicked on the table */}
         {openModal && (
           <DeleteConfirmModal
             contentId={contentId}
             selectedContent={selectedContent}
             handleClose={() => setOpenModal(false)}
+            error={errorDelete}
+            isError={idDeleteError}
+            isLoading={isLoadingDelete}
+            handleConfirm={handleConfirmDeletion}
+            isSuccess={idDeleteSuccess}
           />
         )}
       </Paper>

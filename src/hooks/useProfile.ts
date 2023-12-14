@@ -1,4 +1,4 @@
-import { getProfile } from '@/utils/api/profile/profile';
+import { getProfile } from '@/utils/api/profile/profile.api';
 import { useQuery } from '@tanstack/react-query';
 
 export function useFetchOneprofile() {

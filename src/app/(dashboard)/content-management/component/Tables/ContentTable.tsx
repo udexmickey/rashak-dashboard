@@ -28,6 +28,7 @@ type Props = {
   ) => void;
   headers: string[];
   isLoading: boolean;
+  label: string;
 };
 
 export default function ContentTable({
@@ -36,6 +37,7 @@ export default function ContentTable({
   handleOptionClick,
   headers,
   isLoading,
+  label,
 }: Props) {
   return (
     <TableContainer component={Paper}>
@@ -69,7 +71,7 @@ export default function ContentTable({
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell className="p-4 border-b border-gray-200">
-                  <Link href={`content-management/news/${row?._id}`}>
+                  <Link href={`content-management/${label}/${row?._id}`}>
                     <div className="flex items-center px-2 whitespace-nowrap ">
                       {(row.image || row.media) && (
                         <Image

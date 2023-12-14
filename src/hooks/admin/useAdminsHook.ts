@@ -5,9 +5,9 @@ import {
   DeleteAdmin,
   getAllSearchAdmins,
   getOneAdmin,
-} from "@/utils/api/admins/admins";
-import { getAllSearchPendingUsers } from "@/utils/api/admins/pending-user";
-import { getAllTeamMember, getOneTeamMember } from "@/utils/api/members/team";
+} from "@/utils/api/admins/admins.api";
+import { getAllSearchPendingUsers } from "@/utils/api/admins/pending-user.api";
+import { getAllTeamMember, getOneTeamMember } from "@/utils/api/members/team.api";
 
 export function useFetchAllAdmin({
   searchText,

@@ -1,5 +1,5 @@
 
-import { getActivityLog } from '@/utils/api/notification/notification';
+import { getActivityLog } from '@/utils/api/notification/notification.api';
 import { useQuery } from '@tanstack/react-query';
 
 export function useFetchNotification({ searchText, pageNumber, pageSize }: { searchText?: string | number | undefined; pageNumber: number; pageSize?: number }) {

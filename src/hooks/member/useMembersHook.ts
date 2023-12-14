@@ -1,9 +1,8 @@
 "use client";
 
-import { getAllBoardMember, getOneBoardMember, addBoardMember, DeleteBoardMember } from "@/utils/api/members/board";
-import { DeleteTeamMember, addTeamMember, getAllTeamMember, getOneTeamMember } from "@/utils/api/members/team";
+import { getAllBoardMember, getOneBoardMember, addBoardMember, DeleteBoardMember } from "@/utils/api/members/board.api";
+import { DeleteTeamMember, addTeamMember, getAllTeamMember, getOneTeamMember } from "@/utils/api/members/team.api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { BiBody } from "react-icons/bi";
 
 export function useFetchAllBoard({
   searchText,

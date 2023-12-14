@@ -1,5 +1,5 @@
 "use client";
-import { signUpApi } from "@/utils/api/auth/signup";
+import { signUpApi } from "@/utils/api/auth/signup.api";
 import { useMutation } from "@tanstack/react-query";
 
 export const useSignUp = () => {

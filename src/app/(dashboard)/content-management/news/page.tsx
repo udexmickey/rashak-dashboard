@@ -128,14 +128,8 @@ const NewsPostForm: React.FC = () => {
       // setImageGallery([null]);
       setBlogContent((prev) => (prev = ""));
       setTitle((prev) => (prev = ""));
-
-      const resetTime = setTimeout(() => {
-        reset();
-      }, 3000);
-
-      return () => clearTimeout(resetTime);
     }
-  }, [isIdle, isSuccess, reset]);
+  }, [isIdle, isSuccess]);
 
   return (
     <Paper elevation={3} className="p-8 max-w-7xl mx-auto w-full">

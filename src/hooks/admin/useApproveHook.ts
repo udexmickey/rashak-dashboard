@@ -1,6 +1,6 @@
 "use client";
 
-import { ApprovePendingUser, DeletePendingUser } from "@/utils/api/admins/approval.user";
+import { ApprovePendingUser, DeletePendingUser } from "@/utils/api/admins/approval.user.api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useApprovePendingUser = () => {

@@ -116,6 +116,7 @@ const NewsTable: React.FC = () => {
               handleOptionClick={handleOptionClick}
               headers={headers && headers}
               isLoading={isLoading}
+              label={"news"}
             />
           </>
         )}

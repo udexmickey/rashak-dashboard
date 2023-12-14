@@ -15,14 +15,14 @@ import SortBy from "../sortby";
 import EmptyStateBox from "@/components/ui/placeholders/notification.placeholder";
 import {
   useDeleteOneBlog,
-  useFetchAllBlogs,
+  useFetchAllBlog,
 } from "@/hooks/content-management/useBlogHook";
 
 const BlogTable: React.FC = () => {
   const [sortBy, setSortBy] = useState("newest");
   const [page, setPage] = React.useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const { isLoading, data, isError } = useFetchAllBlogs({
+  const { isLoading, data, isError } = useFetchAllBlog({
     searchText: "",
     pageNumber: page,
     pageSize: rowsPerPage,
@@ -118,6 +118,7 @@ const BlogTable: React.FC = () => {
               handleOptionClick={handleOptionClick}
               headers={headers && headers}
               isLoading={isLoading}
+              label={"blogs"}
             />
           </>
         )}

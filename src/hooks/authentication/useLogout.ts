@@ -1,4 +1,4 @@
-import { logOutApi } from '@/utils/api/auth/logout';
+import { logOutApi } from '@/utils/api/auth/logout.api';
 import { useMutation } from '@tanstack/react-query';
 
 export const useLogout = () => {

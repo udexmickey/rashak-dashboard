@@ -1,94 +1,91 @@
 "use client";
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
 import {
   TextField,
   Button,
   Paper,
   Typography,
   Box,
+  IconButton,
   Stack,
 } from "@mui/material";
+import { IoMdPhotos } from "react-icons/io";
 import Image from "next/image";
+// import ReactQuill from "react-quill";
 // import "react-quill/dist/quill.snow.css";
 import useUnsavedFormChanges from "@/hooks/useUnsavedFormChanges";
+import { usePostStory } from "@/hooks/content-management/useStoryHook";
 
 const StoryPostForm: React.FC = () => {
   const { setUnsavedChanges } = useUnsavedFormChanges();
 
-  const [name, setName] = useState<string>("");
+  const [author, setAuthor] = useState<string>("");
   const [heroImage, setHeroImage] = useState<File | null>(null);
   const [blogContent, setBlogContent] = useState<string>("");
   const [youtubeLink, setYoutubeLink] = useState<string>("");
-  const [pressReleaseLinks, setPressReleaseLinks] = useState<string>("");
 
-  const [relatedPictures, setRelatedPictures] = useState<(File | null)[]>(
-    Array.from({ length: 6 }, () => null)
-  );
-
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
+  const handleAuthorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAuthor((prev) => (prev = event.target.value));
     setUnsavedChanges(true);
   };
 
   const handleHeroImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
-    setHeroImage(file);
+    setHeroImage((prev) => (prev = file));
     setUnsavedChanges(true);
   };
 
-  const handleContentChange = (value: string) => {
-    setBlogContent(value);
-  };
-
-  // Inside handleRelatedPictureChange
-  const handleRelatedPictureChange = (
-    event: ChangeEvent<HTMLInputElement>,
-    index: number
-  ) => {
-    const files = event.target.files;
-    if (files) {
-      setRelatedPictures((prevPictures) => {
-        const updatedPictures = [...prevPictures];
-        // Assuming you only want the first file
-        updatedPictures[index] = Array.from(files)[0];
-        return updatedPictures;
-      });
-    }
+  const handleContentChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setBlogContent((prev) => (prev = event.target.value));
   };
 
   const handleYoutubeLinkChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setYoutubeLink(event.target.value);
+    setYoutubeLink((prev) => (prev = event.target.value.trim()));
     setUnsavedChanges(true);
   };
 
-  const handlePressReleaseLinksChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setPressReleaseLinks(event.target.value);
-    setUnsavedChanges(true);
-  };
+  const {
+    mutateAsync: postData,
+    isError,
+    error,
+    isPending,
+    isSuccess,
+    isIdle,
+    isPaused,
+    reset,
+  } = usePostStory();
+
+  const formRef: any = React.useRef();
 
   // Inside handleSubmit
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const formDataObject = relatedPictures.reduce((acc, picture, index) => {
-      acc[`related-picture-${index}`] = picture;
-      return acc;
-    }, {} as Record<string, File | null>);
-
     const formData = {
-      name,
+      author: author,
       youtubeLink,
-      pressReleaseLinks,
-      heroImage,
-      blogContent,
-      relatedPictures: formDataObject,
+      file: heroImage,
+      content: blogContent,
     };
+
+    console.log("formData object", formData);
+
+    await postData({ ...formData });
     setUnsavedChanges(false);
+
+    formRef.current.reset();
   };
+
+  useEffect(() => {
+    if (isSuccess && !isIdle) {
+      setYoutubeLink((prev) => (prev = ""));
+      setHeroImage((prev) => (prev = null));
+      setBlogContent((prev) => (prev = ""));
+      setAuthor((prev) => (prev = ""));
+    }
+  }, [isIdle, isSuccess]);
 
   return (
     <Paper elevation={3} className="p-8 max-w-7xl mx-auto w-full">
@@ -100,26 +97,30 @@ const StoryPostForm: React.FC = () => {
         sx={{
           "& .MuiTextField-root": {
             m: 1,
-            width: "100ch",
+            width: "100%",
           },
         }}
-        noValidate
-        autoComplete="off"
+        // noValidate
+        autoComplete="on"
+        autoCorrect="on"
+        autoFocus
         className="flex flex-col space-y-4 md:space-y-8"
         onSubmit={handleSubmit}
+        ref={formRef}
       >
         {/* Name */}
         <TextField
           label="Name"
           variant="outlined"
-          value={name}
-          onChange={handleNameChange}
-          className="mb-4 max-w-[458px] w-full"
+          value={author}
+          onChange={handleAuthorChange}
+          className="mb-4 max-w-[430px] w-full"
           InputProps={{
             style: {
               borderRadius: "2rem",
             },
           }}
+          required={true}
         />
 
         {/* Hero Image */}
@@ -130,6 +131,7 @@ const StoryPostForm: React.FC = () => {
             onChange={handleHeroImageChange}
             className="hidden"
             id="hero-image"
+            // required
           />
           <label htmlFor="hero-image" className="mb-4 max-w-[458px] w-full">
             <div className="h-full cursor-grab min-h-full relative flex md:justify-start items-center justify-center mt-4 md:mt-6">
@@ -144,8 +146,7 @@ const StoryPostForm: React.FC = () => {
               ) : (
                 <Box
                   sx={{ bgcolor: "#D9D9D9", height: "30vh" }}
-                  //   width={400}ß
-                  className="max-w-[458px] w-full md:aspect-square"
+                  className="max-w-[458px] w-full"
                 >
                   <div className="flex flex-col items-center justify-center pt-5 pb-6 max-w-[458px] w-full h-[30vh]">
                     <svg
@@ -187,23 +188,29 @@ const StoryPostForm: React.FC = () => {
 
         {/* Content/Description Body */}
         <div
-          className="sm:mb-0 mb-8 flex flex-col gap-y8"
-          style={{ height: "200px" }}
+          className="sm:mb-0 mb-8 flex flex-col gap-y-8 h-full w-full relative"
+          // style={{ height: "500px" }}
         >
           <label htmlFor="blog-content" className="block mb-1">
-            Story Content
+            Media Content
           </label>
-          {/* <TextareaAutosize maxRows={4} /> */}
-
-          {/* <label htmlFor="message" className="block mb-2 text-sm font-medium">
-            Your message
-          </label> */}
-          <textarea
-            id="blog-content"
-            rows={8}
-            className="block p-2.5 w-full text-sm rounded-lg border border-gray-300 placeholder-gray-400 ring-[#00A651]"
-            placeholder="Write farmers story here..."
-          ></textarea>
+          <TextField
+            id="outlined-multiline-static"
+            label="Media Content"
+            multiline
+            rows={10}
+            variant="outlined"
+            fullWidth
+            className="w-full mx-auto"
+            value={blogContent}
+            onChange={handleContentChange}
+            InputProps={{
+              style: {
+                height: "300px",
+              },
+            }}
+            required
+          />
         </div>
 
         <div>
@@ -221,19 +228,47 @@ const StoryPostForm: React.FC = () => {
               }}
             />
           </div>
+          {isError && (
+            <p>
+              Error: {` `}
+              <span className="text-[#ff0000]">
+                {` `} {error?.message}
+              </span>
+            </p>
+          )}
+          {isPending && (
+            <p>
+              Please wait: {` `}
+              <span className="text-[#f1c557]">
+                {` `} While post is submmiting...
+              </span>
+            </p>
+          )}
+          {isSuccess && (
+            <p>
+              Successfully: {` `}
+              <span className="text-[#00A651]">{` `} posted</span>
+            </p>
+          )}
         </div>
 
         <Button
           variant="contained"
-          style={{ backgroundColor: "#00A651", color: "#ffffff" }}
+          style={{
+            backgroundColor: `${"#00A651"}`,
+            color: "#ffffff",
+            opacity: `${isPending ? ".6" : "1"}`,
+          }}
           type="submit"
           className="px-6 !text-base py-2 mt-12 float-right mr-8 max-w-max w-full justify-end self-end justify-self-end"
           sx={{
             "&:focus": { backgroundColor: "#00A651" },
             "&.Mui-error": { backgroundColor: "red" },
           }}
+          disabled={isPending}
+          onClick={() => formRef.current?.reportValidity()}
         >
-          Add +
+          {isPending ? "Posting..." : "Add +"}
         </Button>
       </Box>
     </Paper>

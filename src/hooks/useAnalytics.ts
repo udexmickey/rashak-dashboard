@@ -1,4 +1,4 @@
-import { getOverviewCounts } from '@/utils/api/analytics/overview';
+import { getOverviewCounts } from '@/utils/api/analytics/overview.api';
 import { useQuery } from '@tanstack/react-query';
 
 export function useOverviewCounts() {

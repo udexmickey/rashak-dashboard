@@ -1,6 +1,6 @@
 "use client";
 
-import { ReassignDepartment } from "@/utils/api/admins/department.admin";
+import { ReassignDepartment } from "@/utils/api/admins/department.admin.api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useReassignDepartment = () => {
