@@ -26,11 +26,13 @@ const style = {
 interface ConfirmationModalProps {
   selectedMember: string;
   handleClose: () => void;
+  handleCloseUpper: () => void;
 }
 
 const MemberConfirmModal: React.FC<ConfirmationModalProps> = ({
   selectedMember,
   handleClose,
+  handleCloseUpper,
 }) => {
   return (
     <>
@@ -68,7 +70,11 @@ const MemberConfirmModal: React.FC<ConfirmationModalProps> = ({
               <IoClose />
             </Typography>
           </div>
-          {selectedMember === "team" ? <TeamMemberForm /> : <BoardMemberForm />}
+          {selectedMember === "team" ? (
+            <TeamMemberForm handleClose={handleCloseUpper} />
+          ) : (
+            <BoardMemberForm handleClose={handleCloseUpper} />
+          )}
         </Box>
       </Modal>
     </>

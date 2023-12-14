@@ -1,11 +1,11 @@
 "use client";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import NestedModal from "../modal";
 import { BiEditAlt } from "react-icons/bi";
 import { MdAutoDelete } from "react-icons/md";
 import BoardMemberUpdateForm from "../Form/boardUpdate.form";
 import DeleteConfirmationModal from "../confirmationUI/deleteAdminConfirmationModal";
-import { useFetchAllBoard } from "@/hooks/useMembersHook";
+import { useDeleteBoardMember, useFetchAllBoard } from "@/hooks/useMembersHook";
 import { Pagination, Paper } from "@mui/material";
 import { useRouter } from "next/navigation";
 import MemberTable from "@/components/ui/Tables/Members.table";
@@ -73,6 +73,31 @@ export default function BoardMemberTable() {
 
   const headers = ["Name", "Role", "Date Added"];
 
+  const {
+    mutateAsync: deleteAdmin,
+    isPending: deleteLoading,
+    isError: deleteError,
+    isSuccess: deleteSuccess,
+  } = useDeleteBoardMember();
+
+  const handleConfirmDeleteAdmin = async () => {
+    const body = {
+      id: memberId,
+    };
+
+    console.log("Delete Admin", body);
+
+    await deleteAdmin(body);
+  };
+
+  const handleClose = () => {
+    setOpenModal(false);
+  };
+
+  useEffect(() => {
+    deleteSuccess && handleClose();
+  }, [deleteSuccess]);
+
   return (
     <div className="relative overflow-x-auto sm:rounded-lg">
       <Paper
@@ -110,7 +135,7 @@ export default function BoardMemberTable() {
 
         {openModal && (
           <NestedModal
-            handleClose={() => setOpenModal(false)}
+            handleClose={handleClose}
             title={
               modalType === "edit" ? "Edit Board Member" : "Remove Board Member"
             }
@@ -121,12 +146,15 @@ export default function BoardMemberTable() {
                 initialValues={boardMembersDatas as any}
                 handleUpdate={handleUpdate}
               />
+            ) : //Uncomment this when board member is available
+            modalType === "remove" ? (
+              <DeleteConfirmationModal
+                adminId={memberId}
+                title={"Board Member"}
+                handleClose={handleClose}
+                handleConfirm={handleConfirmDeleteAdmin}
+              />
             ) : null}
-            {/* {modalType === "remove" ? <DeleteConfirmationModal adminId={""} handleClose={function (): void {
-              throw new Error("Function not implemented.");
-            } } handleConfirm={function (): void {
-              throw new Error("Function not implemented.");
-            } } /> : null} */}
           </NestedModal>
         )}
       </Paper>

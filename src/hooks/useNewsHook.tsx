@@ -41,7 +41,7 @@ export const usePostNews = () => {
 
   // Use react-query's useMutation hook
   const postNewsMutation = useMutation({
-    mutationFn: async (body: NewsDataType) => await postNews(body), // TODO change the body type checking
+    mutationFn: async (body: any) => await postNews(body), // TODO change the body type checking
     onSuccess: () => {
       // Invalidate and refetch andv Handle success if needed
       queryClient.invalidateQueries({

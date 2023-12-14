@@ -65,11 +65,11 @@ export default function Charts({ type, datas }: { type: any; datas: any }) {
 
   const series = [
     {
-      name: "2022",
+      name: "2023",
       data: [20, 40, 50, 30, 40, 50, 70, 30, 60, 50, 15, 60],
     },
     {
-      name: "2023",
+      name: "2024",
       data: [10, 20, 40, 60, 20, 40, 50, 60, 20, 90, 83, 30],
     },
   ];

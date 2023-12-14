@@ -41,11 +41,11 @@ export default function Error({
           </button>{" "}
           |{" "}
           <Link
-            href="/"
+            href="/dashboard"
             className="rounded-lg ring-[#00A651] ring-solid ring-1 p-3 duration-200 ease-in hover:bg-[#00A651] text-white hover:text-slate-200 cursor-pointer"
           >
             {" "}
-            GO To Home
+            Home
           </Link>
         </div>
       </div>

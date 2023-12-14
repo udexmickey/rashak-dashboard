@@ -124,6 +124,7 @@ export default function MembersManagement() {
           <MemberCard
             title="Kindly select the member you want to add"
             handleReassign={handleReassign}
+            handleClose={() => setOpenModal(false)}
           />
         </NestedModal>
       )}

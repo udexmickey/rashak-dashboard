@@ -14,7 +14,7 @@ export interface NewsDataType {
   newsType: any;
   cloudinaryPublicId?: string;
 
-  imageGallery?: NewsImageGalleryProps;
+  imageGallery?: NewsImageGalleryProps[];
   youtubeLink: string;
   pressReleaseLink: string;
 }

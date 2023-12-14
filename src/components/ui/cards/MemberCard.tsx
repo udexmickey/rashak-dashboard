@@ -9,9 +9,10 @@ import MemberConfirmModal from "../confirmationUI/confirm.member.modal";
 interface MemberCardProps {
   title: string;
   handleReassign: (adminId: string, selectedMember: string) => void;
+  handleClose: () => void;
 }
 
-const MemberCard: React.FC<MemberCardProps> = ({ title }) => {
+const MemberCard: React.FC<MemberCardProps> = ({ title, handleClose }) => {
   const [selectedMember, setSelectedMember] = useState<string>("");
   const [showConfirmationModal, setShowConfirmationModal] =
     useState<boolean>(false);
@@ -122,6 +123,7 @@ const MemberCard: React.FC<MemberCardProps> = ({ title }) => {
           <MemberConfirmModal
             handleClose={() => setShowConfirmationModal(false)}
             selectedMember={selectedMember}
+            handleCloseUpper={handleClose}
           />
         )}
       </FormControl>

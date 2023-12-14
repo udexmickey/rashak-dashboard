@@ -138,11 +138,6 @@ const NewsPostForm: React.FC = () => {
     }
   }, [isIdle, isSuccess, reset]);
 
-  console.log("isSuccess", isSuccess);
-  console.log("isPending", isPending);
-  console.log("isIdle", isIdle);
-  console.log("isPaused", isPaused);
-
   return (
     <Paper elevation={3} className="p-8 max-w-7xl mx-auto w-full">
       <Typography variant="h5" align="left" gutterBottom>

@@ -8,7 +8,11 @@ import Image from "next/image";
 import useUnsavedFormChanges from "@/hooks/useUnsavedFormChanges";
 import { usePostBoardMember } from "@/hooks/useMembersHook";
 
-const BoardMemberForm: React.FC = () => {
+export default function BoardMemberForm({
+  handleClose,
+}: {
+  handleClose: () => void;
+}) {
   const { setUnsavedChanges } = useUnsavedFormChanges();
   const [name, setName] = React.useState("");
   const [role, setRole] = React.useState("");
@@ -92,11 +96,12 @@ const BoardMemberForm: React.FC = () => {
 
       const resetTime = setTimeout(() => {
         reset();
+        handleClose();
       }, 3000);
 
       return () => clearTimeout(resetTime);
     }
-  }, [isSuccess, reset]);
+  }, [handleClose, isSuccess, reset]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -236,10 +241,31 @@ const BoardMemberForm: React.FC = () => {
           >
             Save
           </Button>
+
+          {isError && (
+            <p>
+              Error: {` `}
+              <span className="text-[#ff0000]">
+                {` `} {error?.message}
+              </span>
+            </p>
+          )}
+          {isPending && (
+            <p>
+              Please wait: {` `}
+              <span className="text-[#f1c557]">{` `} Posting...</span>
+            </p>
+          )}
+          {isSuccess && (
+            <p>
+              Posted: {` `}
+              <span className="text-[#00A651]">{` `} Member Added</span>
+            </p>
+          )}
         </div>
       </Box>
     </form>
   );
-};
+}
 
-export default BoardMemberForm;
+// export default BoardMemberForm;

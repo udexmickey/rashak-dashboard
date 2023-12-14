@@ -1,5 +1,5 @@
 "use client";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import NestedModal from "../modal";
 import { BiEditAlt } from "react-icons/bi";
 import { MdAutoDelete } from "react-icons/md";
@@ -90,6 +90,14 @@ export default function TeamMemberTable() {
     await deleteAdmin(body);
   };
 
+  const handleClose = () => {
+    setOpenModal(false);
+  };
+
+  useEffect(() => {
+    deleteSuccess && handleClose();
+  }, [deleteSuccess]);
+
   return (
     <div className="relative overflow-x-auto sm:rounded-lg">
       <Paper
@@ -127,7 +135,7 @@ export default function TeamMemberTable() {
 
         {openModal && (
           <NestedModal
-            handleClose={() => setOpenModal(false)}
+            handleClose={handleClose}
             title={
               modalType === "edit" ? "Edit Team Member" : "Remove Team Member"
             }
@@ -143,7 +151,7 @@ export default function TeamMemberTable() {
               <DeleteConfirmationModal
                 adminId={memberId}
                 title={"Team Member"}
-                handleClose={() => setOpenModal(false)}
+                handleClose={handleClose}
                 handleConfirm={handleConfirmDeleteAdmin}
               />
             ) : null}

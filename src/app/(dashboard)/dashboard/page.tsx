@@ -67,8 +67,6 @@ export default function Dashboard() {
 
   const { data: overviewData } = useOverviewCounts();
 
-  console.log("overviewData", overviewData);
-
   return (
     <div className="flex items-stretch justify-between flex-col h-[87dvh] gap-y-8">
       {/* <Maintance /> */}
@@ -76,16 +74,16 @@ export default function Dashboard() {
         <SummeryCard
           title={"Total Images"}
           icon={MdPhoto}
-          color={"#FFE8D9"}
+          color={"#C7FFE2"}
           amount={(overviewData && overviewData?.totalImages) ?? "510"}
         />
 
-        <SummeryCard
+        {/* <SummeryCard
           title={"Total Videos"}
           icon={FaVideo}
           color={"#C7FFE2"}
           amount={(overviewData && overviewData?.totalVideos) ?? "60"}
-        />
+        /> */}
         <SummeryCard
           title={"Total Blog posts"}
           icon={MdEventNote}
