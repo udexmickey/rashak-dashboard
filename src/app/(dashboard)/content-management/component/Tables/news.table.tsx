@@ -81,12 +81,20 @@ const NewsTable: React.FC = () => {
     error: errorDelete,
     isError: idDeleteError,
     isSuccess: idDeleteSuccess,
+    reset: resetDelete,
   } = useDeleteOneNews();
 
   const handleConfirmDeletion = async () => {
     //the delete function from useDeletePost hook
     await deletePost(contentId);
   };
+
+  React.useEffect(() => {
+    //close modal in 1000miliseconds only if the request was successful
+    setTimeout(() => {
+      idDeleteSuccess && resetDelete();
+    }, 1000);
+  }, [idDeleteSuccess, resetDelete]);
 
   return (
     <div className="flex flex-col">

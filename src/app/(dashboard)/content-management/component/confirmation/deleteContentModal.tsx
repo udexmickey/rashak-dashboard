@@ -4,7 +4,6 @@ import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import { Typography } from "@mui/material";
 import { IoCheckmarkSharp, IoClose } from "react-icons/io5";
-import useDeletePost from "@/hooks/useDeletePost";
 
 const style = {
   position: "absolute" as "absolute",

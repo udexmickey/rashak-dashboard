@@ -64,7 +64,7 @@ export const useDeleteOneStory = () => {
     onSuccess: () => {
       // Invalidate and refetch andv Handle success if needed
       queryClient.invalidateQueries({
-        queryKey: ["story", { searchText: "", pageNumber: 1 }],
+        queryKey: ["stories", { searchText: "", pageNumber: 1 }],
       });
     },
     onError: (error: any) => {

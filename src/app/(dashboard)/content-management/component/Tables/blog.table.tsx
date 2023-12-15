@@ -83,12 +83,20 @@ const BlogTable: React.FC = () => {
     error: errorDelete,
     isError: idDeleteError,
     isSuccess: idDeleteSuccess,
+    reset: resetDelete,
   } = useDeleteOneBlog();
 
   const handleConfirmDeletion = async () => {
     //the delete function from useDeletePost hook
     await deletePost(contentId);
   };
+
+  React.useEffect(() => {
+    //close modal in 500miliseconds
+    setTimeout(() => {
+      idDeleteSuccess && resetDelete();
+    }, 1000);
+  }, [idDeleteSuccess, resetDelete]);
 
   return (
     <div className="flex flex-col">
