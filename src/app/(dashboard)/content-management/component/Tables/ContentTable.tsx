@@ -79,16 +79,24 @@ export default function ContentTable({
                           src={
                             (row.image as string) ?? (row.media as string) ?? ""
                           }
-                          alt={`${row.title} image`}
+                          alt={`${
+                            row?.title ?? row?.author ?? row?.name
+                          } image`}
                           width={40}
                           height={40}
                         />
                       )}
                       <div className="ps-3">
                         <div className="text-base font-semibold">
-                          {`${row?.title?.slice(0, 25)} ${
-                            (row?.title as string).length >
-                            (row?.title as string).slice(0, 22)?.length
+                          {`${(row?.title ?? row?.author ?? row?.name)?.slice(
+                            0,
+                            25
+                          )} ${
+                            ((row?.title ?? row?.author ?? row?.name) as string)
+                              .length >
+                            (
+                              (row?.title ?? row?.author ?? row?.name) as string
+                            ).slice(0, 22)?.length
                               ? "..."
                               : ""
                           }`}
@@ -109,7 +117,7 @@ export default function ContentTable({
                     adminId={row?._id as string}
                     options={options}
                     handleOptionClick={handleOptionClick}
-                    title={row?.title}
+                    title={row?.title ?? row?.author ?? row?.name}
                   />
                 </TableCell>
               </TableRow>

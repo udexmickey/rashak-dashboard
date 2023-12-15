@@ -62,7 +62,7 @@ const StoryTable: React.FC = () => {
     selectedContent?: string
   ) => {
     if (optionName.toLowerCase() === "edit") {
-      router.push(`content-management/story/${clickedContentId}`);
+      router.push(`content-management/stories/${clickedContentId}`);
     } else if (optionName.toLowerCase() === "delete") {
       setSelectedContent((prev) => (prev = selectedContent));
       setContentId((prev) => (prev = clickedContentId));
@@ -116,7 +116,7 @@ const StoryTable: React.FC = () => {
               handleOptionClick={handleOptionClick}
               headers={headers && headers}
               isLoading={isLoading}
-              label={"story"}
+              label={"stories"}
             />
           </>
         )}

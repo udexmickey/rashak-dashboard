@@ -22,6 +22,7 @@ export interface BlogImageGalleryProps{
 
 export interface postUpload {
     author: string;
+    name: string;
     cloudinaryPublicId: string;
     content: string;
     createdAt: string | number | Date;
