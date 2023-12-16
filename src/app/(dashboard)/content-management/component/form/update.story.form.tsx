@@ -48,7 +48,8 @@ const UpdateStoryPostForm: React.FC<UpdateStoryProps> = ({
   const { setUnsavedChanges } = useUnsavedFormChanges();
   const {
     mutateAsync: updatePost,
-    isPending: loading,
+    isPending,
+    isSuccess,
     error,
     isError,
     reset,
@@ -148,6 +149,29 @@ const UpdateStoryPostForm: React.FC<UpdateStoryProps> = ({
             maxWidth={458}
           />
         </div>
+
+        {isError && (
+          <p>
+            Error: {` `}
+            <span className="text-[#ff0000]">
+              {` `} {error?.message}
+            </span>
+          </p>
+        )}
+        {isPending && (
+          <p>
+            Please wait: {` `}
+            <span className="text-[#f1c557]">
+              {` `} While post is updating...
+            </span>
+          </p>
+        )}
+        {isSuccess && (
+          <p>
+            Successfully: {` `}
+            <span className="text-[#00A651]">{` `} Updated</span>
+          </p>
+        )}
 
         <UpdateContentButton />
       </Box>
