@@ -55,8 +55,13 @@ const DepartmentCard: React.FC<DepartmentCardProps> = ({
   return (
     <>
       <FormControl
-        style={{ color: "#484848" }}
-        className="grid place-items-center gap-y-12"
+        style={{
+          color: "#484848",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        className="flex justify-center items-center gap-y-12"
       >
         <FormLabel
           id="demo-customized-radios"
@@ -129,11 +134,32 @@ const DepartmentCard: React.FC<DepartmentCardProps> = ({
           </div>
         </RadioGroup>
 
-        <Button
+        {/* <Button
           variant="contained"
           color="primary"
           style={{ color: "#fff", backgroundColor: "#00A651" }}
           className="max-w-max w-full grid place-items-center px-12 py-4 rounded-2xl"
+          onClick={handleAssignClick}
+          disabled={selectedDepartment === ""}
+        >
+          Assign
+        </Button> */}
+
+        <Button
+          variant="contained"
+          color="primary"
+          style={{
+            color: "#fff",
+            backgroundColor: "#00A651",
+            padding: "1rem 3.5rem",
+            fontSize: "1.5rem",
+            borderRadius: "1rem",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            textTransform: "capitalize",
+          }}
+          className="max-w-max w-full grid place-items-center px-12 py-4 rounded-2xl capitalize"
           onClick={handleAssignClick}
           disabled={selectedDepartment === ""}
         >

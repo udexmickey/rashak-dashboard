@@ -18,7 +18,7 @@ const StoryPostForm: React.FC = () => {
 
   const [author, setAuthor] = useState<string>("");
   const [heroImage, setHeroImage] = useState<File | null>(null);
-  const [blogContent, setBlogContent] = useState<string>("");
+  const [content, setContent] = useState<string>("");
   const [youtubeLink, setYoutubeLink] = useState<string>("");
 
   const handleAuthorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,11 +33,11 @@ const StoryPostForm: React.FC = () => {
   };
 
   // const handleContentChange = (event: ChangeEvent<HTMLInputElement>) => {
-  //   setBlogContent((prev) => (prev = event.target.value));
+  //   setContent((prev) => (prev = event.target.value));
   // };
 
   const handleContentChange = (value: string) => {
-    setBlogContent(value);
+    setContent(value);
   };
 
   const handleYoutubeLinkChange = (
@@ -68,7 +68,7 @@ const StoryPostForm: React.FC = () => {
       author: author,
       youtubeLink,
       file: heroImage,
-      content: blogContent,
+      content: content,
     };
 
     console.log("formData object", formData);
@@ -84,11 +84,10 @@ const StoryPostForm: React.FC = () => {
     if (isSuccess && !isIdle) {
       setYoutubeLink((prev) => (prev = ""));
       setHeroImage((prev) => (prev = null));
-      setBlogContent((prev) => (prev = ""));
+      setContent((prev) => (prev = ""));
       setAuthor((prev) => (prev = ""));
     }
-    console.log("blogContent", blogContent);
-  }, [blogContent, isIdle, isSuccess]);
+  }, [content, isIdle, isSuccess]);
 
   return (
     <Paper elevation={3} className="p-8 max-w-7xl mx-auto w-full">
@@ -205,7 +204,7 @@ const StoryPostForm: React.FC = () => {
             variant="outlined"
             fullWidth
             className="w-full mx-auto"
-            value={blogContent}
+            value={content}
             onChange={handleContentChange}
             InputProps={{
               style: {
@@ -214,7 +213,7 @@ const StoryPostForm: React.FC = () => {
             }}
             required
           /> */}
-          <RichTextEditor value={blogContent} onChange={handleContentChange} />
+          <RichTextEditor value={content} onChange={handleContentChange} />
         </div>
 
         <div>

@@ -73,17 +73,14 @@ const DeleteConfirmModal: React.FC<ConfirmationModalProps> = ({
               <IoClose />
             </Typography>
           </div>
-          <div className="flex flex-col justify-center gap-y-8 h-full pb-8 ">
-            <Typography
-              component="div"
-              className="text-[#1E1E1E] text-2xl text-center flex flex-col gap-y-4"
-            >
+          <div className="flex flex-col justify-center gap-y-2 h-full pb-8 ">
+            <div className="text-[#1E1E1E] text-2xl text-center flex flex-col gap-y-4">
               Are you sure you want to Delete this content
-              <Typography className="block text-2xl">
+              <p className="block text-2xl">
                 <span className="text-[#00A651]">{selectedContent}</span>
                 {` `}
-              </Typography>
-            </Typography>
+              </p>
+            </div>
             <div className="">
               {/* Loading or error indicator */}
               {isLoading && (
@@ -102,11 +99,11 @@ const DeleteConfirmModal: React.FC<ConfirmationModalProps> = ({
                 </p>
               )}
             </div>
-            <div className="flex justify-center items-center">
-              <Button
-                variant="contained"
-                color="success"
-                className="inline-flex items-center justify-start w-full text-[#484848] text-xl font-medium bg-[#C7FFE2] border border-gray-200 rounded-lg cursor-pointer 
+            <div className="flex justify-center items-center gap-x-12">
+              <button
+                // variant="contained"
+                // color="success"
+                className="inline-flex items-center justify-center w-full text-[#484848] text-xl font-medium bg-[#C7FFE2] border border-gray-200 rounded-lg cursor-pointer 
            hover:text-gray-600 hover:bg-gray-100 md:px-8 px-4 py-5 h-24"
                 onClick={handleConfirm}
                 disabled={isLoading}
@@ -118,20 +115,20 @@ const DeleteConfirmModal: React.FC<ConfirmationModalProps> = ({
                   />
                 </span>
                 Yes
-              </Button>
-              <Button
-                variant="contained"
-                className="inline-flex items-center justify-start w-full text-[#484848] text-xl font-medium bg-[#ff000033] border border-gray-200 rounded-lg cursor-pointer 
+              </button>
+              <button
+                // variant="contained"
+                className="inline-flex items-center justify-center w-full text-[#484848] text-xl font-medium bg-[#ff000033] border border-gray-200 rounded-lg cursor-pointer 
            hover:text-gray-600 hover:bg-gray-100 md:px-8 px-4 py-5 h-24"
                 onClick={handleClose}
-                sx={{ ml: 2 }}
+                // sx={{ ml: 2 }}
                 disabled={isLoading}
               >
                 <span className="bg-white rounded-full h-9 w-9 justify-center items-center flex me-4 -ms-1">
                   <IoClose size={16} className="w-6 h-6 text-[#ff0000]" />
                 </span>
                 No
-              </Button>
+              </button>
             </div>
           </div>
         </Box>

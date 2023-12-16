@@ -4,7 +4,7 @@ import { MediaTypeEnum } from "../enum/mediaType.enum";
 export interface PostData {
     title: string;
     image: File | null;
-    blogContent: string;
+    content: string;
     youtubeLink: string;
     pressReleaseLink: string;
     relatedPictures: (File | null | NewsImageGalleryProps)[];

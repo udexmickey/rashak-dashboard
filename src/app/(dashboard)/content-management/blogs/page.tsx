@@ -15,6 +15,7 @@ import Image from "next/image";
 // import "react-quill/dist/quill.snow.css";
 import useUnsavedFormChanges from "@/hooks/useUnsavedFormChanges";
 import { usePostBlog } from "@/hooks/content-management/useBlogHook";
+import RichTextEditor from "../component/InputTextField/RichTextEditor";
 
 const BlogPostForm: React.FC = () => {
   const { setUnsavedChanges } = useUnsavedFormChanges();
@@ -31,7 +32,7 @@ const BlogPostForm: React.FC = () => {
 
   const [title, setTitle] = useState<string>("");
   const [heroImage, setHeroImage] = useState<File | null>(null);
-  const [blogContent, setBlogContent] = useState<string>("");
+  const [content, setContent] = useState<string>("");
   const [youtubeLink, setYoutubeLink] = useState<string>("");
   const [pressReleaseLink, setPressReleaseLink] = useState<string>("");
 
@@ -50,8 +51,12 @@ const BlogPostForm: React.FC = () => {
     setUnsavedChanges(true);
   };
 
-  const handleContentChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setBlogContent((prev) => (prev = event.target.value));
+  // const handleContentChange = (event: ChangeEvent<HTMLInputElement>) => {
+  //   setContent((prev) => (prev = event.target.value));
+  // };
+
+  const handleContentChange = (value: string) => {
+    setContent(value);
   };
 
   // Inside handleRelatedPictureChange
@@ -104,7 +109,7 @@ const BlogPostForm: React.FC = () => {
       youtubeLink,
       pressReleaseLink,
       image: heroImage,
-      content: blogContent,
+      content: content,
       author: "Rashak Agro",
       // imageGallery: imageGalleryFiles,
       ...Object.assign({}, ...imageGalleryObjects),
@@ -124,7 +129,7 @@ const BlogPostForm: React.FC = () => {
       setPressReleaseLink((prev) => (prev = ""));
       setHeroImage((prev) => (prev = null));
       setImageGallery((prev) => (prev = [null]));
-      setBlogContent((prev) => (prev = ""));
+      setContent((prev) => (prev = ""));
       setTitle((prev) => (prev = ""));
     }
   }, [isIdle, isSuccess]);
@@ -231,30 +236,13 @@ const BlogPostForm: React.FC = () => {
         {/* Content/Description Body */}
         <div
           className="sm:mb-0 mb-8 flex flex-col gap-y-8 h-full w-full relative"
-          // style={{ height: "500px" }}
+          style={{ height: "400px" }}
         >
           <label htmlFor="blog-content" className="block mb-1">
             Media Content
           </label>
 
-          {/* <ReactQuill
-            theme="snow"
-            value={blogContent}
-            onChange={handleContentChange}
-            modules={{
-              toolbar: [
-                [{ header: [1, 2, 3, false] }],
-                ["bold", "italic", "underline", "strike", "link"],
-                [{ color: [] }, { background: [] }],
-                ["image", "code-block"],
-                [{ list: "ordered" }, { list: "bullet" }],
-              ],
-            }}
-            //   style={{ height: '300px' }}
-            className="max-h-[300px] h-full w-full"
-          /> */}
-
-          <TextField
+          {/* <TextField
             id="outlined-multiline-static"
             label="Media Content"
             multiline
@@ -262,7 +250,7 @@ const BlogPostForm: React.FC = () => {
             variant="outlined"
             fullWidth
             className="w-full mx-auto"
-            value={blogContent}
+            value={content}
             onChange={handleContentChange}
             InputProps={{
               style: {
@@ -270,7 +258,8 @@ const BlogPostForm: React.FC = () => {
               },
             }}
             required
-          />
+          /> */}
+          <RichTextEditor value={content} onChange={handleContentChange} />
         </div>
 
         {/* Related Pictures */}

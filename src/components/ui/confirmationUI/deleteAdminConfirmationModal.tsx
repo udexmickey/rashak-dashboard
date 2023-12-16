@@ -36,20 +36,31 @@ export default function DeleteConfirmationModal({
               d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
             />
           </svg>
-          <Typography
-            component={"h5"}
-            variant="h3"
-            className="mb-5 text-lg font-normal text-gray-500 "
-          >
+          <div className="mb-5 text-xl font-medium text-gray-500 ">
             Are you sure you want to delete this {title ?? "Admin"}?
             {/* {` `} {adminId} */}
-          </Typography>
-          <div className="flex justify-center items-center">
-            <Button
-              variant="contained"
-              color="success"
-              className="inline-flex items-center justify-start w-full text-[#484848] text-xl font-medium bg-[#C7FFE2] border border-gray-200 rounded-lg cursor-pointer 
-           hover:text-gray-600 hover:bg-gray-100 md:px-8 px-4 py-5 h-24"
+          </div>
+          <div className="flex justify-center items-center gap-x-12">
+            <button
+              // variant="contained"
+              // color="success"
+              // style={{
+              //   display: "inline-flex",
+              //   alignItems: "center",
+              //   justifyContent: "center",
+              //   width: "100%",
+              //   height: "6rem",
+              //   fontWeight: "500",
+              //   textTransform: "capitalize",
+              //   color: "#484848",
+              //   fontSize: "1.25rem",
+              //   lineHeight: "1.75rem",
+              //   backgroundColor: "#C7FFE2",
+              //   borderRadius: "0.5rem",
+              //   cursor: "pointer",
+              //   padding: "1.25rem 2rem",
+              // }}
+              className="inline-flex items-center justify-center duration-300 ease-in-out  w-full text-[#484848] text-xl font-medium bg-[#C7FFE2] border border-gray-200 rounded-lg cursor-pointer hover:text-gray-600 hover:bg-gray-100 md:px-8 px-4 py-5 h-24 hover:shadow-md"
               onClick={handleConfirm}
             >
               <span className="bg-white rounded-full h-9 w-9 justify-center items-center flex me-4 -ms-1">
@@ -59,19 +70,42 @@ export default function DeleteConfirmationModal({
                 />
               </span>
               Yes, I am sure
-            </Button>
-            <Button
+            </button>
+            {/* <Button
               variant="contained"
               className="inline-flex items-center justify-start w-full text-[#484848] text-xl font-medium bg-[#ff000033] border border-gray-200 rounded-lg cursor-pointer 
            hover:text-gray-600 hover:bg-gray-100 md:px-8 px-4 py-5 h-24"
               onClick={handleClose}
               sx={{ ml: 2 }}
+            > */}
+
+            <button
+              // variant="contained"
+              // color="error"
+              // style={{
+              //   display: "inline-flex",
+              //   alignItems: "center",
+              //   justifyContent: "center",
+              //   width: "100%",
+              //   height: "6rem",
+              //   fontWeight: "500",
+              //   textTransform: "capitalize",
+              //   color: "#484848",
+              //   fontSize: "1.25rem",
+              //   lineHeight: "1.75rem",
+              //   backgroundColor: "#ff000033",
+              //   borderRadius: "0.5rem",
+              //   cursor: "pointer",
+              //   padding: "1.25rem 2rem",
+              // }}
+              className="inline-flex items-center justify-center duration-300 ease-in-out w-full text-[#484848] text-xl font-medium bg-[#ff000033] border border-gray-200 rounded-lg cursor-pointer hover:text-gray-600 hover:bg-gray-100 md:px-8 px-4 py-5 h-24 hover:shadow-md"
+              onClick={handleClose}
             >
               <span className="bg-white rounded-full h-9 w-9 justify-center items-center flex me-4 -ms-1">
                 <IoClose size={16} className="w-6 h-6 text-[#ff0000]" />
               </span>
               No, cancel
-            </Button>
+            </button>
           </div>
         </div>
       </div>

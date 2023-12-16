@@ -32,8 +32,13 @@ const MemberCard: React.FC<MemberCardProps> = ({ title, handleClose }) => {
   return (
     <>
       <FormControl
-        style={{ color: "#484848" }}
-        className="grid place-items-center gap-y-12"
+        style={{
+          color: "#484848",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        className="flex justify-center items-center gap-y-12"
       >
         <FormLabel
           id="demo-customized-radios"
@@ -81,7 +86,12 @@ const MemberCard: React.FC<MemberCardProps> = ({ title, handleClose }) => {
               </div>
             </label>
           </div>
-          <div className="w-full max-w-lg">
+          <div
+            className="w-full max-w-lg"
+            style={{
+              maxWidth: "32rem",
+            }}
+          >
             <input
               type="radio"
               id="hosting-big"
@@ -111,8 +121,18 @@ const MemberCard: React.FC<MemberCardProps> = ({ title, handleClose }) => {
         <Button
           variant="contained"
           color="primary"
-          style={{ color: "#fff", backgroundColor: "#00A651" }}
-          className="max-w-max w-full grid place-items-center px-12 py-4 rounded-2xl"
+          style={{
+            color: "#fff",
+            backgroundColor: "#00A651",
+            padding: "1rem 3.5rem",
+            fontSize: "1.5rem",
+            borderRadius: "1rem",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            textTransform: "capitalize",
+          }}
+          className="max-w-max w-full grid place-items-center px-12 py-4 rounded-2xl capitalize"
           onClick={handleAssignClick}
           disabled={selectedMember === ""}
         >
