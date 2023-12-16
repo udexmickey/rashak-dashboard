@@ -91,9 +91,11 @@ const UpdateNewsPostForm: React.FC<UpdateNewsProps> = ({
 
   const {
     mutateAsync: updatePost,
-    isPending: loading,
+    isPending,
+    isSuccess,
     error,
     isError,
+    reset,
   } = useUpdateOneNews(contentId);
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -106,16 +108,12 @@ const UpdateNewsPostForm: React.FC<UpdateNewsProps> = ({
         heroImage,
         content,
         relatedPictures,
+        mediaType: "image",
       };
 
       // Use the updatePost function from the hook
       await updatePost(updatedData);
-
-      // Optionally, handle errors or perform other actions after updating
-      if (!isError) {
-        console.log("Post updated successfully");
-        setUnsavedChanges(false);
-      }
+      reset();
     } catch (error: any) {
       throw new Error("Failed to update post:", error);
     }
@@ -200,6 +198,28 @@ const UpdateNewsPostForm: React.FC<UpdateNewsProps> = ({
           />
         </div>
 
+        {isError && (
+          <p>
+            Error: {` `}
+            <span className="text-[#ff0000]">
+              {` `} {error?.message}
+            </span>
+          </p>
+        )}
+        {isPending && (
+          <p>
+            Please wait: {` `}
+            <span className="text-[#f1c557]">
+              {` `} While post is updating...
+            </span>
+          </p>
+        )}
+        {isSuccess && (
+          <p>
+            Successfully: {` `}
+            <span className="text-[#00A651]">{` `} Updated</span>
+          </p>
+        )}
         <UpdateContentButton />
       </Box>
     </Paper>

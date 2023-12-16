@@ -90,9 +90,11 @@ const UpdateBlogPostForm: React.FC<UpdateBlogProps> = ({
 
   const {
     mutateAsync: updatePost,
-    isPending: loading,
+    isPending,
+    isSuccess,
     error,
     isError,
+    reset,
   } = useUpdateOneBlog(contentId);
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -102,19 +104,14 @@ const UpdateBlogPostForm: React.FC<UpdateBlogProps> = ({
         title,
         youtubeLink,
         pressReleaseLinks,
-        heroImage,
+        file: heroImage,
         content,
         relatedPictures,
       };
 
       // Use the updatePost function from the hook
       await updatePost(updatedData);
-
-      // Optionally, handle errors or perform other actions after updating
-      if (!isError) {
-        console.log("Post updated successfully");
-        setUnsavedChanges(false);
-      }
+      reset();
     } catch (error: any) {
       throw new Error("Failed to update post:", error);
     }
@@ -179,7 +176,6 @@ const UpdateBlogPostForm: React.FC<UpdateBlogProps> = ({
           Related Pictures
         </label>
         <RelatedPicturesUpdate
-          // label={"related-pictures"}
           relatedPictures={relatedPictures}
           handleRelatedPictureChange={handleRelatedPictureChange}
         />
@@ -200,6 +196,28 @@ const UpdateBlogPostForm: React.FC<UpdateBlogProps> = ({
           />
         </div>
 
+        {isError && (
+          <p>
+            Error: {` `}
+            <span className="text-[#ff0000]">
+              {` `} {error?.message}
+            </span>
+          </p>
+        )}
+        {isPending && (
+          <p>
+            Please wait: {` `}
+            <span className="text-[#f1c557]">
+              {` `} While post is updating...
+            </span>
+          </p>
+        )}
+        {isSuccess && (
+          <p>
+            Successfully: {` `}
+            <span className="text-[#00A651]">{` `} Updated</span>
+          </p>
+        )}
         <UpdateContentButton />
       </Box>
     </Paper>

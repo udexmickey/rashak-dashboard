@@ -15,24 +15,12 @@ const UpdateStoryPostForm: React.FC<UpdateStoryProps> = ({
   initialData,
   contentId,
 }) => {
-  const { setUnsavedChanges } = useUnsavedFormChanges();
-  const {
-    mutateAsync: updatePost,
-    isPending: loading,
-    error,
-    isError,
-  } = useUpdateOneStory(contentId);
-
   const [author, setAuthor] = useState<string>(initialData?.author);
   const [heroImage, setHeroImage] = useState<File | null>(initialData?.image);
   const [content, setContent] = useState<string>(initialData?.content);
   const [youtubeLink, setYoutubeLink] = useState<string>(
     initialData?.youtubeLink
   );
-
-  useEffect(() => {
-    setUnsavedChanges(true);
-  }, [author, heroImage, content, youtubeLink, setUnsavedChanges]);
 
   const handleAuthorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAuthor(event.target.value);
@@ -57,6 +45,15 @@ const UpdateStoryPostForm: React.FC<UpdateStoryProps> = ({
     setYoutubeLink(event.target.value);
   };
 
+  const { setUnsavedChanges } = useUnsavedFormChanges();
+  const {
+    mutateAsync: updatePost,
+    isPending: loading,
+    error,
+    isError,
+    reset,
+  } = useUpdateOneStory(contentId);
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
@@ -70,15 +67,15 @@ const UpdateStoryPostForm: React.FC<UpdateStoryProps> = ({
       // Use the updatePost function from the hook
       await updatePost(updatedData);
 
-      // Optionally, handle errors or perform other actions after updating
-      if (!isError) {
-        console.log("Post updated successfully");
-        setUnsavedChanges(false);
-      }
+      reset();
     } catch (error: any) {
       throw new Error("Failed to update post:", error);
     }
   };
+
+  useEffect(() => {
+    setUnsavedChanges(true);
+  }, [author, heroImage, content, youtubeLink, setUnsavedChanges]);
 
   return (
     <Paper elevation={3} className="p-8 max-w-7xl mx-auto w-full">
