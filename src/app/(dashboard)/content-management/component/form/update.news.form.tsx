@@ -10,17 +10,18 @@ import UpdateContentButton from "../button/updateContent.button";
 import InputTextField from "../InputTextField/InputTextField";
 import HeroImage from "../HeroImage/HeroImage";
 import RelatedPicturesUpdate from "../RelatedPictures/RelatedPicturesUpdate";
+import RichTextEditor from "../InputTextField/RichTextEditor";
+import { useUpdateOneNews } from "@/hooks/content-management/useNewsHook";
 
 const UpdateNewsPostForm: React.FC<UpdateNewsProps> = ({
   initialData,
   contentId,
 }) => {
   const { setUnsavedChanges } = useUnsavedFormChanges();
-  const { updatePost, loading, error, isError } = useUpdatePost(contentId);
 
   const [title, setTitle] = useState<string>(initialData?.title);
   const [heroImage, setHeroImage] = useState<File | null>(initialData?.media);
-  const [blogContent, setBlogContent] = useState<string>(initialData?.content);
+  const [content, setContent] = useState<string>(initialData?.content);
   const [youtubeLink, setYoutubeLink] = useState<string>(
     initialData?.youtubeLink
   );
@@ -39,7 +40,7 @@ const UpdateNewsPostForm: React.FC<UpdateNewsProps> = ({
   }, [
     title,
     heroImage,
-    blogContent,
+    content,
     youtubeLink,
     pressReleaseLinks,
     relatedPictures,
@@ -55,8 +56,12 @@ const UpdateNewsPostForm: React.FC<UpdateNewsProps> = ({
     setHeroImage(file);
   };
 
-  const handleContentChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setBlogContent(event.target.value);
+  // const handleContentChange = (event: ChangeEvent<HTMLInputElement>) => {
+  //   setContent((prev) => (prev = event.target.value));
+  // };
+
+  const handleContentChange = (value: string) => {
+    setContent(value);
   };
 
   const handleRelatedPictureChange = (
@@ -84,6 +89,13 @@ const UpdateNewsPostForm: React.FC<UpdateNewsProps> = ({
     setPressReleaseLinks(event.target.value);
   };
 
+  const {
+    mutateAsync: updatePost,
+    isPending: loading,
+    error,
+    isError,
+  } = useUpdateOneNews(contentId);
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
@@ -92,7 +104,7 @@ const UpdateNewsPostForm: React.FC<UpdateNewsProps> = ({
         youtubeLink,
         pressReleaseLinks,
         heroImage,
-        blogContent,
+        content,
         relatedPictures,
       };
 
@@ -144,7 +156,7 @@ const UpdateNewsPostForm: React.FC<UpdateNewsProps> = ({
           <label htmlFor="news-content" className="block mb-1">
             Media Content
           </label>
-          <TextField
+          {/* <TextField
             id="outlined-multiline-static"
             label="Media Content"
             multiline
@@ -152,14 +164,15 @@ const UpdateNewsPostForm: React.FC<UpdateNewsProps> = ({
             variant="outlined"
             fullWidth
             className="w-full mx-auto"
-            value={blogContent}
+            value={content}
             onChange={handleContentChange}
             InputProps={{
               style: {
                 height: "300px",
               },
             }}
-          />
+          /> */}
+          <RichTextEditor value={content} onChange={handleContentChange} />
         </div>
 
         {/* Replace the RelatedPictures section with the RelatedPictures component */}

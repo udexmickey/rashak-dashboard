@@ -8,13 +8,20 @@ import UpdateContentButton from "../button/updateContent.button";
 import InputTextField from "../InputTextField/InputTextField";
 import HeroImage from "../HeroImage/HeroImage";
 import { UpdateStoryProps } from "@/utils/types/UpdateStoryProps";
+import RichTextEditor from "../InputTextField/RichTextEditor";
+import { useUpdateOneStory } from "@/hooks/content-management/useStoryHook";
 
 const UpdateStoryPostForm: React.FC<UpdateStoryProps> = ({
   initialData,
   contentId,
 }) => {
   const { setUnsavedChanges } = useUnsavedFormChanges();
-  const { updatePost, loading, error, isError } = useUpdatePost(contentId);
+  const {
+    mutateAsync: updatePost,
+    isPending: loading,
+    error,
+    isError,
+  } = useUpdateOneStory(contentId);
 
   const [author, setAuthor] = useState<string>(initialData?.author);
   const [heroImage, setHeroImage] = useState<File | null>(initialData?.image);
@@ -36,8 +43,12 @@ const UpdateStoryPostForm: React.FC<UpdateStoryProps> = ({
     setHeroImage(file);
   };
 
-  const handleContentChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setContent(event.target.value);
+  // const handleContentChange = (event: ChangeEvent<HTMLInputElement>) => {
+  //   setContent((prev) => (prev = event.target.value));
+  // };
+
+  const handleContentChange = (value: string) => {
+    setContent(value);
   };
 
   const handleYoutubeLinkChange = (
@@ -100,11 +111,19 @@ const UpdateStoryPostForm: React.FC<UpdateStoryProps> = ({
           setHeroImage={setHeroImage}
         />
 
-        <div className="sm:mb-0 mb-8 flex flex-col gap-y-8 h-full w-full relative">
-          <label htmlFor="story-content" className="block mb-1">
+        <div
+          className="sm:mb-0 mb-8 flex flex-col gap-y-8 h-full w-full relative"
+          style={{ height: "400px" }}
+        >
+          <label htmlFor="blog-content" className="block mb-1">
             Media Content
           </label>
-          <TextField
+
+          {/* <div className="sm:mb-0 mb-8 flex flex-col gap-y-8 h-full w-full relative">
+          <label htmlFor="story-content" className="block mb-1">
+            Media Content
+          </label> */}
+          {/* <TextField
             id="outlined-multiline-static"
             label="Media Content"
             multiline
@@ -119,9 +138,11 @@ const UpdateStoryPostForm: React.FC<UpdateStoryProps> = ({
                 height: "300px",
               },
             }}
-          />
+          /> */}
+          <RichTextEditor value={content} onChange={handleContentChange} />
         </div>
 
+        {/* //Since we'll be using the RichTextEditor there is no need to change the youtube link and the rich editor */}
         <div className="flex items-center flex-col md:flex-row md:justify-between justify-left md:gap-y-8">
           <InputTextField
             label={"Youtube Link"}

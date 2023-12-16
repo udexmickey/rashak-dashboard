@@ -1,6 +1,6 @@
 "use client";
 
-import { DeleteBlog, getAllSearchBlog, getOneBlog, postBlog } from "@/utils/api/blog/blog.api";
+import { DeleteBlog, UpdateBlog, getAllSearchBlog, getOneBlog, postBlog } from "@/utils/api/blog/blog.api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function useFetchAllBlog({
@@ -13,7 +13,7 @@ export function useFetchAllBlog({
   pageSize?: number;
 }) {
   const fetchedData = useQuery({
-    queryKey: ["blog", { searchText, pageNumber }],
+    queryKey: ["blogs", { searchText, pageNumber }],
     queryFn: async () =>
       await getAllSearchBlog({ pageNumber, searchText, pageSize }),
     enabled: !!pageNumber,
@@ -44,7 +44,7 @@ export const usePostBlog = () => {
     onSuccess: () => {
       // Invalidate and refetch andv Handle success if needed
       queryClient.invalidateQueries({
-        queryKey: ["blog", { searchText: "", pageNumber: 1 }],
+        queryKey: ["blogs", { searchText: "", pageNumber: 1 }],
       });
     },
     onError: (error: any) => {
@@ -53,6 +53,31 @@ export const usePostBlog = () => {
   });
 
   return postBlogMutation;
+};
+
+export const useUpdateOneBlog = (id: string) => {
+  const queryClient = useQueryClient();
+
+  // Use react-query's useMutation hook
+  const UpdateBlogrMutation = useMutation({
+    mutationFn: async (body: any) => await UpdateBlog(id, { ...body }),
+    onSuccess: () => {
+      // Invalidate and refetch andv Handle success if needed
+      queryClient.invalidateQueries({
+        queryKey: ["blogs", { searchText: "", pageNumber: 1 }],
+      });
+      //This line helps invalidate that stored/catched queries for post with that id so on update the key also invalidates
+      queryClient.invalidateQueries({
+        queryKey: ["blog", id],
+      });
+    },
+    onError: (error: any) => {
+      // Handle error if needed
+      console.log("this is the cause of the error update", error);
+    },
+  });
+
+  return UpdateBlogrMutation;
 };
 
 export const useDeleteOneBlog = () => {
@@ -64,7 +89,7 @@ export const useDeleteOneBlog = () => {
     onSuccess: () => {
       // Invalidate and refetch andv Handle success if needed
       queryClient.invalidateQueries({
-        queryKey: ["blog", { searchText: "", pageNumber: 1 }],
+        queryKey: ["blogs", { searchText: "", pageNumber: 1 }],
       });
     },
     onError: (error: any) => {

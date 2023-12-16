@@ -6,15 +6,12 @@ import {
   Paper,
   Typography,
   Box,
-  IconButton,
   Stack,
 } from "@mui/material";
-import { IoMdPhotos } from "react-icons/io";
 import Image from "next/image";
-// import ReactQuill from "react-quill";
-// import "react-quill/dist/quill.snow.css";
 import useUnsavedFormChanges from "@/hooks/useUnsavedFormChanges";
 import { usePostStory } from "@/hooks/content-management/useStoryHook";
+import RichTextEditor from "../component/InputTextField/RichTextEditor";
 
 const StoryPostForm: React.FC = () => {
   const { setUnsavedChanges } = useUnsavedFormChanges();
@@ -35,8 +32,12 @@ const StoryPostForm: React.FC = () => {
     setUnsavedChanges(true);
   };
 
-  const handleContentChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setBlogContent((prev) => (prev = event.target.value));
+  // const handleContentChange = (event: ChangeEvent<HTMLInputElement>) => {
+  //   setBlogContent((prev) => (prev = event.target.value));
+  // };
+
+  const handleContentChange = (value: string) => {
+    setBlogContent(value);
   };
 
   const handleYoutubeLinkChange = (
@@ -76,6 +77,7 @@ const StoryPostForm: React.FC = () => {
     setUnsavedChanges(false);
 
     formRef.current.reset();
+    reset();
   };
 
   useEffect(() => {
@@ -85,7 +87,8 @@ const StoryPostForm: React.FC = () => {
       setBlogContent((prev) => (prev = ""));
       setAuthor((prev) => (prev = ""));
     }
-  }, [isIdle, isSuccess]);
+    console.log("blogContent", blogContent);
+  }, [blogContent, isIdle, isSuccess]);
 
   return (
     <Paper elevation={3} className="p-8 max-w-7xl mx-auto w-full">
@@ -189,12 +192,12 @@ const StoryPostForm: React.FC = () => {
         {/* Content/Description Body */}
         <div
           className="sm:mb-0 mb-8 flex flex-col gap-y-8 h-full w-full relative"
-          // style={{ height: "500px" }}
+          style={{ height: "400px" }}
         >
           <label htmlFor="blog-content" className="block mb-1">
             Media Content
           </label>
-          <TextField
+          {/* <TextField
             id="outlined-multiline-static"
             label="Media Content"
             multiline
@@ -210,7 +213,8 @@ const StoryPostForm: React.FC = () => {
               },
             }}
             required
-          />
+          /> */}
+          <RichTextEditor value={blogContent} onChange={handleContentChange} />
         </div>
 
         <div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { getAllSearchStory, getOneStory, postStory, DeleteStory } from "@/utils/api/story/story.api";
+import { getAllSearchStory, getOneStory, postStory, DeleteStory, UpdateStory } from "@/utils/api/story/story.api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function useFetchAllStory({
@@ -53,6 +53,31 @@ export const usePostStory = () => {
   });
 
   return postStoryMutation;
+};
+
+export const useUpdateOneStory = (id: string) => {
+  const queryClient = useQueryClient();
+
+  // Use react-query's useMutation hook
+  const UpdateStoryrMutation = useMutation({
+    mutationFn: async (body: any) => await UpdateStory(id, { ...body }),
+    onSuccess: () => {
+      // Invalidate and refetch andv Handle success if needed
+      queryClient.invalidateQueries({
+        queryKey: ["stories", { searchText: "", pageNumber: 1 }],
+      });
+      //This line helps invalidate that stored/catched queries for post with that id so on update the key also invalidates
+      queryClient.invalidateQueries({
+        queryKey: ["story", id],
+      });
+    },
+    onError: (error: any) => {
+      // Handle error if needed
+      console.log("this is the cause of the error update", error);
+    },
+  });
+
+  return UpdateStoryrMutation;
 };
 
 export const useDeleteOneStory = () => {

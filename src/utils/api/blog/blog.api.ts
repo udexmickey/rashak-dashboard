@@ -53,6 +53,21 @@ export async function getAllSearchBlog({ pageNumber, searchText, pageSize } : { 
     }
 }
 
+export async function UpdateBlog(id: string, data: any) {
+    try {
+        const posts = await authApi.patch(`/blogs/${id}`, { ...data }, { headers: {
+            "Content-Type": "multipart/form-data",
+            contentType: "multipart/form-data",
+            // ...data.getHeaders(),
+            maxBodyLength: Infinity
+        }})
+
+        return await posts.data;
+    } catch (error: any) {
+        throw new Error(error?.response?.data.message ?? error?.message)
+    }
+}
+
 export async function DeleteBlog(id: string) {
     try {
         const posts = await authApi.delete(`/blogs/${id}`)

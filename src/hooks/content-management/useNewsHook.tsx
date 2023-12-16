@@ -2,6 +2,7 @@
 
 import {
   DeleteNews,
+  UpdateNews,
   getAllSearchNews,
   getOneNews,
   postNews,
@@ -59,6 +60,31 @@ export const usePostNews = () => {
   });
 
   return postNewsMutation;
+};
+
+export const useUpdateOneNews = (id: string) => {
+  const queryClient = useQueryClient();
+
+  // Use react-query's useMutation hook
+  const UpdateNewsrMutation = useMutation({
+    mutationFn: async (body: any) => await UpdateNews(id, { ...body }),
+    onSuccess: () => {
+      // Invalidate and refetch andv Handle success if needed
+      queryClient.invalidateQueries({
+        queryKey: ["news", { searchText: "", pageNumber: 1 }],
+      });
+      //This line helps invalidate that stored/catched queries for post with that id so on update the key also invalidates
+      queryClient.invalidateQueries({
+        queryKey: ["news", id],
+      });
+    },
+    onError: (error: any) => {
+      // Handle error if needed
+      console.log("this is the cause of the error update", error);
+    },
+  });
+
+  return UpdateNewsrMutation;
 };
 
 export const useDeleteOneNews = () => {

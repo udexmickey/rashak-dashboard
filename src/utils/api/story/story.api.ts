@@ -38,6 +38,21 @@ export async function postStory(data: any) {
     }
 }
 
+export async function UpdateStory(id: string, data: any) {
+    try {
+        const posts = await authApi.patch(`/stories/${id}`, { ...data }, { headers: {
+            "Content-Type": "multipart/form-data",
+            contentType: "multipart/form-data",
+            // ...data.getHeaders(),
+            maxBodyLength: Infinity
+        }})
+
+        return await posts.data;
+    } catch (error: any) {
+        throw new Error(error?.response?.data.message ?? error?.message)
+    }
+}
+
 export async function getAllSearchStory({ pageNumber, searchText, pageSize } : { pageNumber?: number, searchText?: string | number | undefined, pageSize?: number }) {
     try {
         const response = await authApi.get(`/stories?${searchText && `searchQuery=${searchText}`}&${pageNumber && `page=${pageNumber}`}&${pageSize && `pageSize=${pageSize}`}`);

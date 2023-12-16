@@ -4,23 +4,23 @@ import React, { useState, ChangeEvent, useEffect } from "react";
 import { TextField, Paper, Typography, Box } from "@mui/material";
 import useUnsavedFormChanges from "@/hooks/useUnsavedFormChanges";
 import { UpdateBlogProps } from "@/utils/types/UpdateBlogType";
-import useUpdatePost from "@/hooks/UseUpdatePost";
 import { BlogImageGalleryProps } from "@/utils/types/PostData.types";
 import UpdateContentButton from "../button/updateContent.button";
 import InputTextField from "../InputTextField/InputTextField";
 import HeroImage from "../HeroImage/HeroImage";
 import RelatedPicturesUpdate from "../RelatedPictures/RelatedPicturesUpdate";
+import RichTextEditor from "../InputTextField/RichTextEditor";
+import { useUpdateOneBlog } from "@/hooks/content-management/useBlogHook";
 
 const UpdateBlogPostForm: React.FC<UpdateBlogProps> = ({
   initialData,
   contentId,
 }) => {
   const { setUnsavedChanges } = useUnsavedFormChanges();
-  const { updatePost, loading, error, isError } = useUpdatePost(contentId);
 
   const [title, setTitle] = useState<string>(initialData?.title);
   const [heroImage, setHeroImage] = useState<File | null>(initialData?.image);
-  const [blogContent, setBlogContent] = useState<string>(initialData?.content);
+  const [content, setContent] = useState<string>(initialData?.content);
   const [youtubeLink, setYoutubeLink] = useState<string>(
     initialData?.youtubeLink
   );
@@ -39,7 +39,7 @@ const UpdateBlogPostForm: React.FC<UpdateBlogProps> = ({
   }, [
     title,
     heroImage,
-    blogContent,
+    content,
     youtubeLink,
     pressReleaseLinks,
     relatedPictures,
@@ -55,8 +55,12 @@ const UpdateBlogPostForm: React.FC<UpdateBlogProps> = ({
     setHeroImage(file);
   };
 
-  const handleContentChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setBlogContent(event.target.value);
+  // const handleContentChange = (event: ChangeEvent<HTMLInputElement>) => {
+  //   setContent((prev) => (prev = event.target.value));
+  // };
+
+  const handleContentChange = (value: string) => {
+    setContent(value);
   };
 
   const handleRelatedPictureChange = (
@@ -84,6 +88,13 @@ const UpdateBlogPostForm: React.FC<UpdateBlogProps> = ({
     setPressReleaseLinks(event.target.value);
   };
 
+  const {
+    mutateAsync: updatePost,
+    isPending: loading,
+    error,
+    isError,
+  } = useUpdateOneBlog(contentId);
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
@@ -92,7 +103,7 @@ const UpdateBlogPostForm: React.FC<UpdateBlogProps> = ({
         youtubeLink,
         pressReleaseLinks,
         heroImage,
-        blogContent,
+        content,
         relatedPictures,
       };
 
@@ -144,7 +155,7 @@ const UpdateBlogPostForm: React.FC<UpdateBlogProps> = ({
           <label htmlFor="blog-content" className="block mb-1">
             Media Content
           </label>
-          <TextField
+          {/* <TextField
             id="outlined-multiline-static"
             label="Media Content"
             multiline
@@ -152,14 +163,15 @@ const UpdateBlogPostForm: React.FC<UpdateBlogProps> = ({
             variant="outlined"
             fullWidth
             className="w-full mx-auto"
-            value={blogContent}
+            value={content}
             onChange={handleContentChange}
             InputProps={{
               style: {
                 height: "300px",
               },
             }}
-          />
+          /> */}
+          <RichTextEditor value={content} onChange={handleContentChange} />
         </div>
 
         {/* Replace the RelatedPictures section with the RelatedPictures component */}

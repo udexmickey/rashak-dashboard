@@ -54,6 +54,22 @@ export async function getAllSearchNews({ pageNumber, searchText, pageSize } : { 
     }
 }
 
+
+export async function UpdateNews(id: string, data: any) {
+    try {
+        const posts = await authApi.patch(`/news/${id}`, { ...data }, { headers: {
+            "Content-Type": "multipart/form-data",
+            contentType: "multipart/form-data",
+            // ...data.getHeaders(),
+            maxBodyLength: Infinity
+        }})
+
+        return await posts.data;
+    } catch (error: any) {
+        throw new Error(error?.response?.data.message ?? error?.message)
+    }
+}
+
 export async function DeleteNews(id: string) {
     try {
         const posts = await authApi.delete(`/news/${id}`)
