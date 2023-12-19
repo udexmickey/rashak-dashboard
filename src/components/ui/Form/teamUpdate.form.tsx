@@ -10,12 +10,13 @@ import useUnsavedFormChanges from "@/hooks/useUnsavedFormChanges";
 
 interface TeamMemberUpdateFormProps {
   initialValues: {
+    _id: string;
     name: string;
     role: string;
     linkedinLink: string;
     image: File | null;
   };
-  handleUpdate: (data: FormData) => void;
+  handleUpdate: (data: Record<string, any>) => void;
 }
 
 const TeamMemberUpdateForm: React.FC<TeamMemberUpdateFormProps> = ({
@@ -28,7 +29,7 @@ const TeamMemberUpdateForm: React.FC<TeamMemberUpdateFormProps> = ({
   const [linkedinLink, setLinkedinLink] = React.useState(
     initialValues.linkedinLink
   );
-  const [file, setFile] = React.useState<File | null>(null);
+  const [file, setFile] = React.useState<File | null>(initialValues.image);
   const [nameError, setNameError] = React.useState<string | null>(null);
   const [roleError, setRoleError] = React.useState<string | null>(null);
 
@@ -73,17 +74,16 @@ const TeamMemberUpdateForm: React.FC<TeamMemberUpdateFormProps> = ({
     return isValid;
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
     if (validateForm()) {
-      const formData = new FormData();
-      formData.append("name", name);
-      formData.append("role", role);
-      formData.append("linkedinLink", linkedinLink);
-      if (file) {
-        formData.append("file", file);
-      }
+      const formData = {
+        name,
+        role,
+        linkedinLink,
+        file,
+      };
 
       handleUpdate(formData);
       setUnsavedChanges(false);
@@ -115,14 +115,6 @@ const TeamMemberUpdateForm: React.FC<TeamMemberUpdateFormProps> = ({
             <br />
             <div className="h-full cursor-grab min-h-full relative flex md:justify-start items-center justify-center mt-4 md:mt-6">
               {file ? (
-                // <Image
-                //   src={URL.createObjectURL(file)}
-                //   width={400}
-                //   height={400}
-                //   alt="File Preview"
-                //   className="max-w-full aspect-square"
-                // />
-
                 <Image
                   src={
                     typeof file === "string" ? file : URL.createObjectURL(file)
@@ -132,7 +124,7 @@ const TeamMemberUpdateForm: React.FC<TeamMemberUpdateFormProps> = ({
                   priority
                   quality={100}
                   alt="File Preview"
-                  className="max-w-xl w-full h-[35dvh] object-cover bg-slate-200"
+                  className="max-w-xl w-full h-[35dvh] object-contain bg-slate-200"
                 />
               ) : (
                 <Box

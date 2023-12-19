@@ -26,6 +26,17 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ value, onChange }) => {
           //   ["image", "code-block"],
           [{ list: "ordered" }, { list: "bullet" }],
         ],
+        formats: [
+          "header",
+          "bold",
+          "italic",
+          "underline",
+          "strike",
+          "link",
+          "color",
+          "background",
+          "list",
+        ],
       }}
       style={{ height: "300px" }}
       className="max-h-[300px] h-full w-full"

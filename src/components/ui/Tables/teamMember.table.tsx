@@ -8,6 +8,7 @@ import DeleteConfirmationModal from "../confirmationUI/deleteAdminConfirmationMo
 import {
   useDeleteTeamMember,
   useFetchAllTeam,
+  useUpdateOneTeam,
 } from "@/hooks/member/useMembersHook";
 import { Pagination, Paper } from "@mui/material";
 import { useRouter } from "next/navigation";
@@ -62,9 +63,21 @@ export default function TeamMemberTable() {
     teamMembersData &&
     teamMembersData?.data?.find((member: any) => member?._id === memberId);
 
+  const {
+    mutateAsync: updatePost,
+    isPending,
+    isSuccess,
+    error,
+    isError: isErroruUpdate,
+    reset,
+  } = useUpdateOneTeam(memberId);
+
   // Handler for updating the team member
-  const handleUpdate = (formData: FormData) => {
+  const handleUpdate = async (formData: Record<string, any>) => {
     // Perform the update logic with the formData
+
+    await updatePost(formData);
+    reset();
     console.log("Updating team member with data:", formData);
   };
 

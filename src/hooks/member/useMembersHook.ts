@@ -1,7 +1,7 @@
 "use client";
 
-import { getAllBoardMember, getOneBoardMember, addBoardMember, DeleteBoardMember } from "@/utils/api/members/board.api";
-import { DeleteTeamMember, addTeamMember, getAllTeamMember, getOneTeamMember } from "@/utils/api/members/team.api";
+import { getAllBoardMember, getOneBoardMember, addBoardMember, DeleteBoardMember, UpdateBoardMember } from "@/utils/api/members/board.api";
+import { DeleteTeamMember, UpdateTeamMember, addTeamMember, getAllTeamMember, getOneTeamMember } from "@/utils/api/members/team.api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function useFetchAllBoard({
@@ -54,6 +54,31 @@ export const usePostBoardMember = () => {
   });
 
   return postBoardMutation;
+};
+
+export const useUpdateOneBoard = (id: string) => {
+  const queryClient = useQueryClient();
+
+  // Use react-query's useMutation hook
+  const UpdateBoardrMutation = useMutation({
+    mutationFn: async (body: any) => await UpdateBoardMember(id, { ...body }),
+    onSuccess: () => {
+      // Invalidate and refetch andv Handle success if needed
+      queryClient.invalidateQueries({
+        queryKey: ["boards", { searchText: "", pageNumber: 1 }],
+      });
+      //This line helps invalidate that stored/catched queries for post with that id so on update the key also invalidates
+      queryClient.invalidateQueries({
+        queryKey: ["board", id],
+      });
+    },
+    onError: (error: any) => {
+      // Handle error if needed
+      console.log("this is the cause of the error update", error);
+    },
+  });
+
+  return UpdateBoardrMutation;
 };
 
 export const useDeleteBoardMember = () => {
@@ -129,6 +154,31 @@ export const usePostTeamMember = () => {
   });
 
   return postTeamMutation;
+};
+
+export const useUpdateOneTeam = (id: string) => {
+  const queryClient = useQueryClient();
+
+  // Use react-query's useMutation hook
+  const UpdateTeamrMutation = useMutation({
+    mutationFn: async (body: any) => await UpdateTeamMember(id, { ...body }),
+    onSuccess: () => {
+      // Invalidate and refetch andv Handle success if needed
+      queryClient.invalidateQueries({
+        queryKey: ["teams", { searchText: "", pageNumber: 1 }],
+      });
+      //This line helps invalidate that stored/catched queries for post with that id so on update the key also invalidates
+      queryClient.invalidateQueries({
+        queryKey: ["team", id],
+      });
+    },
+    onError: (error: any) => {
+      // Handle error if needed
+      console.log("this is the cause of the error update", error);
+    },
+  });
+
+  return UpdateTeamrMutation;
 };
 
 export const useDeleteTeamMember = () => {

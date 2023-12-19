@@ -8,6 +8,7 @@ import DeleteConfirmationModal from "../confirmationUI/deleteAdminConfirmationMo
 import {
   useDeleteBoardMember,
   useFetchAllBoard,
+  useUpdateOneBoard,
 } from "@/hooks/member/useMembersHook";
 import { Pagination, Paper } from "@mui/material";
 import { useRouter } from "next/navigation";
@@ -62,9 +63,21 @@ export default function BoardMemberTable() {
     boardMembersData &&
     boardMembersData?.data?.find((member: any) => member?._id === memberId);
 
+  const {
+    mutateAsync: updatePost,
+    isPending,
+    isSuccess,
+    error,
+    isError: isErroruUpdate,
+    reset,
+  } = useUpdateOneBoard(memberId);
+
   // Handler for updating the board member
-  const handleUpdate = (formData: FormData) => {
+  const handleUpdate = async (formData: Record<string, any>) => {
     // Perform the update logic with the formData
+
+    await updatePost(formData);
+    reset();
     console.log("Updating board member with data:", formData);
   };
 

@@ -42,6 +42,21 @@ export async function addBoardMember(body: any) {
     }
   };
 
+   export async function UpdateBoardMember(id: string, data: any) {
+    try {
+        const posts = await authApi.patch(`/board-member/${id}`, { ...data }, { headers: {
+            "Content-Type": "multipart/form-data",
+            contentType: "multipart/form-data",
+            // ...data.getHeaders(),
+            maxBodyLength: Infinity
+        }})
+
+        return await posts.data;
+    } catch (error: any) {
+        throw new Error(error?.response?.data.message ?? error?.message)
+    }
+}
+
     export async function DeleteBoardMember(id: string) {
     try {
         const posts = await authApi.delete(`/board-member/${id}`)
