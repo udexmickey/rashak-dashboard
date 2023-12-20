@@ -8,10 +8,8 @@ import DeleteConfirmationModal from "../confirmationUI/deleteAdminConfirmationMo
 import {
   useDeleteBoardMember,
   useFetchAllBoard,
-  useUpdateOneBoard,
 } from "@/hooks/member/useMembersHook";
 import { Pagination, Paper } from "@mui/material";
-import { useRouter } from "next/navigation";
 import MemberTable from "@/components/ui/Tables/Members.table";
 import EmptyStateBox from "../placeholders/notification.placeholder";
 
@@ -63,26 +61,6 @@ export default function BoardMemberTable() {
     boardMembersData &&
     boardMembersData?.data?.find((member: any) => member?._id === memberId);
 
-  const {
-    mutateAsync: updatePost,
-    isPending,
-    isSuccess,
-    error,
-    isError: isErroruUpdate,
-    reset,
-  } = useUpdateOneBoard(memberId);
-
-  // Handler for updating the board member
-  const handleUpdate = async (formData: Record<string, any>) => {
-    // Perform the update logic with the formData
-
-    await updatePost(formData);
-    reset();
-    console.log("Updating board member with data:", formData);
-  };
-
-  const router = useRouter();
-
   const handleChangePage = (event: ChangeEvent<unknown>, newPage: number) => {
     setPage((prev) => (prev = newPage));
   };
@@ -100,8 +78,6 @@ export default function BoardMemberTable() {
     const body = {
       id: memberId,
     };
-
-    console.log("Delete Admin", body);
 
     await deleteAdmin(body);
   };
@@ -158,10 +134,7 @@ export default function BoardMemberTable() {
             modalClassName={""}
           >
             {modalType === "edit" ? (
-              <BoardMemberUpdateForm
-                initialValues={boardMembersDatas as any}
-                handleUpdate={handleUpdate}
-              />
+              <BoardMemberUpdateForm initialValues={boardMembersDatas as any} />
             ) : //Uncomment this when board member is available
             modalType === "remove" ? (
               <DeleteConfirmationModal

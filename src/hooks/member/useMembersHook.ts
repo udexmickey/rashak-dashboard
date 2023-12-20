@@ -14,7 +14,7 @@ export function useFetchAllBoard({
   pageSize?: number;
 }) {
   const fetchedData = useQuery({
-    queryKey: ["board", { searchText, pageNumber }],
+    queryKey: ["boards", { searchText, pageNumber }],
     queryFn: async () =>
       await getAllBoardMember({ pageNumber, searchText, pageSize }),
     enabled: !!pageNumber,
@@ -45,7 +45,7 @@ export const usePostBoardMember = () => {
     onSuccess: () => {
       // Invalidate and refetch andv Handle success if needed
       queryClient.invalidateQueries({
-        queryKey: ["board", { pageNumber: 1, searchText: "" }],
+        queryKey: ["boards", { pageNumber: 1, searchText: "" }],
       });
     },
     onError: (error: any) => {
@@ -114,7 +114,7 @@ export function useFetchAllTeam({
   pageSize?: number;
 }) {
   const fetchedData = useQuery({
-    queryKey: ["team", { searchText, pageNumber }],
+    queryKey: ["teams", { searchText, pageNumber }],
     queryFn: async () =>
       await getAllTeamMember({ pageNumber, searchText, pageSize }),
     enabled: !!pageNumber,
@@ -145,7 +145,7 @@ export const usePostTeamMember = () => {
     onSuccess: () => {
       // Invalidate and refetch andv Handle success if needed
       queryClient.invalidateQueries({
-        queryKey: ["team", { pageNumber: 1, searchText: "" }],
+        queryKey: ["teams", { pageNumber: 1, searchText: "" }],
       });
     },
     onError: (error: any) => {
@@ -190,7 +190,7 @@ export const useDeleteTeamMember = () => {
     onSuccess: () => {
       // Invalidate and refetch andv Handle success if needed
       queryClient.invalidateQueries({
-        queryKey: ["team", { searchText: "", pageNumber: 1 }],
+        queryKey: ["teams", { searchText: "", pageNumber: 1 }],
       });
     },
     onError: (error: any) => {

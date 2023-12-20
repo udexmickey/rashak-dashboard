@@ -7,6 +7,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import useUnsavedFormChanges from "@/hooks/useUnsavedFormChanges";
+import { useUpdateOneBoard } from "@/hooks/member/useMembersHook";
 
 interface BoardMemberUpdateFormProps {
   initialValues: {
@@ -16,14 +17,15 @@ interface BoardMemberUpdateFormProps {
     linkedinLink: string;
     image: File | null;
   };
-  handleUpdate: (data: Record<string, any>) => void;
+  // handleUpdate: (data: Record<string, any>) => void;
 }
 
 const BoardMemberUpdateForm: React.FC<BoardMemberUpdateFormProps> = ({
   initialValues,
-  handleUpdate,
+  // handleUpdate,
 }) => {
   const { setUnsavedChanges } = useUnsavedFormChanges();
+  const [memberId, setMemberId] = React.useState(initialValues._id);
   const [name, setName] = React.useState(initialValues.name);
   const [role, setRole] = React.useState(initialValues.role);
   const [linkedinLink, setLinkedinLink] = React.useState(
@@ -74,6 +76,22 @@ const BoardMemberUpdateForm: React.FC<BoardMemberUpdateFormProps> = ({
     return isValid;
   };
 
+  const {
+    mutateAsync: updatePost,
+    isPending,
+    isSuccess,
+    error,
+    isError: isErroruUpdate,
+    reset,
+  } = useUpdateOneBoard(memberId);
+
+  // Handler for updating the board member
+  const handleUpdate = async (formData: Record<string, any>) => {
+    // Perform the update logic with the formData
+
+    await updatePost(formData);
+  };
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -90,9 +108,22 @@ const BoardMemberUpdateForm: React.FC<BoardMemberUpdateFormProps> = ({
     }
   };
 
+  React.useEffect(() => {
+    if (isSuccess) {
+      const resetTime = setTimeout(() => {
+        reset();
+      }, 2000);
+
+      return () => clearTimeout(resetTime);
+    }
+  }, [isSuccess, reset]);
+
   return (
     <form onSubmit={handleSubmit} className="md:w-[850px]">
-      <Box className="flex flex-col md:flex-row justify-center items-center gap-y-2 md:gap-y-8  md:gap-x-10">
+      <Box
+        component={"div"}
+        className="flex flex-col md:flex-row justify-center items-center gap-y-2 md:gap-y-8  md:gap-x-10"
+      >
         {/* Left Column (File Upload) */}
         <div className="md:w-1/2 w-[90%] px-2">
           <input
@@ -234,6 +265,26 @@ const BoardMemberUpdateForm: React.FC<BoardMemberUpdateFormProps> = ({
           </Button>
         </div>
       </Box>
+      {isErroruUpdate && (
+        <p>
+          Login Error: {` `}
+          <span className="text-[#ff0000]">
+            {` `} {error?.message}
+          </span>
+        </p>
+      )}
+      {isPending && (
+        <p>
+          Please wait: {` `}
+          <span className="text-[#f1c557]">{` `} updating...</span>
+        </p>
+      )}
+      {isSuccess && (
+        <p>
+          Success: {` `}
+          <span className="text-[#00A651]">{` `} member Updated</span>
+        </p>
+      )}
     </form>
   );
 };

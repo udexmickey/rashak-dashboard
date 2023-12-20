@@ -8,10 +8,8 @@ import DeleteConfirmationModal from "../confirmationUI/deleteAdminConfirmationMo
 import {
   useDeleteTeamMember,
   useFetchAllTeam,
-  useUpdateOneTeam,
 } from "@/hooks/member/useMembersHook";
 import { Pagination, Paper } from "@mui/material";
-import { useRouter } from "next/navigation";
 import MemberTable from "@/components/ui/Tables/Members.table";
 import EmptyStateBox from "../placeholders/notification.placeholder";
 
@@ -63,26 +61,6 @@ export default function TeamMemberTable() {
     teamMembersData &&
     teamMembersData?.data?.find((member: any) => member?._id === memberId);
 
-  const {
-    mutateAsync: updatePost,
-    isPending,
-    isSuccess,
-    error,
-    isError: isErroruUpdate,
-    reset,
-  } = useUpdateOneTeam(memberId);
-
-  // Handler for updating the team member
-  const handleUpdate = async (formData: Record<string, any>) => {
-    // Perform the update logic with the formData
-
-    await updatePost(formData);
-    reset();
-    console.log("Updating team member with data:", formData);
-  };
-
-  const router = useRouter();
-
   const handleChangePage = (event: ChangeEvent<unknown>, newPage: number) => {
     setPage((prev) => (prev = newPage));
   };
@@ -100,8 +78,6 @@ export default function TeamMemberTable() {
     const body = {
       id: memberId,
     };
-
-    console.log("Delete Admin", body);
 
     await deleteAdmin(body);
   };
@@ -158,10 +134,7 @@ export default function TeamMemberTable() {
             modalClassName={""}
           >
             {modalType === "edit" ? (
-              <TeamMemberUpdateForm
-                initialValues={teamMembersDatas as any}
-                handleUpdate={handleUpdate}
-              />
+              <TeamMemberUpdateForm initialValues={teamMembersDatas as any} />
             ) : //Uncomment this when team member is available
             modalType === "remove" ? (
               <DeleteConfirmationModal
