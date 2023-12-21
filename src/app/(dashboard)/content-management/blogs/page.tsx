@@ -234,11 +234,8 @@ const BlogPostForm: React.FC = () => {
         </div>
 
         {/* Content/Description Body */}
-        <div
-          className="sm:mb-0 mb-8 flex flex-col gap-y-8 h-full w-full relative"
-          style={{ height: "400px" }}
-        >
-          <label htmlFor="blog-content" className="block mb-1">
+        <div className="mb-8 flex flex-col gap-y-8 max-h-[500px] h-full w-full relative box-border">
+          <label htmlFor="blog-content" className="block">
             Media Content
           </label>
 
@@ -263,78 +260,82 @@ const BlogPostForm: React.FC = () => {
         </div>
 
         {/* Related Pictures */}
-        <label htmlFor="related-pictures" className="block mb-1">
-          Related Pictures
-        </label>
-        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-2">
-          {imageGallery.map((picture, index) => (
-            <div key={index} className="relative group">
-              <input
-                type="file"
-                id={`related-picture-${index}`}
-                className="hidden"
-                accept="image/*"
-                onChange={(e) => handleRelatedPictureChange(e, index)}
-                multiple
-                // required
-              />
-              <label
-                htmlFor={`related-picture-${index}`}
-                className="w-full h-full cursor-pointer"
-              >
-                {picture ? (
-                  <Image
-                    src={URL.createObjectURL(picture)}
-                    width={250}
-                    height={350}
-                    alt={`File Preview ${index + 1}`}
-                    className="max-w-xl w-full h-[30vh] object-cover bg-slate-200"
-                  />
-                ) : (
-                  <Box
-                    sx={{ bgcolor: "#D9D9D9", height: "30vh" }}
-                    // width={400}
-                    className="max-w-sm w-full"
-                  >
-                    <div className="flex flex-col items-center justify-center pt-5 pb-6 max-w-xl w-full h-[30vh]">
-                      <svg
-                        className="w-8 h-8 mb-4 text-gray-500 bg-[#D9D9D9]"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 20 16"
-                      >
-                        <path
-                          stroke="currentColor"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                        />
-                      </svg>
-                      <p className="mb-2 text-sm text-gray-500 bg-[#D9D9D9]">
-                        <span className="font-semibold">Click to upload</span>
-                      </p>
-                      <p className="text-xs text-gray-500 bg-[#D9D9D9]">
-                        PNG, or JPG (MAX. 800x400px)
-                      </p>
-                    </div>
-                  </Box>
+        <div className="mt-4">
+          <label htmlFor="related-pictures" className="block mb-1">
+            Related Pictures
+          </label>
+          <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-2">
+            {imageGallery.map((picture, index) => (
+              <div key={index} className="relative group">
+                <input
+                  type="file"
+                  id={`related-picture-${index}`}
+                  className="hidden"
+                  accept="image/*"
+                  onChange={(e) => handleRelatedPictureChange(e, index)}
+                  multiple
+                  // required
+                />
+                <label
+                  htmlFor={`related-picture-${index}`}
+                  className="w-full h-full cursor-pointer"
+                >
+                  {picture ? (
+                    <Image
+                      src={URL.createObjectURL(picture)}
+                      width={250}
+                      height={350}
+                      alt={`File Preview ${index + 1}`}
+                      className="max-w-xl w-full h-[30vh] object-cover bg-slate-200"
+                    />
+                  ) : (
+                    <Box
+                      sx={{ bgcolor: "#D9D9D9", height: "30vh" }}
+                      // width={400}
+                      className="max-w-sm w-full"
+                    >
+                      <div className="flex flex-col items-center justify-center pt-5 pb-6 max-w-xl w-full h-[30vh]">
+                        <svg
+                          className="w-8 h-8 mb-4 text-gray-500 bg-[#D9D9D9]"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 20 16"
+                        >
+                          <path
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                          />
+                        </svg>
+                        <p className="mb-2 text-sm text-gray-500 bg-[#D9D9D9]">
+                          <span className="font-semibold">Click to upload</span>
+                        </p>
+                        <p className="text-xs text-gray-500 bg-[#D9D9D9]">
+                          PNG, or JPG (MAX. 800x400px)
+                        </p>
+                      </div>
+                    </Box>
+                  )}
+                </label>
+                {picture && (
+                  <div className="absolute bottom-0 right-0">
+                    <IconButton
+                      size="small"
+                      color="primary"
+                      onClick={(e) =>
+                        handleRelatedPictureChange(e as any, index)
+                      }
+                    >
+                      <IoMdPhotos />
+                    </IconButton>
+                  </div>
                 )}
-              </label>
-              {picture && (
-                <div className="absolute bottom-0 right-0">
-                  <IconButton
-                    size="small"
-                    color="primary"
-                    onClick={(e) => handleRelatedPictureChange(e as any, index)}
-                  >
-                    <IoMdPhotos />
-                  </IconButton>
-                </div>
-              )}
-            </div>
-          ))}
+              </div>
+            ))}
+          </div>
         </div>
 
         <div>

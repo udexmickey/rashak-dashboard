@@ -1,8 +1,7 @@
 // RichTextEditor.tsx
 
-import dynamic from "next/dynamic";
-import { ChangeEvent } from "react";
 import "react-quill/dist/quill.snow.css";
+import dynamic from "next/dynamic";
 
 // Use dynamic import to load ReactQuill only on the client side
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
@@ -26,20 +25,20 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ value, onChange }) => {
           //   ["image", "code-block"],
           [{ list: "ordered" }, { list: "bullet" }],
         ],
-        formats: [
-          "header",
-          "bold",
-          "italic",
-          "underline",
-          "strike",
-          "link",
-          "color",
-          "background",
-          "list",
-        ],
+        // formats: [
+        //   "header",
+        //   "bold",
+        //   "italic",
+        //   "underline",
+        //   "strike",
+        //   "link",
+        //   "color",
+        //   "background",
+        //   "list",
+        // ],
       }}
       style={{ height: "300px" }}
-      className="max-h-[300px] h-full w-full"
+      className="max-h-[300px] h-[70%] w-full mb-8 "
     />
   );
 };

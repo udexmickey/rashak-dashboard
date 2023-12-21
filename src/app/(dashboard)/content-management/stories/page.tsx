@@ -190,8 +190,8 @@ const StoryPostForm: React.FC = () => {
 
         {/* Content/Description Body */}
         <div
-          className="sm:mb-0 mb-8 flex flex-col gap-y-8 h-full w-full relative"
-          style={{ height: "400px" }}
+          className="sm:mb-0 mb-8 flex flex-col gap-y-8 max-h-[500px] h-full w-full relative"
+          // style={{ height: "400px" }}
         >
           <label htmlFor="blog-content" className="block mb-1">
             Media Content

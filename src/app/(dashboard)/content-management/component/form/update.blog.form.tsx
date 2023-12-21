@@ -148,7 +148,7 @@ const UpdateBlogPostForm: React.FC<UpdateBlogProps> = ({
           setHeroImage={setHeroImage}
         />
 
-        <div className="sm:mb-0 mb-8 flex flex-col gap-y-8 h-full w-full relative">
+        <div className="mb-8 flex flex-col gap-y-8 max-h-[500px] h-full w-full relative">
           <label htmlFor="blog-content" className="block mb-1">
             Media Content
           </label>
