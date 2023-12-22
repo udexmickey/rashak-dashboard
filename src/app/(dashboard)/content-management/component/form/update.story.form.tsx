@@ -67,16 +67,27 @@ const UpdateStoryPostForm: React.FC<UpdateStoryProps> = ({
 
       // Use the updatePost function from the hook
       await updatePost(updatedData);
-
-      reset();
     } catch (error: any) {
       throw new Error("Failed to update post:", error);
     }
   };
 
   useEffect(() => {
+    if (isSuccess) {
+      setTimeout(() => {
+        reset();
+      }, 3000);
+    }
     setUnsavedChanges(true);
-  }, [author, heroImage, content, youtubeLink, setUnsavedChanges]);
+  }, [
+    author,
+    heroImage,
+    content,
+    youtubeLink,
+    setUnsavedChanges,
+    isSuccess,
+    reset,
+  ]);
 
   return (
     <Paper elevation={3} className="p-8 max-w-7xl mx-auto w-full">

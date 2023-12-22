@@ -111,11 +111,19 @@ const UpdateBlogPostForm: React.FC<UpdateBlogProps> = ({
 
       // Use the updatePost function from the hook
       await updatePost(updatedData);
-      reset();
     } catch (error: any) {
       throw new Error("Failed to update post:", error);
     }
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      setTimeout(() => {
+        reset();
+      }, 3000);
+    }
+    setUnsavedChanges(true);
+  }, [isSuccess, reset, setUnsavedChanges]);
 
   return (
     <Paper elevation={3} className="p-8 max-w-7xl mx-auto w-full">
