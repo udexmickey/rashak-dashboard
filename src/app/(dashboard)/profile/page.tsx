@@ -1,9 +1,7 @@
 "use client";
 import React from "react";
-import { Metadata, ResolvingMetadata } from "next";
 import { List, ListItem, ListItemText } from "@mui/material";
 import BackgroundLetterAvatars from "@/components/menu/stringAvatar";
-import { useFetchOneadmin } from "@/hooks/admin/useAdminsHook";
 import { useFetchOneprofile } from "@/hooks/useProfile";
 
 export default function Profile() {
@@ -16,7 +14,7 @@ export default function Profile() {
 
   return (
     <div className="">
-      <div className="flex bg-white max-w-4xl w-full max-h-[30rem] h-full rounded-3xl gap-6 p-8">
+      <div className="flex flex-col bg-white max-w-4xl w-full min-h-[30rem] h-full rounded-3xl gap-6 p-8">
         <div className="w-full flex gap-12 flex-col">
           <BackgroundLetterAvatars
             name={usermanagementData && usermanagementData.name}

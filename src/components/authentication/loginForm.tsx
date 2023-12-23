@@ -31,6 +31,7 @@ const LoginForm = () => {
     error,
     isSuccess,
     data,
+    reset,
   } = useLogin();
   const router = useRouter();
 
@@ -67,7 +68,15 @@ const LoginForm = () => {
   };
 
   useEffect(() => {
-    isSuccess && handleLoginSuccess();
+    if (isSuccess) {
+      handleLoginSuccess();
+    }
+
+    const timeSession = setTimeout(() => {
+      reset();
+    }, 3000);
+
+    return () => clearTimeout(timeSession);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
 

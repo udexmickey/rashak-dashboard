@@ -1,8 +1,8 @@
 "use client";
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { Paper, TextField, Button } from "@mui/material";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useForgetPassword } from "@/hooks/authentication/useForgetPassword";
 
 interface Values {
   email: string;
@@ -15,16 +15,22 @@ const ForgetPasswordForm = () => {
     emailError: false,
   });
 
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-
-  const router = useRouter();
-
   const handleChange =
     (prop: keyof Values) => (event: ChangeEvent<HTMLInputElement>) => {
       setValues({ ...values, [prop]: event.target.value });
     };
 
-  const handleSubmit = (event: FormEvent) => {
+  const {
+    mutateAsync: ForgetPasswordFxn,
+    isPending,
+    isError,
+    error,
+    isSuccess,
+    data,
+    reset,
+  } = useForgetPassword();
+
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
     // Email validation
@@ -34,33 +40,21 @@ const ForgetPasswordForm = () => {
       return;
     }
 
-    // Mock API Call (replace this with actual API call)
-    const submitForm = () => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve({ message: "password sent successful" });
-        }, 1000);
-      });
-    };
-
-    submitForm()
-      .then((response) => {
-        console.log("Form submitted:", values);
-        console.log("API Response:", response);
-
-        // Show success message
-        setShowSuccessMessage(true);
-
-        // Hide success message after 2000 milliseconds (2 seconds)
-        setTimeout(() => {
-          setShowSuccessMessage(false);
-        }, 9000);
-      })
-
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    try {
+      //forgetPassword function from useForgetPassword hook
+      await ForgetPasswordFxn(values.email);
+    } catch (error: any) {
+      throw new Error(error);
+    }
   };
+
+  useEffect(() => {
+    // const timeSession = setTimeout(() => {
+    //   isSuccess && reset();
+    // }, 6000);
+    // return () => clearTimeout(timeSession);
+    // // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccess]);
 
   return (
     <div className="flex flex-col items-center justify-start h-screen w-[100%] max-w-2xl isolate box-border md:gap-y-20 gap-y-10">
@@ -128,6 +122,30 @@ const ForgetPasswordForm = () => {
               )}
             </div>
           </div>
+          {isError && (
+            <p className="text-center">
+              Error: {` `}
+              <span className="text-[#ff0000]">
+                {` `} {error?.message}
+              </span>
+            </p>
+          )}
+          {isPending && (
+            <p>
+              Please wait: {` `}
+              <span className="text-[#f1c557]">
+                {` `} While verify you credentials...
+              </span>
+            </p>
+          )}
+          {isSuccess && (
+            <p className="text-center">
+              success: {` `}
+              <span className="text-[#00A651]">
+                {` `} {data && data?.message}
+              </span>
+            </p>
+          )}
           <Button
             variant="contained"
             style={{ backgroundColor: "#00A651", color: "#ffffff" }}
@@ -147,11 +165,13 @@ const ForgetPasswordForm = () => {
             </Link>
           </label>
         </form>
-        {showSuccessMessage && (
+        {/* {isSuccess && (
           <div className="text-[#00A651] text-base mb-4">
-            Password reset link sent successfully. Please check your email.
+            {data &&
+              (data?.message ??
+                "Password reset link sent successfully. Please check your email.")}
           </div>
-        )}
+        )} */}
       </Paper>
     </div>
   );

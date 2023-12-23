@@ -1,8 +1,9 @@
 "use client";
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { Paper, TextField, Button } from "@mui/material";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
 import { useRouter } from "next/navigation";
+import { useResetPassword } from "@/hooks/authentication/useResetPassword";
 
 interface Values {
   token: string;
@@ -28,7 +29,6 @@ const ResetPasswordForm = ({
   });
 
   const [showPassword, setShowPassword] = useState<boolean>(true);
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const router = useRouter();
 
@@ -41,7 +41,17 @@ const ResetPasswordForm = ({
       });
     };
 
-  const handleSubmit = (event: FormEvent) => {
+  const {
+    mutateAsync: ResetPasswordFxn,
+    isPending,
+    isError,
+    error,
+    isSuccess,
+    data,
+    reset,
+  } = useResetPassword();
+
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
     // Password validation (minimum 8 characters)
@@ -55,36 +65,27 @@ const ResetPasswordForm = ({
       setValues({ ...values, confirmNewPasswordError: true });
       return;
     }
-
-    // Mock API Call (replace this with actual API call)
-    const submitForm = () => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve({ message: "Password reset was successful" });
-        }, 1000);
-      });
+    const resetPayload = {
+      token: values.token,
+      newPassword: values.newPassword,
     };
-
-    submitForm()
-      .then((response) => {
-        console.log("Form submitted:", values);
-        console.log("API Response:", response);
-
-        // Show success message
-        setShowSuccessMessage(true);
-
-        // Hide success message after 2000 milliseconds (2 seconds)
-        setTimeout(() => {
-          setShowSuccessMessage(false);
-
-          // Redirect to the check page
-          router.push("/login");
-        }, 7000);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    try {
+      //forgetPassword function from useForgetPassword hook
+      await ResetPasswordFxn(resetPayload);
+    } catch (error: any) {
+      throw new Error(error);
+    }
   };
+
+  useEffect(() => {
+    const timeSession = setTimeout(() => {
+      isSuccess && router.push("/login");
+      reset();
+    }, 3000);
+
+    return () => clearTimeout(timeSession);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccess]);
 
   return (
     <div className="flex flex-col items-center justify-start h-screen w-[100%] max-w-2xl isolate box-border md:gap-y-20 gap-y-10">
@@ -116,7 +117,12 @@ const ResetPasswordForm = ({
                 required
                 value={params.resetpasswordId ?? values.token}
                 // defaultValue={params.resetpasswordId}
-                disabled={params.resetpasswordId !== null || params.resetpasswordId !== undefined ? true : false}
+                disabled={
+                  params.resetpasswordId !== null ||
+                  params.resetpasswordId !== undefined
+                    ? true
+                    : false
+                }
                 size="medium"
                 onChange={handleChange("token")}
                 InputProps={{
@@ -227,6 +233,30 @@ const ResetPasswordForm = ({
               Password should be 8 characters minimum.
             </p>
           </div>
+          {isError && (
+            <p className="text-left">
+              Error: {` `}
+              <span className="text-[#ff0000]">
+                {` `} {error?.message}
+              </span>
+            </p>
+          )}
+          {isPending && (
+            <p>
+              Please wait: {` `}
+              <span className="text-[#f1c557]">
+                {` `} While verify you credentials...
+              </span>
+            </p>
+          )}
+          {isSuccess && (
+            <p className="text-left">
+              success: {` `}
+              <span className="text-[#00A651]">
+                {` `} {data && data?.message}
+              </span>
+            </p>
+          )}
           <Button
             variant="contained"
             style={{ backgroundColor: "#00A651", color: "#ffffff" }}
@@ -240,12 +270,12 @@ const ResetPasswordForm = ({
             Reset Password
           </Button>
         </form>
-        {showSuccessMessage && (
+        {/* {showSuccessMessage && (
           <div className="text-[#00A651] text-base mb-4">
             Password reset successfully. You can now login with your new
             Password.
           </div>
-        )}
+        )} */}
       </Paper>
     </div>
   );
