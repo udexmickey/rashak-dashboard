@@ -14,7 +14,7 @@ export default function Profile() {
 
   return (
     <div className="">
-      <div className="flex flex-col bg-white max-w-4xl w-full min-h-[30rem] h-full rounded-3xl gap-6 p-8">
+      <div className="flex flex-col bg-white max-w-4xl w-full rounded-3xl gap-6 p-8">
         <div className="w-full flex gap-12 flex-col">
           <BackgroundLetterAvatars
             name={usermanagementData && usermanagementData.name}
