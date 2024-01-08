@@ -28,8 +28,6 @@ export default function Notification() {
     setPage((prev) => (prev = newPage));
   };
 
-  // console.log("activityLogData", activityLogData);
-
   return (
     <div>
       {!isError && activityLogData?.data?.length < 1 ? (

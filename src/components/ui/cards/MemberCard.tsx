@@ -25,10 +25,6 @@ const MemberCard: React.FC<MemberCardProps> = ({ title, handleClose }) => {
     setSelectedMember((event.target as HTMLInputElement).value);
   };
 
-  useEffect(() => {
-    console.log("selectedMember", selectedMember);
-  }, [selectedMember]);
-
   return (
     <>
       <FormControl

@@ -37,14 +37,6 @@ const AssignedConfirmModal: React.FC<ConfirmationModalProps> = ({
   handleClose,
   handleConfirm,
 }) => {
-  // const handleConfirm = () => {
-  //   console.log(
-  //     `Admin ID: ${adminId}, Selected Department: ${selectedDepartment}`
-  //   );
-  //   // handleClose();
-  //   <PositionedSnackbar />;
-  // };
-
   return (
     <div>
       <Modal

@@ -40,8 +40,6 @@ export default function UsermanagementById({
 }) {
   const { usermanagementId } = params;
 
-  console.log("usermanagementId", usermanagementId);
-
   const {
     data: usermanagementData,
     isLoading,

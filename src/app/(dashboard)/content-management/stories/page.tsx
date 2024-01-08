@@ -71,8 +71,6 @@ const StoryPostForm: React.FC = () => {
       content: content,
     };
 
-    console.log("formData object", formData);
-
     await postData({ ...formData });
     setUnsavedChanges(false);
 

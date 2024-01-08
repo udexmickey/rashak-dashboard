@@ -115,8 +115,6 @@ const BlogPostForm: React.FC = () => {
       ...Object.assign({}, ...imageGalleryObjects),
     };
 
-    console.log("formData object", formData);
-
     await postData({ ...formData });
     setUnsavedChanges(false);
 

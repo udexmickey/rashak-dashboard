@@ -32,8 +32,6 @@ export async function addBoardMember(body: any) {
             // ...data.getHeaders(),
             maxBodyLength: Infinity
         }});
-      console.log('file name changed api', body.file);
-      console.log('body changed api', body);
 
       return { success: true, message: response.data.message }; 
     } catch (error: any) {

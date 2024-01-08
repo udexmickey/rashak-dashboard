@@ -47,11 +47,6 @@ const DepartmentCard: React.FC<DepartmentCardProps> = ({
     // handleClose();
   };
 
-  // useEffect(() => {
-  //   console.log("selectedDepartment", selectedDepartment);
-  //   console.log("adminId", adminId);
-  // }, [adminId, selectedDepartment]);
-
   return (
     <>
       <FormControl
