@@ -279,16 +279,18 @@ const SignupForm = () => {
                     },
                 }}
               />
-              {values.confirmPasswordError &&
-                values.password !== values.confirmPassword && (
-                  <p className="text-[#F5821F] mt-2 text-xs">
-                    Passwords do not match
-                  </p>
-                )}
+              {values.confirmPasswordError ? (
+                <p className="text-[#F5821F] mt-2 text-xs">
+                  Password must be at least 8 characters long with uppercase
+                  letters, numbers, and symbols.
+                </p>
+              ) : (
+                <p className="text-[#A0A3BD] mt-2 text-xs">
+                  Password should be minimum of 8 characters, including
+                  uppercase letters, numbers, and symbols.
+                </p>
+              )}
             </div>
-            <p className="text-[#A0A3BD] mt-2 text-xs">
-              Password should be 8 characters minimum.
-            </p>
             <br />
 
             {isError && (
